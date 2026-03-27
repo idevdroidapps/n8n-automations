@@ -1,0 +1,155 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-24T14:57:07.287Z",
+  "id": "uRLnzV6Opd7lXWSn",
+  "isArchived": true,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "getBestArticle",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "jsonExample",
+        "jsonExample": "{\n  \"title\": \" The next Android update may finally undo some of Google's worst decisions \",\n  \"contentSnippet\": \"Android Canary 2603 introduces new features aimed at fixing common user frustrations.\",\n  \"link\": \"https://www.androidcentral.com/apps-software/android-os/google-android-canary-build-march-2026\",\n  \"tableName\": \"android-articles\"\n}"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "5d6d2961-0240-49ed-939f-5f5fdd085a52",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \"url\" FROM \"android-articles\"",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        160,
+        0
+      ],
+      "id": "4e87a0ef-fca6-4d28-bd30-8408460c67e7",
+      "name": "Execute a SQL query",
+      "credentials": {
+        "postgres": {
+          "id": "LgdkxwF56mxDrQhd",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\"title\": \"OnePlus might be building its own Android gaming handheld, but with a twist\",\n\"link\":\"https://www.androidauthority.com/oneplus-android-gaming-handheld-leak-3651355/\",\n\"tableName\":\"android-articles\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        640,
+        192
+      ],
+      "id": "d6103663-3392-4930-93d3-7cbc31552888",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "model": "lfm2:24b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        448,
+        192
+      ],
+      "id": "5ca6428c-2756-4382-b815-38bc79a59528",
+      "name": "Ollama Chat Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "8kJz2wEe8su5Ft3w",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Role: You are an expert media analyst and data engineer.\n\nTask: Analyze the provided list of news articles. Your goal is to identify the single most interesting or controversial article from the collection.\n\nSelection Criteria:\nControversy: High levels of conflicting viewpoints, public debate, or provocative statements.\nImpact: Significant social, political, or economic implications.\nNovelty: Unusual or unexpected developments that deviate from standard news cycles.\n\nOutput Constraints:\nReturn only a JSON object of the selected article.\nDo not include markdown conversational text outside of the JSON.\nDo not include reasons.\n\nNEWS ARTICLES: {{ $('When Executed by Another Workflow').item.json.data.toJsonString() }}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        464,
+        0
+      ],
+      "id": "662e840e-5e03-491e-b7c6-0f1cc8b59147",
+      "name": "AI Agent",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "disabled": true
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-24T14:57:07.287Z",
+      "createdAt": "2026-03-24T14:57:07.287Z",
+      "role": "workflow:owner",
+      "workflowId": "uRLnzV6Opd7lXWSn",
+      "projectId": "9zdj01WOZxeIxACP"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-25T13:40:35.000Z",
+  "versionId": "92082c34-7d99-434a-8bd2-bb5bed0fcd1a"
+}
