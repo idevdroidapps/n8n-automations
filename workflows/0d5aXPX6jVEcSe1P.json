@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-26T22:38:25.000Z",
-    "createdAt": "2026-03-26T22:37:32.736Z",
-    "versionId": "d3d5cf3d-edb5-42c4-85a1-7b9041cebc5c",
+    "updatedAt": "2026-03-28T17:15:30.000Z",
+    "createdAt": "2026-03-28T17:11:33.441Z",
+    "versionId": "17a64a8a-dc13-4fa3-b820-e90d4cdcd3f6",
     "workflowId": "0d5aXPX6jVEcSe1P",
     "nodes": [
       {
@@ -159,7 +159,7 @@
         "type": "n8n-nodes-base.filter",
         "typeVersion": 2.3,
         "position": [
-          208,
+          192,
           -224
         ],
         "id": "59601e61-0235-4be6-bf4a-445d7fd32a22",
@@ -176,7 +176,10 @@
           240
         ],
         "id": "e2a7a071-4dba-43e3-a0f5-2e83fae72198",
-        "name": "Structured Output Parser"
+        "name": "Structured Output Parser",
+        "retryOnFail": true,
+        "alwaysOutputData": false,
+        "waitBetweenTries": 5000
       },
       {
         "parameters": {
@@ -186,8 +189,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
         "typeVersion": 1,
         "position": [
-          -128,
-          240
+          -192,
+          256
         ],
         "id": "d3ebb6f2-4f2c-4685-b087-e216fa64c567",
         "name": "Ollama Chat Model",
@@ -310,7 +313,7 @@
         "type": "n8n-nodes-base.aggregate",
         "typeVersion": 1,
         "position": [
-          432,
+          576,
           -224
         ],
         "id": "959dab6c-190d-4370-986b-865ef56d5cbc",
@@ -503,7 +506,7 @@
       {
         "parameters": {
           "promptType": "define",
-          "text": "=Role: You are an expert media analyst and data engineer.\n\nTask: Analyze the provided list of news articles. Your goal is to identify the single most interesting or controversial article from the collection.\n\nSelection Criteria:\nControversy: High levels of conflicting viewpoints, public debate, or provocative statements.\nImpact: Significant social, political, or economic implications.\nNovelty: Unusual or unexpected developments that deviate from standard news cycles.\n\nOutput Constraints:\nReturn only a JSON object of the selected article.\nDo not include markdown conversational text outside of the JSON.\nDo not include reasons.\n\nNEWS ARTICLES: {{ $('Combine Fresh Articles').item.json.rssfeeds.toJsonString() }}",
+          "text": "=Role: Expert Media Analyst & Data Engineer.\n\nTask: Analyze the provided list of news articles and select exactly one article that represents the highest level of controversy, impact, and novelty.\n\nSelection Criteria:\n\nControversy: High levels of conflicting viewpoints or provocative statements.\n\nImpact: Significant social, political, or economic implications.\n\nNovelty: Unusual developments that deviate from standard news cycles.\n\nOutput Format Requirements (STRICT):\n\nFormat: Return the result as a raw JSON object only.\n\nNo Markdown: Do not use markdown code blocks (e.g., do not use ` ` `json).\n\nNo Preamble/Postamble: Do not include any introductory text, \"Sure thing,\" or concluding remarks.\n\nNo Reasoning: Do not include your thought process or selection justification.\n\nSchema: Your output must follow this exact structure:\n\n{\n\"title\": \n\"Android 17 Beta 3 Hides a Feature That Will Make Charging Smarter Than Ever\",\n\"contentSnippet\": \n\"The post Android 17 Beta 3 Hides a Feature That Will Make Charging Smarter Than Ever appeared first on Android Headlines.\",\n\"url\": \n\"https://www.androidheadlines.com/2026/03/android-17-beta-3-priority-charging-mode.html\",\n\"guid\": \n\"https://www.androidheadlines.com/?p=1275568\",\n\"img\": \n\"https://www.androidheadlines.com/wp-content/uploads/2026/03/Android-XR-logo-AH-2.jpg\"\n}\n\nNEWS ARTICLES: {{ $('Combine Fresh Articles').item.json.rssfeeds.toJsonString() }}",
           "hasOutputParser": true,
           "options": {}
         },
@@ -521,7 +524,7 @@
       {
         "parameters": {
           "promptType": "define",
-          "text": "=Role: Act as a Android Engineer with a sharp, engaging, and conversational writing style.\n\nTask: Review the provided article headline and snippet. Then, write a short, personalized commentary (2–4 sentences) in the first person (\"I\").\n\nPunctuation & Syntax (CRITICAL):\n\nZERO TOLERANCE for dashes or hyphens. Do not use em dashes (—), en dashes (–), or hyphens (-).\n\nNo compound words. Instead of \"wake-up call,\" use \"wakeup call\" or \"call to action.\" Instead of \"high-speed,\" use \"fast.\"\n\nStructure: If you feel the urge to use a dash to connect two thoughts, use a period and start a new sentence instead. >\nVoice Guidelines:\n\nBe Authentic: No \"In today's world\" or \"This article explains.\"\n\nTone: Provocative but optimistic.\n\nOutputs: \n\nCommentary: The first-person post.\nHashtags: A list of 3–5 relevant, trending hashtags. The first hashtag is to always be \"#Android\".\n\nFinal Instruction: Before providing the output, double check every single character. If there is a dash or hyphen anywhere, rewrite the sentence to remove it.\n\nInputs:\n\nArticle Headline: {{ $json.output.title }}\nArticle Snippet: {{ $json.output.contentSnippet }}",
+          "text": "=Role: Act as a Android Engineer with a sharp, engaging, and conversational writing style.\n\nTask: Review the provided article headline and snippet. Then, write a short, personalized commentary (2–4 sentences) in the first person (\"I\").\n\nPunctuation & Syntax (CRITICAL):\n\nZERO TOLERANCE for dashes or hyphens. Do not use em dashes (—), en dashes (–), or hyphens (-).\n\nNo compound words. Instead of \"wake-up call,\" use \"wakeup call\" or \"call to action.\" Instead of \"high-speed,\" use \"fast.\"\n\nStructure: If you feel the urge to use a dash to connect two thoughts, use a period and start a new sentence instead. >\nVoice Guidelines:\n\nBe Authentic: No \"In today's world\" nor \"This article explains\".  Do not start with \"I see\".\n\nTone: Provocative but optimistic.\n\nOutputs: \n\nCommentary: The first-person post.\nHashtags: A list of 3–5 relevant, trending hashtags. The first hashtag is to always be \"#Android\".\n\nFinal Instruction: Before providing the output, double check every single character. If there is a dash or hyphen anywhere, rewrite the sentence to remove it.\n\nInputs:\n\nArticle Headline: {{ $json.output.title }}\nArticle Snippet: {{ $json.output.contentSnippet }}",
           "hasOutputParser": true,
           "options": {}
         },
@@ -555,6 +558,19 @@
         ],
         "id": "1349142d-9b2d-475a-97f4-27aba307edfa",
         "name": "9am hour"
+      },
+      {
+        "parameters": {
+          "maxItems": 10
+        },
+        "type": "n8n-nodes-base.limit",
+        "typeVersion": 1,
+        "position": [
+          400,
+          -224
+        ],
+        "id": "f7049f36-268c-4ea3-a194-d474c6bfd591",
+        "name": "Limit"
       }
     ],
     "connections": {
@@ -650,7 +666,7 @@
         "main": [
           [
             {
-              "node": "Combine Fresh Articles",
+              "node": "Limit",
               "type": "main",
               "index": 0
             }
@@ -819,14 +835,25 @@
             }
           ]
         ]
+      },
+      "Limit": {
+        "main": [
+          [
+            {
+              "node": "Combine Fresh Articles",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
       }
     },
     "authors": "James Campbell",
-    "name": "Version 20260326",
+    "name": "Version 20260328",
     "description": "",
     "autosaved": true
   },
-  "activeVersionId": "d3d5cf3d-edb5-42c4-85a1-7b9041cebc5c",
+  "activeVersionId": "17a64a8a-dc13-4fa3-b820-e90d4cdcd3f6",
   "connections": {
     "Android Authority": {
       "main": [
@@ -1628,7 +1655,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Role: Act as a Android Engineer with a sharp, engaging, and conversational writing style.\n\nTask: Review the provided article headline and snippet. Then, write a short, personalized commentary (2–4 sentences) in the first person (\"I\").\n\nPunctuation & Syntax (CRITICAL):\n\nZERO TOLERANCE for dashes or hyphens. Do not use em dashes (—), en dashes (–), or hyphens (-).\n\nNo compound words. Instead of \"wake-up call,\" use \"wakeup call\" or \"call to action.\" Instead of \"high-speed,\" use \"fast.\"\n\nStructure: If you feel the urge to use a dash to connect two thoughts, use a period and start a new sentence instead. >\nVoice Guidelines:\n\nBe Authentic: No \"In today's world\" or \"This article explains.\"\n\nTone: Provocative but optimistic.\n\nOutputs: \n\nCommentary: The first-person post.\nHashtags: A list of 3–5 relevant, trending hashtags. The first hashtag is to always be \"#Android\".\n\nFinal Instruction: Before providing the output, double check every single character. If there is a dash or hyphen anywhere, rewrite the sentence to remove it.\n\nInputs:\n\nArticle Headline: {{ $json.output.title }}\nArticle Snippet: {{ $json.output.contentSnippet }}",
+        "text": "=Role: Act as a Android Engineer with a sharp, engaging, and conversational writing style.\n\nTask: Review the provided article headline and snippet. Then, write a short, personalized commentary (2–4 sentences) in the first person (\"I\").\n\nPunctuation & Syntax (CRITICAL):\n\nZERO TOLERANCE for dashes or hyphens. Do not use em dashes (—), en dashes (–), or hyphens (-).\n\nNo compound words. Instead of \"wake-up call,\" use \"wakeup call\" or \"call to action.\" Instead of \"high-speed,\" use \"fast.\"\n\nStructure: If you feel the urge to use a dash to connect two thoughts, use a period and start a new sentence instead. >\nVoice Guidelines:\n\nBe Authentic: No \"In today's world\" nor \"This article explains\".  Do not start with \"I see\".\n\nTone: Provocative but optimistic.\n\nOutputs: \n\nCommentary: The first-person post.\nHashtags: A list of 3–5 relevant, trending hashtags. The first hashtag is to always be \"#Android\".\n\nFinal Instruction: Before providing the output, double check every single character. If there is a dash or hyphen anywhere, rewrite the sentence to remove it.\n\nInputs:\n\nArticle Headline: {{ $json.output.title }}\nArticle Snippet: {{ $json.output.contentSnippet }}",
         "hasOutputParser": true,
         "options": {}
       },
@@ -1719,6 +1746,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-03-27T14:21:20.949Z",
-  "versionId": "f63ca478-29ef-42e4-aa87-e654f44072a6"
+  "updatedAt": "2026-03-28T17:11:33.440Z",
+  "versionId": "17a64a8a-dc13-4fa3-b820-e90d4cdcd3f6"
 }
