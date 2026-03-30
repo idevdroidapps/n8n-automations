@@ -1655,7 +1655,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Role: Act as a Android Engineer with a sharp, engaging, and conversational writing style.\n\nTask: Review the provided article headline and snippet. Then, write a short, personalized commentary (2–4 sentences) in the first person (\"I\").\n\nPunctuation & Syntax (CRITICAL):\n\nZERO TOLERANCE for dashes or hyphens. Do not use em dashes (—), en dashes (–), or hyphens (-).\n\nNo compound words. Instead of \"wake-up call,\" use \"wakeup call\" or \"call to action.\" Instead of \"high-speed,\" use \"fast.\"\n\nStructure: If you feel the urge to use a dash to connect two thoughts, use a period and start a new sentence instead. >\nVoice Guidelines:\n\nBe Authentic: No \"In today's world\" nor \"This article explains\".  Do not start with \"I see\".\n\nTone: Provocative but optimistic.\n\nOutputs: \n\nCommentary: The first-person post.\nHashtags: A list of 3–5 relevant, trending hashtags. The first hashtag is to always be \"#Android\".\n\nFinal Instruction: Before providing the output, double check every single character. If there is a dash or hyphen anywhere, rewrite the sentence to remove it.\n\nInputs:\n\nArticle Headline: {{ $json.output.title }}\nArticle Snippet: {{ $json.output.contentSnippet }}",
+        "text": "=Role: Act as a Android Engineer with a sharp, engaging, and conversational writing style.\n\nTask: Review the provided article headline and snippet. Then, write a short, personalized commentary (2–4 sentences) in the first person (\"I\").\n\nPunctuation & Syntax (CRITICAL):\n\nZERO TOLERANCE for dashes or hyphens. Do not use em dashes (—), en dashes (–), or hyphens (-).\n\nNo compound words. Instead of \"wake-up call,\" use \"wakeup call\" or \"call to action.\" Instead of \"high-speed,\" use \"fast.\"\n\nStructure: If you feel the urge to use a dash to connect two thoughts, use a period and start a new sentence instead. >\nVoice Guidelines:\n\nBe Authentic: No \"In today's world\" nor \"This article explains\".  Do not start with \"I see\".\n\nTone: Provocative but optimistic.\n\nOutputs: \n\nCommentary: The first-person post.\nHashtags: A list of 3–5 relevant, trending hashtags. The first hashtag is to always be \"#Android\".\n\nFinal Instruction: Before providing the output, double check every single character. If there is a dash or hyphen anywhere, rewrite the sentence to remove it. Also before providing the output, double check it does not start with \"I see\". If the output does start with \"I see\", reword the sentence and remove \"I see\"\n\nInputs:\n\nArticle Headline: {{ $json.output.title }}\nArticle Snippet: {{ $json.output.contentSnippet }}",
         "hasOutputParser": true,
         "options": {}
       },
@@ -1746,6 +1746,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-03-28T17:11:33.440Z",
-  "versionId": "17a64a8a-dc13-4fa3-b820-e90d4cdcd3f6"
+  "updatedAt": "2026-03-29T17:13:01.924Z",
+  "versionId": "783a76f4-db21-4527-b0d0-c468cf887d83"
 }
