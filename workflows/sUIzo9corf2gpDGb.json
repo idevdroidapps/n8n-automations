@@ -1,0 +1,232 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Data Source": {
+      "main": [
+        [
+          {
+            "node": "Get Transcripts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Global Variables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Global Variables": {
+      "main": [
+        [
+          {
+            "node": "Data Source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Transcripts": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-30T21:50:37.275Z",
+  "id": "sUIzo9corf2gpDGb",
+  "isArchived": false,
+  "meta": null,
+  "name": "runYtTranscriptToShortFormSeries",
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "return {\n  // add a maximum of 50 ids here\n  ids: [$('On form submission').first().json.id]\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        384,
+        0
+      ],
+      "id": "f11b1f3f-4bcd-4935-9cc5-d785eec48cc9",
+      "name": "Data Source"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://www.youtube-transcript.io/api/transcripts",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Basic 69c950850e3c015877b2c2df"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"ids\": [{{ $json.ids.map(item => `\"${item}\"`) }}]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        560,
+        0
+      ],
+      "id": "91596412-1225-44a6-b6e1-14d4090675d4",
+      "name": "Get Transcripts"
+    },
+    {
+      "parameters": {
+        "formTitle": "Youtube Video Submission",
+        "formDescription": "Add the ID of a YouTube Video",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "id"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "0d286df4-03d7-4e6d-b7a7-a56319ecde64",
+      "name": "On form submission",
+      "webhookId": "6ad12db5-752d-4950-abdc-71bf711eaff5"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "variables",
+          "mode": "list",
+          "cachedResultName": "variables"
+        },
+        "returnAll": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        192,
+        0
+      ],
+      "id": "b10291c9-b46d-42fa-ae96-565d800b13f8",
+      "name": "Global Variables"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Role\nYou are an expert Short-Form Content Strategist and Scriptwriter specializing in high-retention platforms like TikTok, Instagram Reels, and YouTube Shorts. Your goal is to extract the most \"viral\" segments from a provided titled transcript and rewrite them into standalone, 60-second video scripts.\n\nTask\nAnalyze the provided [Transcript] and identify [Number, e.g., 3-5] distinct, high-impact themes or segments. Transform each segment into a polished script.\n\nScript Requirements\nFor each script, you must follow this structure:\n\nThe Hook (0-5s): Start with a provocative question, a counter-intuitive statement, or a high-stakes \"open loop\" to stop the scroll.\n\nThe Meat (5-50s): Deliver the core value or story. Use fast-paced, concise language. Remove all \"filler\" words or conversational fluff from the original transcript.\n\nThe CTA (50-60s): A quick, specific call to action (e.g., \"Follow for part 2,\" \"Check the link in bio,\" or \"Comment your thoughts\").\n\nStylistic Guidelines\nTone: Engaging, authoritative, and punchy.\n\nFormatting: Write for the ear, not the eye. Use short sentences and simple vocabulary.\n\nVisual Cues: Include [Bracketed Instructions] for B-roll, text overlays, or specific gestures.\n\nPacing: Ensure the word count stays between 130–150 words per script to fit comfortably within 60 seconds at a natural speaking pace.\n\nOutput Format\nReturn the analyzed segments as a valid JSON object. Ensure the output is strictly JSON without any introductory or concluding text.\n\nInput Transcript Title: {{ $json.title }}\nInput Transcript Text: {{ $json.text }}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        768,
+        0
+      ],
+      "id": "3985974f-179e-4083-8be7-d83304daca3e",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "jaahas/qwen3.5-uncensored:9b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        688,
+        192
+      ],
+      "id": "8e05dcb6-0f0e-4713-b825-708ec58c6b72",
+      "name": "Ollama Chat Model"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"VideoScriptsRoot\",\n  \"type\": \"object\",\n  \"required\": [\n    \"video_scripts\"\n  ],\n  \"properties\": {\n    \"video_scripts\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"estimated_duration_seconds\",\n          \"full_script\",\n          \"hook\",\n          \"video_number\",\n          \"visual_instructions\",\n          \"word_count\",\n          \"working_title\"\n        ],\n        \"properties\": {\n          \"estimated_duration_seconds\": {\n            \"type\": \"integer\",\n            \"description\": \"The estimated length of the video in seconds.\"\n          },\n          \"full_script\": {\n            \"type\": \"string\",\n            \"description\": \"The complete spoken narration or dialogue for the video.\"\n          },\n          \"hook\": {\n            \"type\": \"string\",\n            \"description\": \"The opening line designed to grab the viewer's attention.\"\n          },\n          \"video_number\": {\n            \"type\": \"integer\",\n            \"description\": \"The sequential identifier for the video.\"\n          },\n          \"visual_instructions\": {\n            \"type\": \"array\",\n            \"description\": \"A list of scenes, camera angles, or text overlays to be shown visually.\",\n            \"items\": {\n              \"type\": \"string\"\n            }\n          },\n          \"word_count\": {\n            \"type\": \"integer\",\n            \"description\": \"The total number of words in the full script.\"\n          },\n          \"working_title\": {\n            \"type\": \"string\",\n            \"description\": \"The internal title for the video project.\"\n          }\n        }\n      }\n    }\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        896,
+        224
+      ],
+      "id": "97f30f95-fe18-4e23-8bff-446273e0048b",
+      "name": "Structured Output Parser"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-30T21:50:37.282Z",
+      "createdAt": "2026-03-30T21:50:37.282Z",
+      "role": "workflow:owner",
+      "workflowId": "sUIzo9corf2gpDGb",
+      "projectId": "t74UsjIgT3c9HuwP"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-30T21:50:37.275Z",
+  "versionId": "c0d9bebc-e4ce-4d1e-a4fe-2e1d82e02872"
+}
