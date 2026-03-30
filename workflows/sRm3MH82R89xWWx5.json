@@ -1,0 +1,857 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Android Authority": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Android Police": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Droid Life": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Android Headlines": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Android Central": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Set Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Selection Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Selection Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter for Android": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Fields": {
+      "main": [
+        [
+          {
+            "node": "Curate Articles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OnClick": {
+      "main": [
+        [
+          {
+            "node": "getStoredGuids",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "getStoredGuids": {
+      "main": [
+        [
+          {
+            "node": "Combine guids Array",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine guids Array": {
+      "main": [
+        [
+          {
+            "node": "Android Police",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Android Authority",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Android Headlines",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Droid Life",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Android Central",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine Fresh Articles": {
+      "main": [
+        [
+          {
+            "node": "Selection Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get UserInfo": {
+      "main": [
+        [
+          {
+            "node": "Submit Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Submit Post": {
+      "main": [
+        [
+          {
+            "node": "Save article",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Curate Articles": {
+      "main": [
+        [
+          {
+            "node": "Filter for Android",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Content Builder Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Content Builder Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Selection Agent": {
+      "main": [
+        [
+          {
+            "node": "Content Builder Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Content Builder Agent": {
+      "main": [
+        [
+          {
+            "node": "Get UserInfo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "9am hour": {
+      "main": [
+        [
+          {
+            "node": "getStoredGuids",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Combine Fresh Articles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-30T21:50:07.489Z",
+  "id": "sRm3MH82R89xWWx5",
+  "isArchived": false,
+  "meta": null,
+  "name": "runAndroidRssPost",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://www.androidauthority.com/feed/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        192
+      ],
+      "id": "334d334d-3149-42a5-bf18-158d75e70d34",
+      "name": "Android Authority",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://www.androidpolice.com/feed/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        384
+      ],
+      "id": "c87dac1b-dca5-4751-9cdb-29ad60d69ecf",
+      "name": "Android Police",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://www.droid-life.com/feed/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        576
+      ],
+      "id": "747a98a3-a022-4ec5-851a-d5fcf1ac688d",
+      "name": "Droid Life",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://www.androidheadlines.com/feed",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a7c6e258-7022-412a-b3c1-4c961d889d1b",
+      "name": "Android Headlines",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://www.androidcentral.com/feeds.xml",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        768
+      ],
+      "id": "be45704b-62c5-4894-94ac-d9736e076ce5",
+      "name": "Android Central",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "numberInputs": 5
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        224,
+        336
+      ],
+      "id": "f2bfda58-00dc-4d72-b644-7132a44ab271",
+      "name": "Merge",
+      "alwaysOutputData": false,
+      "retryOnFail": false
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "803a41cd-8fc5-4ee1-9dad-332349359602",
+              "leftValue": "={{ $json.title }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "b7494cd2-42a4-411a-8664-3e3684c44d82",
+              "leftValue": "={{ $('Combine guids Array').item.json.guids }}",
+              "rightValue": "={{ $json.guid }}",
+              "operator": {
+                "type": "array",
+                "operation": "notContains",
+                "rightType": "any"
+              }
+            },
+            {
+              "id": "1b2ff2e4-da46-4123-8588-b1cd858c02ca",
+              "leftValue": "={{ $json.img }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        832,
+        240
+      ],
+      "id": "cd7afe7d-ed0f-4495-9180-7508c878bb3d",
+      "name": "Filter for Android"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{  \n\"title\": \n\"Those lovely Android Calling Cards are already showing up on Pixel Watch calls\",\n\"contentSnippet\": \n\"Calling Cards have started to appear on Pixel Watch users' wrists.\",  \n\"url\": \n\"https://www.androidauthority.com/pixel-watch-calling-cards-3651930/\",  \n\"guid\": \n\"https://www.androidauthority.com/pixel-watch-calling-cards-3651930/\",\n\"img\":\"https://www.androidheadlines.com/wp-content/uploads/2025/05/Google-Gemini-Cars-Android-Auto-Featured-AH-3.jpg\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        640,
+        704
+      ],
+      "id": "ed1e1900-24bf-42f7-a774-745a7538af08",
+      "name": "Structured Output Parser",
+      "retryOnFail": true,
+      "alwaysOutputData": false,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "model": "lfm2:24b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        448,
+        720
+      ],
+      "id": "64a68ff8-50c1-45cc-a5cf-efd74b0343de",
+      "name": "Ollama Chat Model"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "826d99f2-56e1-4123-b89d-14b154f926d3",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "70120e67-63b4-4aa7-9a66-53ae840f4350",
+              "name": "contentSnippet",
+              "value": "={{ $json.contentSnippet }}",
+              "type": "string"
+            },
+            {
+              "id": "4344dbcf-7b9b-48da-af1e-b0ebe7c9755e",
+              "name": "url",
+              "value": "={{ $json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "fe56dc6f-c90c-4602-b364-56c7a50b8964",
+              "name": "guid",
+              "value": "={{ $json.guid }}",
+              "type": "string"
+            },
+            {
+              "id": "52abd3e6-903d-4cc2-8615-cc0fe509c46f",
+              "name": "=img",
+              "value": "={{ $json[\"content:encoded\"]?.urlDecode().extractUrl().replace('\\\"',\"\") }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        400,
+        240
+      ],
+      "id": "9f99c0c0-841b-453d-bd9d-08b8acf7ab01",
+      "name": "Set Fields",
+      "notesInFlow": false
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -672,
+        480
+      ],
+      "id": "a3d39318-a91b-4d81-a8a7-0dde34502b1c",
+      "name": "OnClick"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \"guid\" FROM \"AndroidArticles\"",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -448,
+        384
+      ],
+      "id": "41280788-1648-48b9-a9d9-ea04f4e07e4c",
+      "name": "getStoredGuids",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "guid",
+              "renameField": true,
+              "outputFieldName": "guids"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        384
+      ],
+      "id": "d4f3d246-8baf-4161-bef0-41e78fa4c312",
+      "name": "Combine guids Array"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "rssfeeds",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1216,
+        240
+      ],
+      "id": "11001aa3-02e4-49e5-9326-f83a5cc5b942",
+      "name": "Combine Fresh Articles"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "AndroidArticles",
+          "mode": "list",
+          "cachedResultName": "AndroidArticles"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "published": "={{ $json.id }}",
+            "guid": "={{ $('Selection Agent').item.json.output.guid }}",
+            "url": "={{ $('Selection Agent').item.json.output.url }}",
+            "contentSnippet": "={{ $('Selection Agent').item.json.output.contentSnippet }}",
+            "title": "={{ $('Selection Agent').item.json.output.title }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "contentSnippet",
+              "displayName": "contentSnippet",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "url",
+              "displayName": "url",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "guid",
+              "displayName": "guid",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "published",
+              "displayName": "published",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1632,
+        480
+      ],
+      "id": "f9a2d3be-7299-4f06-8a5f-188b9e2abb72",
+      "name": "Save article"
+    },
+    {
+      "parameters": {
+        "url": "https://api.linkedin.com/v2/userinfo",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1184,
+        480
+      ],
+      "id": "00713388-ad02-4ae9-aff3-2483d802a339",
+      "name": "Get UserInfo"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.linkedin.com/v2/ugcPosts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"author\": \"urn:li:person:{{ $json.sub }}\",\n  \"lifecycleState\": \"PUBLISHED\",\n  \"specificContent\": {\n    \"com.linkedin.ugc.ShareContent\": {\n      \"shareCommentary\": {\n        \"text\": \"{{ $('Content Builder Agent').item.json.output.content }}\\n\\n{{ $('Content Builder Agent').item.json.output.hashtags }}\"\n      },\n      \"shareMediaCategory\": \"ARTICLE\",\n      \"media\": [\n        {\n          \"status\": \"READY\",\n          \"description\": {\n            \"text\": \"{{ $('Selection Agent').item.json.output.contentSnippet }}\"\n          },\n          \"originalUrl\": \"{{ $('Selection Agent').item.json.output.url }}\",\n          \"title\": {\n            \"text\": \"{{ $('Selection Agent').item.json.output.title }}\"\n          },\n          \"thumbnails\":[\n            {\n              \"url\":\"{{ $('Selection Agent').item.json.output.img }}\"\n            }\n          ]\n        }\n      ]\n    }\n  },\n  \"visibility\": {\n    \"com.linkedin.ugc.MemberNetworkVisibility\": \"PUBLIC\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1408,
+        480
+      ],
+      "id": "0f50f3fb-eeb6-4377-a34d-ab9427f4dd63",
+      "name": "Submit Post"
+    },
+    {
+      "parameters": {
+        "jsCode": "const imageRegex = /\\.(jpg|jpeg|png|webp)$/i;\nconst keywordRegex = /Android|Samsung|Google|Galaxy/i;\n// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  if(!imageRegex.test(item.json.img)){\n   item.json.img = \"\" \n  }\n  if(!keywordRegex.test(item.json.title)){\n    item.json.title = \"\"\n  }\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        624,
+        240
+      ],
+      "id": "d84de7bc-f16d-4867-98cc-700e6640eb4d",
+      "name": "Curate Articles"
+    },
+    {
+      "parameters": {
+        "model": "lfm2:24b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        864,
+        704
+      ],
+      "id": "f453a112-d40e-4cbb-8804-80a3c6a4bb67",
+      "name": "Ollama Chat Model1"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"content\": \"This is the generated and personalized content exmample I wrote in first person voice.\",\n\t\"hashtags\": [\"#Android\", \"#AndroidEngineer\", \"#Mobile\"]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        992,
+        704
+      ],
+      "id": "c6c7bd57-08bc-4708-b9f6-54ad8adfa1b1",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Role: Expert Media Analyst & Data Engineer.\n\nTask: Analyze the provided list of news articles and select exactly one article that represents the highest level of controversy, impact, and novelty.\n\nSelection Criteria:\n\nControversy: High levels of conflicting viewpoints or provocative statements.\n\nImpact: Significant social, political, or economic implications.\n\nNovelty: Unusual developments that deviate from standard news cycles.\n\nOutput Format Requirements (STRICT):\n\nFormat: Return the result as a raw JSON object only.\n\nNo Markdown: Do not use markdown code blocks (e.g., do not use ` ` `json).\n\nNo Preamble/Postamble: Do not include any introductory text, \"Sure thing,\" or concluding remarks.\n\nNo Reasoning: Do not include your thought process or selection justification.\n\nSchema: Your output must follow this exact structure:\n\n{\n\"title\": \n\"Android 17 Beta 3 Hides a Feature That Will Make Charging Smarter Than Ever\",\n\"contentSnippet\": \n\"The post Android 17 Beta 3 Hides a Feature That Will Make Charging Smarter Than Ever appeared first on Android Headlines.\",\n\"url\": \n\"https://www.androidheadlines.com/2026/03/android-17-beta-3-priority-charging-mode.html\",\n\"guid\": \n\"https://www.androidheadlines.com/?p=1275568\",\n\"img\": \n\"https://www.androidheadlines.com/wp-content/uploads/2026/03/Android-XR-logo-AH-2.jpg\"\n}\n\nNEWS ARTICLES: {{ $('Combine Fresh Articles').item.json.rssfeeds.toJsonString() }}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        496,
+        480
+      ],
+      "id": "fc455a24-cb49-4aa9-8335-8f74527036e5",
+      "name": "Selection Agent",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Role: Act as a Android Engineer with a sharp, engaging, and conversational writing style.\n\nTask: Review the provided article headline and snippet. Then, write a short, personalized commentary (2–4 sentences) in the first person (\"I\").\n\nPunctuation & Syntax (CRITICAL):\n\nZERO TOLERANCE for dashes or hyphens. Do not use em dashes (—), en dashes (–), or hyphens (-).\n\nNo compound words. Instead of \"wake-up call,\" use \"wakeup call\" or \"call to action.\" Instead of \"high-speed,\" use \"fast.\"\n\nStructure: If you feel the urge to use a dash to connect two thoughts, use a period and start a new sentence instead. >\nVoice Guidelines:\n\nBe Authentic: No \"In today's world\" nor \"This article explains\".  Do not start with \"I see\".\n\nTone: Provocative but optimistic.\n\nOutputs: \n\nCommentary: The first-person post.\nHashtags: A list of 3–5 relevant, trending hashtags. The first hashtag is to always be \"#Android\".\n\nFinal Instruction: Before providing the output, double check every single character. If there is a dash or hyphen anywhere, rewrite the sentence to remove it. Also before providing the output, double check it does not start with \"I see\". If the output does start with \"I see\", reword the sentence and remove \"I see\"\n\nInputs:\n\nArticle Headline: {{ $json.output.title }}\nArticle Snippet: {{ $json.output.contentSnippet }}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        848,
+        480
+      ],
+      "id": "9a9a7959-4c4f-4110-bd83-0a1c1d832f29",
+      "name": "Content Builder Agent",
+      "retryOnFail": true,
+      "waitBetweenTries": 3000
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9,
+              "triggerAtMinute": "={{ Math.floor(Math.random() * (Math.floor(59) - Math.ceil(1) + 1)) + Math.ceil(1) }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -672,
+        304
+      ],
+      "id": "59462473-cdbd-4012-ba2c-140b23a43e28",
+      "name": "9am hour"
+    },
+    {
+      "parameters": {
+        "maxItems": 10
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        240
+      ],
+      "id": "19b05d01-5e4c-4f5d-a07e-7b0fd34247bf",
+      "name": "Limit"
+    }
+  ],
+  "pinData": {
+    "9am hour": [
+      {
+        "json": {
+          "timestamp": "2026-03-27T09:26:46.010-04:00",
+          "Readable date": "March 27th 2026, 9:26:46 am",
+          "Readable time": "9:26:46 am",
+          "Day of week": "Friday",
+          "Year": "2026",
+          "Month": "March",
+          "Day of month": "27",
+          "Hour": "09",
+          "Minute": "26",
+          "Second": "46",
+          "Timezone": "America/New_York (UTC-04:00)"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-30T21:50:07.494Z",
+      "createdAt": "2026-03-30T21:50:07.494Z",
+      "role": "workflow:owner",
+      "workflowId": "sRm3MH82R89xWWx5",
+      "projectId": "t74UsjIgT3c9HuwP"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-30T21:50:07.489Z",
+  "versionId": "1adc5680-4af2-4ebd-b803-87f0753b506f"
+}
