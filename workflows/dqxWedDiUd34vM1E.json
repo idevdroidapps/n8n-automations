@@ -1,0 +1,172 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Data Source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data Source": {
+      "main": [
+        [
+          {
+            "node": "Get Transcripts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Transcripts": {
+      "main": [
+        [
+          {
+            "node": "Convert Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Response": {
+      "main": [
+        [
+          {
+            "node": "Download as CSV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-30T21:48:17.717Z",
+  "id": "dqxWedDiUd34vM1E",
+  "isArchived": false,
+  "meta": null,
+  "name": "getYouTubeVideoTranscripts",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        240
+      ],
+      "id": "24685b0f-fc8c-4c9c-b291-07d409a52057",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "jsCode": "return {\n  // add a maximum of 50 ids here\n  ids: [\"J6aFcT2VcNY\"]\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        240
+      ],
+      "id": "e8d0f076-d238-41ad-82f8-48ad00bc7be5",
+      "name": "Data Source"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://www.youtube-transcript.io/api/transcripts",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Basic 69c950850e3c015877b2c2df"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"ids\": [{{ $json.ids.map(item => `\"${item}\"`) }}]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        448,
+        240
+      ],
+      "id": "f9fcea3f-648d-4ed0-8153-978774900433",
+      "name": "Get Transcripts"
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "binaryPropertyName": "output",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        896,
+        240
+      ],
+      "id": "016815cc-31cc-4b87-b52b-a2bf9be4be63",
+      "name": "Download as CSV"
+    },
+    {
+      "parameters": {
+        "content": "## How to use\n1. Create a variable named **API_KEY** with your API token as value. You can set variables [here](/variables).\n2. add your list of video ids in the **Data Source** node, or replace this node with your own source.",
+        "height": 176,
+        "width": 288,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "4bb23de6-9b6b-45c0-92e7-9de7316b39da",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "jsCode": "const trackToText = (track) => {\n  return track.transcript.map(t => t.text).join(' ');\n}\nreturn $input.all().reduce((acc, cur) => ({...acc, [cur.json.id]: trackToText(cur.json.tracks[0])}), {})"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        240
+      ],
+      "id": "36406bfc-60da-4d43-a0c2-bc6e745a4a3d",
+      "name": "Convert Response"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-30T21:48:17.722Z",
+      "createdAt": "2026-03-30T21:48:17.722Z",
+      "role": "workflow:owner",
+      "workflowId": "dqxWedDiUd34vM1E",
+      "projectId": "t74UsjIgT3c9HuwP"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-30T21:48:40.464Z",
+  "versionId": "5af97e05-821d-4136-a2cd-602d8a7c6aea"
+}
