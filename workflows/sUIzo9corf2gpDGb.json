@@ -3,39 +3,6 @@
   "activeVersion": null,
   "activeVersionId": null,
   "connections": {
-    "Data Source": {
-      "main": [
-        [
-          {
-            "node": "Get Transcripts",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "On form submission": {
-      "main": [
-        [
-          {
-            "node": "Select rows from a table",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get Transcripts": {
-      "main": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Ollama Chat Model": {
       "ai_languageModel": [
         [
@@ -57,77 +24,60 @@
           }
         ]
       ]
+    },
+    "Data Source": {
+      "main": [
+        [
+          {
+            "node": "Select rows from a table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Transcripts": {
+      "main": [
+        [
+          {
+            "node": "Convert Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select rows from a table": {
+      "main": [
+        [
+          {
+            "node": "Get Transcripts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Data Source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2026-03-30T21:50:37.275Z",
   "id": "sUIzo9corf2gpDGb",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "runYtTranscriptToShortFormSeries",
   "nodes": [
-    {
-      "parameters": {
-        "jsCode": "return {\n  // add a maximum of 50 ids here\n  ids: [$('On form submission').first().json.id]\n}"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        384,
-        0
-      ],
-      "id": "f11b1f3f-4bcd-4935-9cc5-d785eec48cc9",
-      "name": "Data Source"
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://www.youtube-transcript.io/api/transcripts",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Authorization",
-              "value": "=Basic 69c950850e3c015877b2c2df"
-            }
-          ]
-        },
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"ids\": [{{ $json.ids.map(item => `\"${item}\"`) }}]\n}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        560,
-        0
-      ],
-      "id": "91596412-1225-44a6-b6e1-14d4090675d4",
-      "name": "Get Transcripts"
-    },
-    {
-      "parameters": {
-        "formTitle": "Youtube Video Submission",
-        "formDescription": "Add the ID of a YouTube Video",
-        "formFields": {
-          "values": [
-            {
-              "fieldLabel": "id"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.formTrigger",
-      "typeVersion": 2.5,
-      "position": [
-        0,
-        0
-      ],
-      "id": "0d286df4-03d7-4e6d-b7a7-a56319ecde64",
-      "name": "On form submission",
-      "webhookId": "6ad12db5-752d-4950-abdc-71bf711eaff5"
-    },
     {
       "parameters": {
         "promptType": "define",
@@ -152,11 +102,17 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
       "typeVersion": 1,
       "position": [
-        688,
-        192
+        704,
+        224
       ],
       "id": "8e05dcb6-0f0e-4713-b825-708ec58c6b72",
-      "name": "Ollama Chat Model"
+      "name": "Ollama Chat Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "jyKY7vCSm6TQQSr0",
+          "name": "Ollama account"
+        }
+      }
     },
     {
       "parameters": {
@@ -174,25 +130,82 @@
     },
     {
       "parameters": {
+        "jsCode": "return {\n  ids: [$input.first().json.ID]\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -96,
+        0
+      ],
+      "id": "b20ee17d-582d-4400-be01-dec36c549101",
+      "name": "Data Source"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://www.youtube-transcript.io/api/transcripts",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Basic {{ $json.value }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"ids\": [{{ $('Data Source').item.json.ids.map(item => `\"${item}\"`) }}]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        352,
+        0
+      ],
+      "id": "e340490d-5c4d-496c-a509-7fecec42ef0a",
+      "name": "Get Transcripts"
+    },
+    {
+      "parameters": {
+        "jsCode": "const trackToText = (track) => {\n  return track.transcript.map(t => t.text.replace(/[\\r\\n]/gm, '')).join(' ');\n}\nreturn $input.all().reduce((acc, cur) => ({...acc, [cur.json.id]: trackToText(cur.json.tracks[0])}), {})"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        576,
+        0
+      ],
+      "id": "d45aaf09-f018-46a4-a8ea-e6fae334e328",
+      "name": "Convert Response"
+    },
+    {
+      "parameters": {
         "operation": "select",
         "schema": {
           "__rl": true,
+          "value": "public",
           "mode": "list",
-          "value": "public"
+          "cachedResultName": "public"
         },
         "table": {
           "__rl": true,
+          "value": "variables",
           "mode": "list",
-          "value": ""
-        }
+          "cachedResultName": "variables"
+        },
+        "returnAll": true,
+        "options": {}
       },
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        208,
+        128,
         0
       ],
-      "id": "2c23b250-bbcb-4d0b-9fa4-2b9a0b57a541",
+      "id": "85ea4386-7e91-4491-91f2-d75e73aaf2d8",
       "name": "Select rows from a table",
       "credentials": {
         "postgres": {
@@ -200,6 +213,29 @@
           "name": "Postgres account"
         }
       }
+    },
+    {
+      "parameters": {
+        "formTitle": "YouTube Video ID",
+        "formDescription": "Please enter a YouTube Video ID",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "ID"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        -320,
+        0
+      ],
+      "id": "197bd414-76eb-483a-a7cc-c68b688ccb69",
+      "name": "On form submission",
+      "webhookId": "05de9f9f-8a2e-486f-9eb4-428fe0ab979c"
     }
   ],
   "pinData": {},
@@ -219,6 +255,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2026-03-31T13:24:31.577Z",
-  "versionId": "ff013fcb-2eb6-4733-b5f0-b48ab7b5b91d"
+  "updatedAt": "2026-03-31T14:37:01.448Z",
+  "versionId": "9168049d-7719-41ba-9927-0043efabcbc7"
 }
