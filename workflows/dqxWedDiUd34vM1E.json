@@ -3,22 +3,11 @@
   "activeVersion": null,
   "activeVersionId": null,
   "connections": {
-    "When clicking ‘Execute workflow’": {
-      "main": [
-        [
-          {
-            "node": "Data Source",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Data Source": {
       "main": [
         [
           {
-            "node": "Get Transcripts",
+            "node": "Select rows from a table",
             "type": "main",
             "index": 0
           }
@@ -38,9 +27,25 @@
     },
     "Convert Response": {
       "main": [
+        []
+      ]
+    },
+    "On form submission": {
+      "main": [
         [
           {
-            "node": "Download as CSV",
+            "node": "Data Source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select rows from a table": {
+      "main": [
+        [
+          {
+            "node": "Get Transcripts",
             "type": "main",
             "index": 0
           }
@@ -51,28 +56,19 @@
   "createdAt": "2026-03-30T21:48:17.717Z",
   "id": "dqxWedDiUd34vM1E",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "getYouTubeVideoTranscripts",
   "nodes": [
     {
-      "parameters": {},
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
-      "position": [
-        0,
-        240
-      ],
-      "id": "24685b0f-fc8c-4c9c-b291-07d409a52057",
-      "name": "When clicking ‘Execute workflow’"
-    },
-    {
       "parameters": {
-        "jsCode": "return {\n  // add a maximum of 50 ids here\n  ids: [\"J6aFcT2VcNY\"]\n}"
+        "jsCode": "return {\n  // add a maximum of 50 ids here\n  ids: $input.first().json.IDs.split(',')\n}"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        224,
+        0,
         240
       ],
       "id": "e8d0f076-d238-41ad-82f8-48ad00bc7be5",
@@ -87,13 +83,13 @@
           "parameters": [
             {
               "name": "Authorization",
-              "value": "=Basic 69c950850e3c015877b2c2df"
+              "value": "=Basic {{ $json.value }}"
             }
           ]
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"ids\": [{{ $json.ids.map(item => `\"${item}\"`) }}]\n}",
+        "jsonBody": "={\n  \"ids\": [{{ $('Data Source').item.json.ids.map(item => `\"${item}\"`) }}]\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -107,38 +103,7 @@
     },
     {
       "parameters": {
-        "operation": "toJson",
-        "binaryPropertyName": "output",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.convertToFile",
-      "typeVersion": 1.1,
-      "position": [
-        896,
-        240
-      ],
-      "id": "016815cc-31cc-4b87-b52b-a2bf9be4be63",
-      "name": "Download as CSV"
-    },
-    {
-      "parameters": {
-        "content": "## How to use\n1. Create a variable named **API_KEY** with your API token as value. You can set variables [here](/variables).\n2. add your list of video ids in the **Data Source** node, or replace this node with your own source.",
-        "height": 176,
-        "width": 288,
-        "color": 3
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        0,
-        0
-      ],
-      "typeVersion": 1,
-      "id": "4bb23de6-9b6b-45c0-92e7-9de7316b39da",
-      "name": "Sticky Note"
-    },
-    {
-      "parameters": {
-        "jsCode": "const trackToText = (track) => {\n  return track.transcript.map(t => t.text).join(' ');\n}\nreturn $input.all().reduce((acc, cur) => ({...acc, [cur.json.id]: trackToText(cur.json.tracks[0])}), {})"
+        "jsCode": "const trackToText = (track) => {\n  return track.transcript.map(t => t.text.replace(/[\\r\\n]/gm, '')).join(' ');\n}\nreturn $input.all().reduce((acc, cur) => ({...acc, [cur.json.id]: trackToText(cur.json.tracks[0])}), {})"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -148,6 +113,63 @@
       ],
       "id": "36406bfc-60da-4d43-a0c2-bc6e745a4a3d",
       "name": "Convert Response"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list",
+          "cachedResultName": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "variables",
+          "mode": "list",
+          "cachedResultName": "variables"
+        },
+        "returnAll": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        224,
+        240
+      ],
+      "id": "d2559d5e-4f39-4e0d-9eec-77a2f98cc71c",
+      "name": "Select rows from a table",
+      "credentials": {
+        "postgres": {
+          "id": "ONc4BCiTp5vVkE3z",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "formTitle": "YouTube Video ID",
+        "formDescription": "Please enter a list of YouTube Video IDs separated by commas and no spaces (e.g.  fds9dj3d,564d2s4,85gde343)",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "IDs",
+              "fieldType": "textarea"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        -224,
+        240
+      ],
+      "id": "5b24dfe4-0aa8-4b91-9c69-2aed06e3bcc8",
+      "name": "On form submission",
+      "webhookId": "a07f6f76-1188-4af3-98e3-7fbfcf1349b5"
     }
   ],
   "pinData": {},
@@ -167,6 +189,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2026-03-30T21:48:40.464Z",
-  "versionId": "5af97e05-821d-4136-a2cd-602d8a7c6aea"
+  "updatedAt": "2026-03-31T14:21:38.288Z",
+  "versionId": "8f94fa4e-9b57-48b9-a1ad-484b5787b38f"
 }
