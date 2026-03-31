@@ -18,18 +18,7 @@
       "main": [
         [
           {
-            "node": "Global Variables",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Global Variables": {
-      "main": [
-        [
-          {
-            "node": "Data Source",
+            "node": "Select rows from a table",
             "type": "main",
             "index": 0
           }
@@ -141,32 +130,6 @@
     },
     {
       "parameters": {
-        "operation": "select",
-        "schema": {
-          "__rl": true,
-          "mode": "list",
-          "value": "public"
-        },
-        "table": {
-          "__rl": true,
-          "value": "variables",
-          "mode": "list",
-          "cachedResultName": "variables"
-        },
-        "returnAll": true,
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        192,
-        0
-      ],
-      "id": "b10291c9-b46d-42fa-ae96-565d800b13f8",
-      "name": "Global Variables"
-    },
-    {
-      "parameters": {
         "promptType": "define",
         "text": "=Role\nYou are an expert Short-Form Content Strategist and Scriptwriter specializing in high-retention platforms like TikTok, Instagram Reels, and YouTube Shorts. Your goal is to extract the most \"viral\" segments from a provided titled transcript and rewrite them into standalone, 60-second video scripts.\n\nTask\nAnalyze the provided [Transcript] and identify [Number, e.g., 3-5] distinct, high-impact themes or segments. Transform each segment into a polished script.\n\nScript Requirements\nFor each script, you must follow this structure:\n\nThe Hook (0-5s): Start with a provocative question, a counter-intuitive statement, or a high-stakes \"open loop\" to stop the scroll.\n\nThe Meat (5-50s): Deliver the core value or story. Use fast-paced, concise language. Remove all \"filler\" words or conversational fluff from the original transcript.\n\nThe CTA (50-60s): A quick, specific call to action (e.g., \"Follow for part 2,\" \"Check the link in bio,\" or \"Comment your thoughts\").\n\nStylistic Guidelines\nTone: Engaging, authoritative, and punchy.\n\nFormatting: Write for the ear, not the eye. Use short sentences and simple vocabulary.\n\nVisual Cues: Include [Bracketed Instructions] for B-roll, text overlays, or specific gestures.\n\nPacing: Ensure the word count stays between 130–150 words per script to fit comfortably within 60 seconds at a natural speaking pace.\n\nOutput Format\nReturn the analyzed segments as a valid JSON object. Ensure the output is strictly JSON without any introductory or concluding text.\n\nInput Transcript Title: {{ $json.title }}\nInput Transcript Text: {{ $json.text }}",
         "hasOutputParser": true,
@@ -208,6 +171,35 @@
       ],
       "id": "97f30f95-fe18-4e23-8bff-446273e0048b",
       "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        208,
+        0
+      ],
+      "id": "2c23b250-bbcb-4d0b-9fa4-2b9a0b57a541",
+      "name": "Select rows from a table",
+      "credentials": {
+        "postgres": {
+          "id": "ONc4BCiTp5vVkE3z",
+          "name": "Postgres account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -227,6 +219,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2026-03-30T21:50:37.275Z",
-  "versionId": "c0d9bebc-e4ce-4d1e-a4fe-2e1d82e02872"
+  "updatedAt": "2026-03-31T13:24:31.577Z",
+  "versionId": "ff013fcb-2eb6-4733-b5f0-b48ab7b5b91d"
 }
