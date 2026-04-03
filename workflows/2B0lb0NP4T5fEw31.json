@@ -259,8 +259,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        0,
-        640
+        16,
+        656
       ],
       "typeVersion": 1
     },
@@ -273,8 +273,8 @@
       "name": "n8n",
       "type": "n8n-nodes-base.n8n",
       "position": [
-        704,
-        384
+        672,
+        368
       ],
       "typeVersion": 1,
       "credentials": {
@@ -709,6 +709,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2026-03-30T22:19:32.082Z",
-  "versionId": "cf42e98b-82d6-4a11-83dc-ecad46b35c1f"
+  "updatedAt": "2026-04-03T19:27:06.869Z",
+  "versionId": "5d0aa3ee-056e-418f-9f5c-1a4968a3052b"
 }
