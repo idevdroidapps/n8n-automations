@@ -3,28 +3,6 @@
   "activeVersion": null,
   "activeVersionId": null,
   "connections": {
-    "Ollama Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Structured Output Parser": {
-      "ai_outputParser": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_outputParser",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Data Source": {
       "main": [
         [
@@ -68,6 +46,39 @@
           }
         ]
       ]
+    },
+    "Convert Response": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2026-03-30T21:50:37.275Z",
@@ -93,40 +104,6 @@
       ],
       "id": "3985974f-179e-4083-8be7-d83304daca3e",
       "name": "AI Agent"
-    },
-    {
-      "parameters": {
-        "model": "jaahas/qwen3.5-uncensored:9b",
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
-      "typeVersion": 1,
-      "position": [
-        704,
-        224
-      ],
-      "id": "8e05dcb6-0f0e-4713-b825-708ec58c6b72",
-      "name": "Ollama Chat Model",
-      "credentials": {
-        "ollamaApi": {
-          "id": "jyKY7vCSm6TQQSr0",
-          "name": "Ollama account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "schemaType": "manual",
-        "inputSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"VideoScriptsRoot\",\n  \"type\": \"object\",\n  \"required\": [\n    \"video_scripts\"\n  ],\n  \"properties\": {\n    \"video_scripts\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"estimated_duration_seconds\",\n          \"full_script\",\n          \"hook\",\n          \"video_number\",\n          \"visual_instructions\",\n          \"word_count\",\n          \"working_title\"\n        ],\n        \"properties\": {\n          \"estimated_duration_seconds\": {\n            \"type\": \"integer\",\n            \"description\": \"The estimated length of the video in seconds.\"\n          },\n          \"full_script\": {\n            \"type\": \"string\",\n            \"description\": \"The complete spoken narration or dialogue for the video.\"\n          },\n          \"hook\": {\n            \"type\": \"string\",\n            \"description\": \"The opening line designed to grab the viewer's attention.\"\n          },\n          \"video_number\": {\n            \"type\": \"integer\",\n            \"description\": \"The sequential identifier for the video.\"\n          },\n          \"visual_instructions\": {\n            \"type\": \"array\",\n            \"description\": \"A list of scenes, camera angles, or text overlays to be shown visually.\",\n            \"items\": {\n              \"type\": \"string\"\n            }\n          },\n          \"word_count\": {\n            \"type\": \"integer\",\n            \"description\": \"The total number of words in the full script.\"\n          },\n          \"working_title\": {\n            \"type\": \"string\",\n            \"description\": \"The internal title for the video project.\"\n          }\n        }\n      }\n    }\n  }\n}"
-      },
-      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
-      "typeVersion": 1.3,
-      "position": [
-        896,
-        224
-      ],
-      "id": "97f30f95-fe18-4e23-8bff-446273e0048b",
-      "name": "Structured Output Parser"
     },
     {
       "parameters": {
@@ -236,6 +213,40 @@
       "id": "197bd414-76eb-483a-a7cc-c68b688ccb69",
       "name": "On form submission",
       "webhookId": "05de9f9f-8a2e-486f-9eb4-428fe0ab979c"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"VideoScriptsRoot\",\n  \"type\": \"object\",\n  \"required\": [\n    \"video_scripts\"\n  ],\n  \"properties\": {\n    \"video_scripts\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"estimated_duration_seconds\",\n          \"full_script\",\n          \"hook\",\n          \"video_number\",\n          \"visual_instructions\",\n          \"word_count\",\n          \"working_title\"\n        ],\n        \"properties\": {\n          \"estimated_duration_seconds\": {\n            \"type\": \"integer\",\n            \"description\": \"The estimated length of the video in seconds.\"\n          },\n          \"full_script\": {\n            \"type\": \"string\",\n            \"description\": \"The complete spoken narration or dialogue for the video.\"\n          },\n          \"hook\": {\n            \"type\": \"string\",\n            \"description\": \"The opening line designed to grab the viewer's attention.\"\n          },\n          \"video_number\": {\n            \"type\": \"integer\",\n            \"description\": \"The sequential identifier for the video.\"\n          },\n          \"visual_instructions\": {\n            \"type\": \"array\",\n            \"description\": \"A list of scenes, camera angles, or text overlays to be shown visually.\",\n            \"items\": {\n              \"type\": \"string\"\n            }\n          },\n          \"word_count\": {\n            \"type\": \"integer\",\n            \"description\": \"The total number of words in the full script.\"\n          },\n          \"working_title\": {\n            \"type\": \"string\",\n            \"description\": \"The internal title for the video project.\"\n          }\n        }\n      }\n    }\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        896,
+        224
+      ],
+      "id": "97f30f95-fe18-4e23-8bff-446273e0048b",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "model": "jaahas/qwen3.5-uncensored:9b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        704,
+        224
+      ],
+      "id": "8e05dcb6-0f0e-4713-b825-708ec58c6b72",
+      "name": "Ollama Chat Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "jyKY7vCSm6TQQSr0",
+          "name": "Ollama account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -255,6 +266,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2026-03-31T14:37:01.448Z",
-  "versionId": "9168049d-7719-41ba-9927-0043efabcbc7"
+  "updatedAt": "2026-03-31T16:12:27.488Z",
+  "versionId": "df706cfb-4bcc-4b1c-bff9-be2daf38f0d8"
 }
