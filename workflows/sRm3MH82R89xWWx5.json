@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-04-05T12:37:20.000Z",
-    "createdAt": "2026-04-05T12:09:41.589Z",
-    "versionId": "68d8c2b1-4e9b-4d6d-aadd-9fc62cb91efb",
+    "updatedAt": "2026-04-05T20:06:42.000Z",
+    "createdAt": "2026-04-05T17:59:13.503Z",
+    "versionId": "c7fa47df-5dff-4c28-a66c-00960909cdf6",
     "workflowId": "sRm3MH82R89xWWx5",
     "nodes": [
       {
@@ -284,8 +284,8 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          2320,
-          0
+          2080,
+          336
         ],
         "id": "f9a2d3be-7299-4f06-8a5f-188b9e2abb72",
         "name": "Save article",
@@ -306,8 +306,8 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.4,
         "position": [
-          1872,
-          0
+          1632,
+          336
         ],
         "id": "00713388-ad02-4ae9-aff3-2483d802a339",
         "name": "Get UserInfo",
@@ -332,8 +332,8 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.4,
         "position": [
-          2096,
-          0
+          1856,
+          336
         ],
         "id": "0f50f3fb-eeb6-4377-a34d-ab9427f4dd63",
         "name": "Submit Post",
@@ -350,14 +350,14 @@
           "text": "=Role: Act as a Senior Tech Writer with a sharp, engaging, and conversational writing style.\n\nTask: Review the provided article title and snippet. Then, write a short, personalized commentary (2–4 sentences) ending in an additional sentence in the first person (\"I\"). Also, provide a list of 3–5 relevant, trending hashtags. The first hashtag is to always be \"#Android\".\n\nPunctuation & Syntax (CRITICAL):\n\nZERO TOLERANCE for dashes or hyphens. Do not use em dashes (—), en dashes (–), or hyphens (-).\n\nNo compound words. Instead of \"wake-up call,\" use \"wakeup call\" or \"call to action.\" Instead of \"high-speed,\" use \"fast.\"\n\nStructure: If you feel the urge to use a dash to connect two thoughts, use a period and start a new sentence instead. \nVoice Guidelines:\n\nBe Authentic: No \"In today's world\" nor \"This article explains\".  Do not start with first person voice.\n\nTone: Provocative but optimistic.\n\nOutput:\nA json object with two required properties, a string (commentary) and an array of strings (hastags).\n\nInputs:\n\nArticle Headline: {{ $json.title }}\nArticle Snippet: {{ $json.contentSnippet }}",
           "hasOutputParser": true,
           "options": {
-            "maxIterations": 30
+            "maxIterations": 60
           }
         },
         "type": "@n8n/n8n-nodes-langchain.agent",
         "typeVersion": 3.1,
         "position": [
-          1568,
-          208
+          1280,
+          480
         ],
         "id": "9a9a7959-4c4f-4110-bd83-0a1c1d832f29",
         "name": "Content Builder Agent",
@@ -509,8 +509,8 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          2544,
-          0
+          2304,
+          336
         ],
         "id": "d3bd34ed-c102-4877-bdb0-79d00f29ed11",
         "name": "Truncate Ai Agent Tables",
@@ -521,19 +521,6 @@
             "name": "Postgres account"
           }
         }
-      },
-      {
-        "parameters": {
-          "jsonSchemaExample": "{\n\t\"commentary\": \"This is the generated and personalized content exmample.\",\n\t\"hashtags\": [\"#Android\", \"#AndroidEngineer\", \"#Mobile\"]\n}"
-        },
-        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
-        "typeVersion": 1.3,
-        "position": [
-          1712,
-          416
-        ],
-        "id": "c6c7bd57-08bc-4708-b9f6-54ad8adfa1b1",
-        "name": "Structured Output Parser"
       },
       {
         "parameters": {
@@ -620,7 +607,7 @@
           "text": "=You are an Expert News Editor. You are provided a Vector Store Tool which contains a list of articles. Your task is to select the single most 'interesting' article based on three metrics: Novelty (how unique it is), Impact (potential for market disruption), and Controversy (how much it challenges existing norms). You are to respond to the user with only the content of the article that you selected as most 'interesting'.\n\nSelection Criteria:\n\nControversy: High levels of conflicting viewpoints or provocative statements.\nImpact: Significant social, political, or economic implications.\nNovelty: Unusual developments that deviate from standard news cycles.\n\nWhich one is the single most 'interesting' news article in your Vector Store?\n\n",
           "hasOutputParser": true,
           "options": {
-            "maxIterations": 30
+            "maxIterations": 60
           }
         },
         "type": "@n8n/n8n-nodes-langchain.agent",
@@ -643,8 +630,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
         "typeVersion": 1,
         "position": [
-          768,
-          464
+          816,
+          448
         ],
         "id": "14e14204-78d5-4e7f-ba28-02d9108443a2",
         "name": "Selector Model",
@@ -749,8 +736,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
         "typeVersion": 1,
         "position": [
-          1568,
-          416
+          1232,
+          688
         ],
         "id": "8da689fb-6245-420c-a40a-0832b93d1fb8",
         "name": "Builder Model",
@@ -775,6 +762,19 @@
         "name": "getMatchingArticle",
         "alwaysOutputData": true,
         "executeOnce": true
+      },
+      {
+        "parameters": {
+          "jsonSchemaExample": "{\n\t\"commentary\": \"This is the generated and personalized content exmample.\",\n\t\"hashtags\": [\"#Android\", \"#AndroidEngineer\", \"#Mobile\"]\n}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.3,
+        "position": [
+          1424,
+          688
+        ],
+        "id": "c6c7bd57-08bc-4708-b9f6-54ad8adfa1b1",
+        "name": "Builder Output Parser"
       }
     ],
     "connections": {
@@ -996,17 +996,6 @@
           ]
         ]
       },
-      "Structured Output Parser": {
-        "ai_outputParser": [
-          [
-            {
-              "node": "Content Builder Agent",
-              "type": "ai_outputParser",
-              "index": 0
-            }
-          ]
-        ]
-      },
       "Embeddings Ollama": {
         "ai_embedding": [
           [
@@ -1150,6 +1139,17 @@
             }
           ]
         ]
+      },
+      "Builder Output Parser": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "Content Builder Agent",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
       }
     },
     "authors": "Jim Campbell",
@@ -1157,7 +1157,7 @@
     "description": "",
     "autosaved": true
   },
-  "activeVersionId": "68d8c2b1-4e9b-4d6d-aadd-9fc62cb91efb",
+  "activeVersionId": "c7fa47df-5dff-4c28-a66c-00960909cdf6",
   "connections": {
     "Android Authority": {
       "main": [
@@ -1377,17 +1377,6 @@
         ]
       ]
     },
-    "Structured Output Parser": {
-      "ai_outputParser": [
-        [
-          {
-            "node": "Content Builder Agent",
-            "type": "ai_outputParser",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Embeddings Ollama": {
       "ai_embedding": [
         [
@@ -1527,6 +1516,17 @@
           {
             "node": "If",
             "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Builder Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Content Builder Agent",
+            "type": "ai_outputParser",
             "index": 0
           }
         ]
@@ -1819,8 +1819,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        2320,
-        0
+        2080,
+        336
       ],
       "id": "f9a2d3be-7299-4f06-8a5f-188b9e2abb72",
       "name": "Save article",
@@ -1841,8 +1841,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        1872,
-        0
+        1632,
+        336
       ],
       "id": "00713388-ad02-4ae9-aff3-2483d802a339",
       "name": "Get UserInfo",
@@ -1867,8 +1867,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        2096,
-        0
+        1856,
+        336
       ],
       "id": "0f50f3fb-eeb6-4377-a34d-ab9427f4dd63",
       "name": "Submit Post",
@@ -1885,14 +1885,14 @@
         "text": "=Role: Act as a Senior Tech Writer with a sharp, engaging, and conversational writing style.\n\nTask: Review the provided article title and snippet. Then, write a short, personalized commentary (2–4 sentences) ending in an additional sentence in the first person (\"I\"). Also, provide a list of 3–5 relevant, trending hashtags. The first hashtag is to always be \"#Android\".\n\nPunctuation & Syntax (CRITICAL):\n\nZERO TOLERANCE for dashes or hyphens. Do not use em dashes (—), en dashes (–), or hyphens (-).\n\nNo compound words. Instead of \"wake-up call,\" use \"wakeup call\" or \"call to action.\" Instead of \"high-speed,\" use \"fast.\"\n\nStructure: If you feel the urge to use a dash to connect two thoughts, use a period and start a new sentence instead. \nVoice Guidelines:\n\nBe Authentic: No \"In today's world\" nor \"This article explains\".  Do not start with first person voice.\n\nTone: Provocative but optimistic.\n\nOutput:\nA json object with two required properties, a string (commentary) and an array of strings (hastags).\n\nInputs:\n\nArticle Headline: {{ $json.title }}\nArticle Snippet: {{ $json.contentSnippet }}",
         "hasOutputParser": true,
         "options": {
-          "maxIterations": 30
+          "maxIterations": 60
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        1568,
-        208
+        1280,
+        480
       ],
       "id": "9a9a7959-4c4f-4110-bd83-0a1c1d832f29",
       "name": "Content Builder Agent",
@@ -2044,8 +2044,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        2544,
-        0
+        2304,
+        336
       ],
       "id": "d3bd34ed-c102-4877-bdb0-79d00f29ed11",
       "name": "Truncate Ai Agent Tables",
@@ -2056,19 +2056,6 @@
           "name": "Postgres account"
         }
       }
-    },
-    {
-      "parameters": {
-        "jsonSchemaExample": "{\n\t\"commentary\": \"This is the generated and personalized content exmample.\",\n\t\"hashtags\": [\"#Android\", \"#AndroidEngineer\", \"#Mobile\"]\n}"
-      },
-      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
-      "typeVersion": 1.3,
-      "position": [
-        1712,
-        416
-      ],
-      "id": "c6c7bd57-08bc-4708-b9f6-54ad8adfa1b1",
-      "name": "Structured Output Parser"
     },
     {
       "parameters": {
@@ -2155,7 +2142,7 @@
         "text": "=You are an Expert News Editor. You are provided a Vector Store Tool which contains a list of articles. Your task is to select the single most 'interesting' article based on three metrics: Novelty (how unique it is), Impact (potential for market disruption), and Controversy (how much it challenges existing norms). You are to respond to the user with only the content of the article that you selected as most 'interesting'.\n\nSelection Criteria:\n\nControversy: High levels of conflicting viewpoints or provocative statements.\nImpact: Significant social, political, or economic implications.\nNovelty: Unusual developments that deviate from standard news cycles.\n\nWhich one is the single most 'interesting' news article in your Vector Store?\n\n",
         "hasOutputParser": true,
         "options": {
-          "maxIterations": 30
+          "maxIterations": 60
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -2178,8 +2165,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
       "typeVersion": 1,
       "position": [
-        768,
-        464
+        816,
+        448
       ],
       "id": "14e14204-78d5-4e7f-ba28-02d9108443a2",
       "name": "Selector Model",
@@ -2284,8 +2271,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
       "typeVersion": 1,
       "position": [
-        1568,
-        416
+        1232,
+        688
       ],
       "id": "8da689fb-6245-420c-a40a-0832b93d1fb8",
       "name": "Builder Model",
@@ -2310,6 +2297,19 @@
       "name": "getMatchingArticle",
       "alwaysOutputData": true,
       "executeOnce": true
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"commentary\": \"This is the generated and personalized content exmample.\",\n\t\"hashtags\": [\"#Android\", \"#AndroidEngineer\", \"#Mobile\"]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1424,
+        688
+      ],
+      "id": "c6c7bd57-08bc-4708-b9f6-54ad8adfa1b1",
+      "name": "Builder Output Parser"
     }
   ],
   "pinData": {
@@ -2354,6 +2354,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-04-05T12:09:41.587Z",
-  "versionId": "68d8c2b1-4e9b-4d6d-aadd-9fc62cb91efb"
+  "updatedAt": "2026-04-05T17:59:13.500Z",
+  "versionId": "c7fa47df-5dff-4c28-a66c-00960909cdf6"
 }
