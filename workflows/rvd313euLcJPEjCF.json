@@ -1,0 +1,1495 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Android Authority": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Android Police": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Droid Life": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Android Headlines": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Android Central": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Set Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Fields": {
+      "main": [
+        [
+          {
+            "node": "Filter by Keyword and Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OnClick": {
+      "main": [
+        [
+          {
+            "node": "getStoredGuids",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "getStoredGuids": {
+      "main": [
+        [
+          {
+            "node": "Combine guids Array",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine guids Array": {
+      "main": [
+        [
+          {
+            "node": "Android Police",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Android Authority",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Android Headlines",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Droid Life",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Android Central",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get UserInfo": {
+      "main": [
+        [
+          {
+            "node": "Register Upload Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Submit Post": {
+      "main": [
+        [
+          {
+            "node": "Save article",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Content Builder Agent": {
+      "main": [
+        [
+          {
+            "node": "Image Prompt Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "9am hour": {
+      "main": [
+        [
+          {
+            "node": "getStoredGuids",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check for Required Fields": {
+      "main": [
+        [
+          {
+            "node": "Get Snippets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter by Keyword and Image": {
+      "main": [
+        [
+          {
+            "node": "Check for Required Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Snippets": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Ollama": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "ai_embedding",
+            "index": 0
+          },
+          {
+            "node": "Article Vectors Retriever",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Article Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres PGVector Store": {
+      "main": [
+        [
+          {
+            "node": "Selector Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Article Vectors Retriever": {
+      "ai_tool": [
+        [
+          {
+            "node": "Selector Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Selector Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Selector Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Selector Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Selector Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Selector Agent": {
+      "main": [
+        [
+          {
+            "node": "getMatchingArticle",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save article": {
+      "main": [
+        []
+      ]
+    },
+    "Reranker Cohere": {
+      "ai_reranker": [
+        []
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Content Builder Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Selector Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Builder Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Content Builder Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "getMatchingArticle": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompt Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Image Prompt Generator",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Builder Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Content Builder Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompt Generation Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Image Prompt Generator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Image Prompt Generator": {
+      "main": [
+        [
+          {
+            "node": "ComfyUI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ComfyUI": {
+      "main": [
+        [
+          {
+            "node": "Video Prompt Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Register Upload Request": {
+      "main": [
+        [
+          {
+            "node": "Upload Media",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Media": {
+      "main": [
+        [
+          {
+            "node": "Submit Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vision Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Video Prompt Generator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vision Analysis Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Video Prompt Generator",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Video Prompt Generator": {
+      "main": [
+        [
+          {
+            "node": "ComfyUI1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-04-06T14:00:37.867Z",
+  "id": "rvd313euLcJPEjCF",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "runAndroidRssPostWithVideo",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://www.androidauthority.com/feed/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        192
+      ],
+      "id": "702e9ebd-f91e-4db3-baba-4353e51f27a9",
+      "name": "Android Authority",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://www.androidpolice.com/feed/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        384
+      ],
+      "id": "898e1d4c-dfed-4e1f-b39e-6dca7135997f",
+      "name": "Android Police",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://www.droid-life.com/feed/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        576
+      ],
+      "id": "5b021a9c-7a7b-4999-9c65-26483590c03f",
+      "name": "Droid Life",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://www.androidheadlines.com/feed",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "82dda5e5-8b0f-41da-b0bf-95d404e3e73d",
+      "name": "Android Headlines",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://www.androidcentral.com/feeds.xml",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        768
+      ],
+      "id": "52da53b6-eed1-4804-9d87-dc08ff0b5ef9",
+      "name": "Android Central",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "numberInputs": 5
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        224,
+        336
+      ],
+      "id": "da422ab0-6ccc-488b-ba18-c8900a5b9b35",
+      "name": "Merge",
+      "alwaysOutputData": false,
+      "retryOnFail": false
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "826d99f2-56e1-4123-b89d-14b154f926d3",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "70120e67-63b4-4aa7-9a66-53ae840f4350",
+              "name": "contentSnippet",
+              "value": "={{ $json[\"content:encodedSnippet\"].replace(/\\r|\\n|\\t/g, '').replace(/Credit:.*?TL;DR/gs, \"\") }}",
+              "type": "string"
+            },
+            {
+              "id": "4344dbcf-7b9b-48da-af1e-b0ebe7c9755e",
+              "name": "url",
+              "value": "={{ $json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "fe56dc6f-c90c-4602-b364-56c7a50b8964",
+              "name": "guid",
+              "value": "={{ $json.guid }}",
+              "type": "string"
+            },
+            {
+              "id": "52abd3e6-903d-4cc2-8615-cc0fe509c46f",
+              "name": "=img",
+              "value": "={{ $json[\"content:encoded\"]?.urlDecode().extractUrl().replace('\\\"',\"\") }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        432,
+        0
+      ],
+      "id": "9c8d9190-62f3-4d57-99e8-aacc9c994e02",
+      "name": "Set Fields",
+      "notesInFlow": false
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -672,
+        480
+      ],
+      "id": "36cad5ba-f6f7-462c-87ce-cf0dcf9c1751",
+      "name": "OnClick"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \"guid\" FROM \"androidrss\"",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -448,
+        384
+      ],
+      "id": "01d2129d-560d-46d9-a1f0-8a427064834d",
+      "name": "getStoredGuids",
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "ONc4BCiTp5vVkE3z",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "guid",
+              "renameField": true,
+              "outputFieldName": "guids"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        384
+      ],
+      "id": "0b4fbc97-5c22-4557-a0f3-0abc608ca9b8",
+      "name": "Combine guids Array"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "androidrss",
+          "mode": "list",
+          "cachedResultName": "androidrss"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "guid": "={{ $('getMatchingArticle').item.json.guid }}",
+            "url": "={{ $('getMatchingArticle').item.json.url }}",
+            "title": "={{ $('getMatchingArticle').item.json.title }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "url",
+              "displayName": "url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "guid",
+              "displayName": "guid",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2208,
+        848
+      ],
+      "id": "a7c08b37-b30b-4ad7-a3fd-90ee60dbea96",
+      "name": "Save article",
+      "credentials": {
+        "postgres": {
+          "id": "ONc4BCiTp5vVkE3z",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.linkedin.com/v2/userinfo",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1392,
+        848
+      ],
+      "id": "b8c721e7-889b-49de-9c95-6d6413338e85",
+      "name": "Get UserInfo",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "z04N7hCzKnMtAJIB",
+          "name": "LinkedIn OAuth"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.linkedin.com/v2/ugcPosts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"author\": \"urn:li:person:{{ $('Get UserInfo').item.json.sub }}\",\n  \"lifecycleState\": \"PUBLISHED\",\n  \"specificContent\": {\n    \"com.linkedin.ugc.ShareContent\": {\n      \"shareCommentary\": {\n        \"text\": \"{{ $('getMatchingArticle').item.json.title }}\\n\\n{{ $('Content Builder Agent').item.json.output.commentary }}\\n\\n{{ $('getMatchingArticle').item.json.url }}\\n\\n{{ $('Content Builder Agent').item.json.output.hashtags }}\"\n      },\n      \"shareMediaCategory\": \"IMAGE\",\n      \"media\": [\n        {\n          \"status\": \"READY\",\n          \"description\": {\n            \"text\": \"{{ $('getMatchingArticle').item.json.contentSnippet }}\"\n          },\n          \"title\": {\n            \"text\": \"{{ $('getMatchingArticle').item.json.title }}\"\n          },\n          \"media\":\"{{ $('Register Upload Request').item.json.value.asset }}\"\n        }\n      ]\n    }\n  },\n  \"visibility\": {\n    \"com.linkedin.ugc.MemberNetworkVisibility\": \"PUBLIC\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        2016,
+        848
+      ],
+      "id": "d6602e6e-5ba2-4dc2-b8db-5bfc5d2b710a",
+      "name": "Submit Post",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "z04N7hCzKnMtAJIB",
+          "name": "LinkedIn OAuth"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Role: Act as a Senior Tech Writer with a sharp, engaging, and conversational writing style.\n\nTask: Review the provided article title and snippet. Then, write a short, personalized commentary (2–4 sentences) ending in an additional sentence in the first person (\"I\"). Also, provide a list of 3–5 relevant, trending hashtags. The first hashtag is to always be \"#Android\".\n\nPunctuation & Syntax (CRITICAL):\n\nZERO TOLERANCE for dashes or hyphens. Do not use em dashes (—), en dashes (–), or hyphens (-).\n\nNo compound words. Instead of \"wake-up call,\" use \"wakeup call\" or \"call to action.\" Instead of \"high-speed,\" use \"fast.\"\n\nStructure: If you feel the urge to use a dash to connect two thoughts, use a period and start a new sentence instead. \nVoice Guidelines:\n\nBe Authentic: No \"In today's world\" nor \"This article explains\".  Do not start with first person voice.\n\nTone: Provocative but optimistic.\n\nOutput:\nA json object with two required properties, a string (commentary) and an array of strings (hastags).\n\nInputs:\n\nArticle Headline: {{ $json.title }}\nArticle Snippet: {{ $json.contentSnippet }}",
+        "hasOutputParser": true,
+        "options": {
+          "maxIterations": 60
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1584,
+        64
+      ],
+      "id": "e564a54a-8d0b-4501-b7aa-1d8d0d4eacf6",
+      "name": "Content Builder Agent",
+      "retryOnFail": true,
+      "waitBetweenTries": 1000,
+      "executeOnce": true,
+      "alwaysOutputData": false,
+      "maxTries": 5
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9,
+              "triggerAtMinute": "={{ Math.floor(Math.random() * (Math.floor(59) - Math.ceil(1) + 1)) + Math.ceil(1) }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -672,
+        288
+      ],
+      "id": "490d4e56-f494-42e4-8917-edfbd734fa05",
+      "name": "9am hour"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "803a41cd-8fc5-4ee1-9dad-332349359602",
+              "leftValue": "={{ $json.title }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "b7494cd2-42a4-411a-8664-3e3684c44d82",
+              "leftValue": "={{ $('Combine guids Array').item.json.guids }}",
+              "rightValue": "={{ $json.guid }}",
+              "operator": {
+                "type": "array",
+                "operation": "notContains",
+                "rightType": "any"
+              }
+            },
+            {
+              "id": "1b2ff2e4-da46-4123-8588-b1cd858c02ca",
+              "leftValue": "={{ $json.img }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        880,
+        0
+      ],
+      "id": "c767bc2a-26bf-4e2e-97ae-e997bf36201b",
+      "name": "Check for Required Fields"
+    },
+    {
+      "parameters": {
+        "jsCode": "const imageRegex = /\\.(jpg|jpeg|png|webp)$/i;\nconst keywordRegex = /Android|Galaxy/i;\n\nfor (const item of $input.all()) {\n  if(!imageRegex.test(item.json.img)){\n   item.json.img = \"\" \n  }\n  if(!keywordRegex.test(item.json.title)){\n    item.json.title = \"\"\n  }\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        656,
+        0
+      ],
+      "id": "24ee0e0f-aabc-4946-9581-835a7475cb23",
+      "name": "Filter by Keyword and Image"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "db2da957-b5ce-4595-a17e-853ddc9db69f",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "4089df73-e686-4080-9e6d-5be598d3badf",
+              "name": "contentSnippet",
+              "value": "={{ $json.contentSnippet }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1104,
+        0
+      ],
+      "id": "e71275d7-4e08-46f4-9c8f-c3cbf10e6445",
+      "name": "Get Snippets"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "articles",
+        "include": "specifiedFields",
+        "fieldsToInclude": "contentSnippet",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1328,
+        0
+      ],
+      "id": "81a2fcae-d8cd-4188-9f4b-e66223040148",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "TRUNCATE TABLE \"n8n_vectors_androidrss\";\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2432,
+        848
+      ],
+      "id": "7e8ab3cb-1d05-4fe3-ac0a-88e021cdef0a",
+      "name": "Truncate Ai Agent Tables",
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "ONc4BCiTp5vVkE3z",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": "n8n_vectors_androidrss",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+      "typeVersion": 1.3,
+      "position": [
+        464,
+        224
+      ],
+      "id": "74b5fb22-935a-4556-9584-42b584b5764b",
+      "name": "Postgres PGVector Store",
+      "credentials": {
+        "postgres": {
+          "id": "ONc4BCiTp5vVkE3z",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "qwen3-embedding:4b"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+      "typeVersion": 1,
+      "position": [
+        464,
+        704
+      ],
+      "id": "ce8a9e22-be6c-4e72-a968-b4f17d26acd0",
+      "name": "Embeddings Ollama",
+      "credentials": {
+        "ollamaApi": {
+          "id": "jyKY7vCSm6TQQSr0",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "={{ $('Aggregate').item.json.articles }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        560,
+        384
+      ],
+      "id": "09aa363d-f819-4ce2-a1fc-4bb04342f30f",
+      "name": "Article Data Loader"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "=News_Articles. Use this tool to select a news article.",
+        "tableName": "n8n_vectors_androidrss",
+        "topK": 30,
+        "useReranker": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+      "typeVersion": 1.3,
+      "position": [
+        832,
+        608
+      ],
+      "id": "1544a14c-f7e6-48b8-8f5e-651fbdc7b399",
+      "name": "Article Vectors Retriever",
+      "credentials": {
+        "postgres": {
+          "id": "ONc4BCiTp5vVkE3z",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an Expert News Editor. You are provided a Vector Store Tool which contains a list of articles. Your task is to select the single most 'interesting' article based on three metrics: Novelty (how unique it is), Impact (potential for market disruption), and Controversy (how much it challenges existing norms). You are to respond to the user with only the content of the article that you selected as most 'interesting'.\n\nSelection Criteria:\n\nControversy: High levels of conflicting viewpoints or provocative statements.\nImpact: Significant social, political, or economic implications.\nNovelty: Unusual developments that deviate from standard news cycles.\n\nWhich one is the single most 'interesting' news article in your Vector Store?\n\n",
+        "hasOutputParser": true,
+        "options": {
+          "maxIterations": 60
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        816,
+        224
+      ],
+      "id": "966ed5c4-4d1b-41ed-9657-cb42b3f71ad6",
+      "name": "Selector Agent",
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 5
+    },
+    {
+      "parameters": {
+        "model": "qwen3.5:4b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        816,
+        464
+      ],
+      "id": "6221b9a3-f77e-4663-a2d8-471f735fe686",
+      "name": "Selector Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "jyKY7vCSm6TQQSr0",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\"contentSnippet\": \"This is an example content snippet from the article selected as most interesting.\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        992,
+        464
+      ],
+      "id": "c43d15ed-3741-4631-9609-20f928b06615",
+      "name": "Selector Output Parser"
+    },
+    {
+      "parameters": {
+        "topN": 1
+      },
+      "type": "@n8n/n8n-nodes-langchain.rerankerCohere",
+      "typeVersion": 1,
+      "position": [
+        912,
+        912
+      ],
+      "id": "8751c3c5-4543-4b1b-834b-e7020e74d433",
+      "name": "Reranker Cohere",
+      "credentials": {
+        "cohereApi": {
+          "id": "ur0ba6VbGRm2LwOG",
+          "name": "Cohere account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "8560af86-b971-4fd6-9171-4235ac2432a5",
+              "leftValue": "={{ $json.contentSnippet }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "2abc98eb-7d60-47e9-a8b5-ebdcbb8d0ed1",
+              "leftValue": "={{ $json.url }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "6f047c64-8d69-4e21-a57f-d497707099fe",
+              "leftValue": "={{ $json.guid }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1296,
+        224
+      ],
+      "id": "fee90346-0c97-4167-9007-01c1bb63b4bd",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "model": "qwen3.5:4b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        1584,
+        304
+      ],
+      "id": "c9dd5e97-f942-4d96-addf-a15c85f39919",
+      "name": "Builder Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "jyKY7vCSm6TQQSr0",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const targetMatch = $input.first().json.output.contentSnippet;\nconst searchItems = $('Check for Required Fields').all();\nconst regX = /(?<=[.!?])\\s/;\n\nreturn searchItems.filter(item => {\n  const text = item.json.contentSnippet || \"\";\n  // Extract first sentence: split by punctuation followed by space\n  const firstSentence = text.split(regX)[0].trim();\n  return targetMatch.includes(firstSentence);\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        224
+      ],
+      "id": "4adabf67-c7cd-4163-ae5e-dfc0605b6254",
+      "name": "getMatchingArticle",
+      "alwaysOutputData": true,
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=# ROLE\nYou are an expert Editorial Photo Director and AI Art Prompt Engineer. Your task is to transform a news article into a highly detailed, professional image generation prompt (for Midjourney, DALL-E 3, or Stable Diffusion).\n\n# INPUT DATA\n<news_article>\n{{ $('getMatchingArticle').item.json.contentSnippet }}\n</news_article>\n\n# INSTRUCTIONS\nFollow these steps to generate the final image prompt:\n\n1. **Core Analysis**: Identify the central \"hero\" of the story (a person, a technology, a landscape, or a symbolic concept).\n2. **Atmosphere Extraction**: Determine the emotional tone of the article (e.g., somber, futuristic, chaotic, hopeful, clinical).\n3. **Visual Metaphor**: If the article is abstract (like \"inflation\" or \"policy\"), brainstorm a concrete visual metaphor.\n4. **Technical Specifications**: Assign professional photography or art styles (e.g., 35mm film, cinematic lighting, isometric 3D, or editorial illustration).\n\n# CONSTRAINTS\n- Avoid \"floating heads\" or generic AI-looking collages.\n- Do not use \"buzzwords\" like \"photorealistic\" or \"4k.\" Instead, describe lighting, textures, and camera lenses.\n- Focus on a single, high-impact composition rather than trying to depict every detail of the article.\n\n# OUTPUT\nThe full, descriptive prompt.",
+        "hasOutputParser": true,
+        "options": {
+          "maxIterations": 60
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1936,
+        64
+      ],
+      "id": "5f4c4d7e-8799-4a70-9d0c-31b3407b4cd7",
+      "name": "Image Prompt Generator",
+      "executeOnce": true,
+      "retryOnFail": true,
+      "maxTries": 5
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"image_generation_prompt\": \"Your high-impact visual description goes here, incorporating the news article's core subject, specific lighting conditions, camera angles, and professional artistic styles.\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        2080,
+        304
+      ],
+      "id": "a8a2ca0c-f423-46c4-909b-8531019595bd",
+      "name": "Prompt Output Parser"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"commentary\": \"This is the generated and personalized content exmample.\",\n\t\"hashtags\": [\"#Android\", \"#AndroidEngineer\", \"#Mobile\"]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1728,
+        304
+      ],
+      "id": "342619ec-8f51-489c-9f83-6178290d263d",
+      "name": "Builder Output Parser"
+    },
+    {
+      "parameters": {
+        "model": "qwen3.5:4b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        1936,
+        304
+      ],
+      "id": "3321c495-f2db-4a14-bee1-dd8ce6a65fd9",
+      "name": "Prompt Generation Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "jyKY7vCSm6TQQSr0",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflow": "={\n  \"9\": {\n    \"inputs\": {\n      \"filename_prefix\": \"z-image\",\n      \"images\": [\n        \"76:65\",\n        0\n      ]\n    },\n    \"class_type\": \"SaveImage\",\n    \"_meta\": {\n      \"title\": \"Save Image\"\n    }\n  },\n  \"76:68\": {\n    \"inputs\": {\n      \"width\": 512,\n      \"height\": 512,\n      \"batch_size\": 1\n    },\n    \"class_type\": \"EmptySD3LatentImage\",\n    \"_meta\": {\n      \"title\": \"EmptySD3LatentImage\"\n    }\n  },\n  \"76:63\": {\n    \"inputs\": {\n      \"vae_name\": \"ae.safetensors\"\n    },\n    \"class_type\": \"VAELoader\",\n    \"_meta\": {\n      \"title\": \"Load VAE\"\n    }\n  },\n  \"76:62\": {\n    \"inputs\": {\n      \"clip_name\": \"qwen_3_4b.safetensors\",\n      \"type\": \"lumina2\",\n      \"device\": \"default\"\n    },\n    \"class_type\": \"CLIPLoader\",\n    \"_meta\": {\n      \"title\": \"Load CLIP\"\n    }\n  },\n  \"76:65\": {\n    \"inputs\": {\n      \"samples\": [\n        \"76:69\",\n        0\n      ],\n      \"vae\": [\n        \"76:63\",\n        0\n      ]\n    },\n    \"class_type\": \"VAEDecode\",\n    \"_meta\": {\n      \"title\": \"VAE Decode\"\n    }\n  },\n  \"76:70\": {\n    \"inputs\": {\n      \"shift\": 3,\n      \"model\": [\n        \"76:66\",\n        0\n      ]\n    },\n    \"class_type\": \"ModelSamplingAuraFlow\",\n    \"_meta\": {\n      \"title\": \"ModelSamplingAuraFlow\"\n    }\n  },\n  \"76:66\": {\n    \"inputs\": {\n      \"unet_name\": \"z_image_bf16.safetensors\",\n      \"weight_dtype\": \"default\"\n    },\n    \"class_type\": \"UNETLoader\",\n    \"_meta\": {\n      \"title\": \"Load Diffusion Model\"\n    }\n  },\n  \"76:71\": {\n    \"inputs\": {\n      \"text\": \"\",\n      \"clip\": [\n        \"76:62\",\n        0\n      ]\n    },\n    \"class_type\": \"CLIPTextEncode\",\n    \"_meta\": {\n      \"title\": \"CLIP Text Encode (Negative Prompt)\"\n    }\n  },\n  \"76:69\": {\n    \"inputs\": {\n      \"seed\": {{Math.ceil(Math.random() * 100000000000)}},\n      \"steps\": 20,\n      \"cfg\": 2,\n      \"sampler_name\": \"res_multistep\",\n      \"scheduler\": \"simple\",\n      \"denoise\": 1,\n      \"model\": [\n        \"76:70\",\n        0\n      ],\n      \"positive\": [\n        \"76:67\",\n        0\n      ],\n      \"negative\": [\n        \"76:71\",\n        0\n      ],\n      \"latent_image\": [\n        \"76:68\",\n        0\n      ]\n    },\n    \"class_type\": \"KSampler\",\n    \"_meta\": {\n      \"title\": \"KSampler\"\n    }\n  },\n  \"76:67\": {\n    \"inputs\": {\n      \"text\": \"{{ $json.output.image_generation_prompt }}\",\n      \"clip\": [\n        \"76:62\",\n        0\n      ]\n    },\n    \"class_type\": \"CLIPTextEncode\",\n    \"_meta\": {\n      \"title\": \"CLIP Text Encode (Positive Prompt)\"\n    }\n  }\n}",
+        "jpegQuality": 90,
+        "timeout": 90
+      },
+      "type": "n8n-nodes-comfyui.comfyui",
+      "typeVersion": 1,
+      "position": [
+        1536,
+        480
+      ],
+      "id": "843181d1-3b84-4cef-92ef-f8b796a3a69c",
+      "name": "ComfyUI",
+      "credentials": {
+        "comfyUIApi": {
+          "id": "03shGwFYK9rTfVc1",
+          "name": "ComfyUI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.linkedin.com/v2/assets?action=registerUpload",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"registerUploadRequest\":{\n    \"recipes\":[\n      \"urn:li:digitalmediaRecipe:feedshare-image\"\n    ],\n    \"owner\":\"urn:li:person:{{ $json.sub }}\",\n    \"serviceRelationships\":[\n      {\n        \"relationshipType\":\"OWNER\",\n        \"identifier\":\"urn:li:userGeneratedContent\"\n      }\n    ]\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1600,
+        848
+      ],
+      "id": "58301c61-fdd7-43bd-aea2-51d765a58ce3",
+      "name": "Register Upload Request",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "z04N7hCzKnMtAJIB",
+          "name": "LinkedIn OAuth"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.value.uploadMechanism['com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest'].uploadUrl }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "={{ $('ComfyUI').item.binary.data }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1808,
+        848
+      ],
+      "id": "f3a2a301-eebc-435b-b577-92ecebc088cf",
+      "name": "Upload Media",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "z04N7hCzKnMtAJIB",
+          "name": "LinkedIn OAuth"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Role: You are an expert AI Cinematographer and Prompt Engineer specialized in text-to-video generative models.\n\nTask: Analyze the provided input image in detail and convert its visual information into a highly descriptive, structured Video Generation Prompt.\n\nAnalysis Requirements:\nSubject Consistency: Identify the primary subjects, their textures, and their exact placement.\nEnvironmental Context: Describe the lighting (time of day, mood), weather, and background depth.\nMotion Dynamics: Determine the most natural or cinematic movement for the subjects and the camera.\nStyle & Aesthetic: Identify the medium (e.g., photorealistic 35mm film, digital animation, oil painting).\n\nOutput Video Prompt: A single, cohesive paragraph containing [Subject Description] + [Action/Movement] + [Environment/Setting] + [Camera Motion & Lens Specs] + [Lighting & Atmosphere] + [Technical Style Tags].\n\nInstructions for Motion: Use evocative verbs (e.g., cascading, meandering, shimmering) and specify camera behavior (e.g., slow dolly-in, handheld jitter, crane shot). Describe how the scene changes over the course of the clip.",
+        "hasOutputParser": true,
+        "options": {
+          "maxIterations": 60
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1744,
+        480
+      ],
+      "id": "cad72ef7-6319-4a71-8cf2-42cd2bbebcf3",
+      "name": "Video Prompt Generator",
+      "executeOnce": true,
+      "retryOnFail": true,
+      "maxTries": 5
+    },
+    {
+      "parameters": {
+        "model": "qwen3.5:4b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        1744,
+        672
+      ],
+      "id": "24159d28-74ba-4eb5-960f-82d400dac4db",
+      "name": "Vision Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "jyKY7vCSm6TQQSr0",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"image_analysis\": {\n    \"primary_subject\": \"A weathered mariner in a yellow slicker\",\n    \"setting\": \"Stormy deck of a wooden fishing vessel at sea\"\n  },\n  \"video_parameters\": {\n    \"prompt\": \"Cinematic close-up of a weathered mariner looking into the storm, salt water cascading down his face, camera executes a slow dramatic zoom-in as lightning illuminates the crashing waves in the background, 4k, high frame rate, hyper-realistic textures.\",\n    \"negative_prompt\": \"morphing face, extra limbs, flickering water, static eyes, plastic skin texture\",\n    \"suggested_duration_in_seconds\": 10,\n    \"camera_movement\": \"Dolly-in / Zoom\"\n  },\n  \"technical_tags\": [\n    \"photorealistic\",\n    \"35mm lens\",\n    \"dynamic simulation\",\n    \"Arri Raw\"\n  ]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1920,
+        672
+      ],
+      "id": "a1cec00f-f73a-4f35-ac5f-74cabc1dd0f7",
+      "name": "Vision Analysis Parser"
+    },
+    {
+      "parameters": {
+        "workflow": "={\n  \"75\": {\n    \"inputs\": {\n      \"filename_prefix\": \"video\",\n      \"format\": \"auto\",\n      \"codec\": \"auto\",\n      \"video-preview\": \"\",\n      \"video\": [\n        \"267:242\",\n        0\n      ]\n    },\n    \"class_type\": \"SaveVideo\",\n    \"_meta\": {\n      \"title\": \"Save Video\"\n    }\n  },\n  \"269\": {\n    \"inputs\": {\n      \"image\": \"example.png\"\n    },\n    \"class_type\": \"LoadImage\",\n    \"_meta\": {\n      \"title\": \"Load Image\"\n    }\n  },\n  \"267:216\": {\n    \"inputs\": {\n      \"noise_seed\": 42\n    },\n    \"class_type\": \"RandomNoise\",\n    \"_meta\": {\n      \"title\": \"RandomNoise\"\n    }\n  },\n  \"267:229\": {\n    \"inputs\": {\n      \"video_latent\": [\n        \"267:230\",\n        0\n      ],\n      \"audio_latent\": [\n        \"267:217\",\n        1\n      ]\n    },\n    \"class_type\": \"LTXVConcatAVLatent\",\n    \"_meta\": {\n      \"title\": \"LTXVConcatAVLatent\"\n    }\n  },\n  \"267:221\": {\n    \"inputs\": {\n      \"ckpt_name\": \"ltx-2.3-22b-dev-fp8.safetensors\"\n    },\n    \"class_type\": \"LTXVAudioVAELoader\",\n    \"_meta\": {\n      \"title\": \"LTXV Audio VAE Loader\"\n    }\n  },\n  \"267:246\": {\n    \"inputs\": {\n      \"sampler_name\": \"euler_cfg_pp\"\n    },\n    \"class_type\": \"KSamplerSelect\",\n    \"_meta\": {\n      \"title\": \"KSamplerSelect\"\n    }\n  },\n  \"267:211\": {\n    \"inputs\": {\n      \"sigmas\": \"0.85, 0.7250, 0.4219, 0.0\"\n    },\n    \"class_type\": \"ManualSigmas\",\n    \"_meta\": {\n      \"title\": \"ManualSigmas\"\n    }\n  },\n  \"267:213\": {\n    \"inputs\": {\n      \"cfg\": 1,\n      \"model\": [\n        \"267:232\",\n        0\n      ],\n      \"positive\": [\n        \"267:212\",\n        0\n      ],\n      \"negative\": [\n        \"267:212\",\n        1\n      ]\n    },\n    \"class_type\": \"CFGGuider\",\n    \"_meta\": {\n      \"title\": \"CFGGuider\"\n    }\n  },\n  \"267:215\": {\n    \"inputs\": {\n      \"noise\": [\n        \"267:237\",\n        0\n      ],\n      \"guider\": [\n        \"267:231\",\n        0\n      ],\n      \"sampler\": [\n        \"267:209\",\n        0\n      ],\n      \"sigmas\": [\n        \"267:252\",\n        0\n      ],\n      \"latent_image\": [\n        \"267:222\",\n        0\n      ]\n    },\n    \"class_type\": \"SamplerCustomAdvanced\",\n    \"_meta\": {\n      \"title\": \"SamplerCustomAdvanced\"\n    }\n  },\n  \"267:212\": {\n    \"inputs\": {\n      \"positive\": [\n        \"267:239\",\n        0\n      ],\n      \"negative\": [\n        \"267:239\",\n        1\n      ],\n      \"latent\": [\n        \"267:217\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVCropGuides\",\n    \"_meta\": {\n      \"title\": \"LTXVCropGuides\"\n    }\n  },\n  \"267:232\": {\n    \"inputs\": {\n      \"lora_name\": \"ltx-2.3-22b-distilled-lora-384.safetensors\",\n      \"strength_model\": 0.5,\n      \"model\": [\n        \"267:236\",\n        0\n      ]\n    },\n    \"class_type\": \"LoraLoaderModelOnly\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"267:235\": {\n    \"inputs\": {\n      \"longer_edge\": 1536,\n      \"images\": [\n        \"267:238\",\n        0\n      ]\n    },\n    \"class_type\": \"ResizeImagesByLongerEdge\",\n    \"_meta\": {\n      \"title\": \"Resize Images by Longer Edge\"\n    }\n  },\n  \"267:253\": {\n    \"inputs\": {\n      \"samples\": [\n        \"267:217\",\n        0\n      ],\n      \"upscale_model\": [\n        \"267:233\",\n        0\n      ],\n      \"vae\": [\n        \"267:236\",\n        2\n      ]\n    },\n    \"class_type\": \"LTXVLatentUpsampler\",\n    \"_meta\": {\n      \"title\": \"LTXVLatentUpsampler\"\n    }\n  },\n  \"267:230\": {\n    \"inputs\": {\n      \"strength\": 1,\n      \"bypass\": [\n        \"267:201\",\n        0\n      ],\n      \"vae\": [\n        \"267:236\",\n        2\n      ],\n      \"image\": [\n        \"267:248\",\n        0\n      ],\n      \"latent\": [\n        \"267:253\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVImgToVideoInplace\",\n    \"_meta\": {\n      \"title\": \"LTXVImgToVideoInplace\"\n    }\n  },\n  \"267:248\": {\n    \"inputs\": {\n      \"img_compression\": 18,\n      \"image\": [\n        \"267:235\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVPreprocess\",\n    \"_meta\": {\n      \"title\": \"LTXVPreprocess\"\n    }\n  },\n  \"267:238\": {\n    \"inputs\": {\n      \"resize_type\": \"scale dimensions\",\n      \"resize_type.width\": [\n        \"267:257\",\n        0\n      ],\n      \"resize_type.height\": [\n        \"267:258\",\n        0\n      ],\n      \"resize_type.crop\": \"center\",\n      \"scale_method\": \"lanczos\",\n      \"input\": [\n        \"269\",\n        0\n      ]\n    },\n    \"class_type\": \"ResizeImageMaskNode\",\n    \"_meta\": {\n      \"title\": \"Resize Image/Mask\"\n    }\n  },\n  \"267:209\": {\n    \"inputs\": {\n      \"sampler_name\": \"euler_ancestral_cfg_pp\"\n    },\n    \"class_type\": \"KSamplerSelect\",\n    \"_meta\": {\n      \"title\": \"KSamplerSelect\"\n    }\n  },\n  \"267:256\": {\n    \"inputs\": {\n      \"expression\": \"a/2\",\n      \"values.a\": [\n        \"267:257\",\n        0\n      ]\n    },\n    \"class_type\": \"ComfyMathExpression\",\n    \"_meta\": {\n      \"title\": \"Math Expression\"\n    }\n  },\n  \"267:259\": {\n    \"inputs\": {\n      \"expression\": \"a/2\",\n      \"values.a\": [\n        \"267:258\",\n        0\n      ]\n    },\n    \"class_type\": \"ComfyMathExpression\",\n    \"_meta\": {\n      \"title\": \"Math Expression\"\n    }\n  },\n  \"267:228\": {\n    \"inputs\": {\n      \"width\": [\n        \"267:256\",\n        1\n      ],\n      \"height\": [\n        \"267:259\",\n        1\n      ],\n      \"length\": [\n        \"267:225\",\n        0\n      ],\n      \"batch_size\": 1\n    },\n    \"class_type\": \"EmptyLTXVLatentVideo\",\n    \"_meta\": {\n      \"title\": \"EmptyLTXVLatentVideo\"\n    }\n  },\n  \"267:249\": {\n    \"inputs\": {\n      \"strength\": 0.7,\n      \"bypass\": [\n        \"267:201\",\n        0\n      ],\n      \"vae\": [\n        \"267:236\",\n        2\n      ],\n      \"image\": [\n        \"267:248\",\n        0\n      ],\n      \"latent\": [\n        \"267:228\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVImgToVideoInplace\",\n    \"_meta\": {\n      \"title\": \"LTXVImgToVideoInplace\"\n    }\n  },\n  \"267:220\": {\n    \"inputs\": {\n      \"samples\": [\n        \"267:218\",\n        1\n      ],\n      \"audio_vae\": [\n        \"267:221\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVAudioVAEDecode\",\n    \"_meta\": {\n      \"title\": \"LTXV Audio VAE Decode\"\n    }\n  },\n  \"267:261\": {\n    \"inputs\": {\n      \"expression\": \"a\",\n      \"values.a\": [\n        \"267:260\",\n        0\n      ]\n    },\n    \"class_type\": \"ComfyMathExpression\",\n    \"_meta\": {\n      \"title\": \"Math Expression\"\n    }\n  },\n  \"267:258\": {\n    \"inputs\": {\n      \"value\": 1080\n    },\n    \"class_type\": \"PrimitiveInt\",\n    \"_meta\": {\n      \"title\": \"Height\"\n    }\n  },\n  \"267:260\": {\n    \"inputs\": {\n      \"value\": 25\n    },\n    \"class_type\": \"PrimitiveInt\",\n    \"_meta\": {\n      \"title\": \"Frame Rate\"\n    }\n  },\n  \"267:225\": {\n    \"inputs\": {\n      \"value\": 280\n    },\n    \"class_type\": \"PrimitiveInt\",\n    \"_meta\": {\n      \"title\": \"Length\"\n    }\n  },\n  \"267:201\": {\n    \"inputs\": {\n      \"value\": true\n    },\n    \"class_type\": \"PrimitiveBoolean\",\n    \"_meta\": {\n      \"title\": \"Switch to Text to Video?\"\n    }\n  },\n  \"267:240\": {\n    \"inputs\": {\n      \"text\": [\n        \"267:274\",\n        0\n      ],\n      \"clip\": [\n        \"267:243\",\n        0\n      ]\n    },\n    \"class_type\": \"CLIPTextEncode\",\n    \"_meta\": {\n      \"title\": \"CLIP Text Encode (Prompt)\"\n    }\n  },\n  \"267:239\": {\n    \"inputs\": {\n      \"frame_rate\": [\n        \"267:261\",\n        0\n      ],\n      \"positive\": [\n        \"267:240\",\n        0\n      ],\n      \"negative\": [\n        \"267:247\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVConditioning\",\n    \"_meta\": {\n      \"title\": \"LTXVConditioning\"\n    }\n  },\n  \"267:214\": {\n    \"inputs\": {\n      \"frames_number\": [\n        \"267:225\",\n        0\n      ],\n      \"frame_rate\": [\n        \"267:261\",\n        1\n      ],\n      \"batch_size\": 1,\n      \"audio_vae\": [\n        \"267:221\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVEmptyLatentAudio\",\n    \"_meta\": {\n      \"title\": \"LTXV Empty Latent Audio\"\n    }\n  },\n  \"267:252\": {\n    \"inputs\": {\n      \"sigmas\": \"1.0, 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.0\"\n    },\n    \"class_type\": \"ManualSigmas\",\n    \"_meta\": {\n      \"title\": \"ManualSigmas\"\n    }\n  },\n  \"267:217\": {\n    \"inputs\": {\n      \"av_latent\": [\n        \"267:215\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVSeparateAVLatent\",\n    \"_meta\": {\n      \"title\": \"LTXVSeparateAVLatent\"\n    }\n  },\n  \"267:219\": {\n    \"inputs\": {\n      \"noise\": [\n        \"267:216\",\n        0\n      ],\n      \"guider\": [\n        \"267:213\",\n        0\n      ],\n      \"sampler\": [\n        \"267:246\",\n        0\n      ],\n      \"sigmas\": [\n        \"267:211\",\n        0\n      ],\n      \"latent_image\": [\n        \"267:229\",\n        0\n      ]\n    },\n    \"class_type\": \"SamplerCustomAdvanced\",\n    \"_meta\": {\n      \"title\": \"SamplerCustomAdvanced\"\n    }\n  },\n  \"267:218\": {\n    \"inputs\": {\n      \"av_latent\": [\n        \"267:219\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVSeparateAVLatent\",\n    \"_meta\": {\n      \"title\": \"LTXVSeparateAVLatent\"\n    }\n  },\n  \"267:242\": {\n    \"inputs\": {\n      \"fps\": [\n        \"267:261\",\n        0\n      ],\n      \"images\": [\n        \"267:251\",\n        0\n      ],\n      \"audio\": [\n        \"267:220\",\n        0\n      ]\n    },\n    \"class_type\": \"CreateVideo\",\n    \"_meta\": {\n      \"title\": \"Create Video\"\n    }\n  },\n  \"267:233\": {\n    \"inputs\": {\n      \"model_name\": \"ltx-2.3-spatial-upscaler-x2-1.1.safetensors\"\n    },\n    \"class_type\": \"LatentUpscaleModelLoader\",\n    \"_meta\": {\n      \"title\": \"Load Latent Upscale Model\"\n    }\n  },\n  \"267:257\": {\n    \"inputs\": {\n      \"value\": 720\n    },\n    \"class_type\": \"PrimitiveInt\",\n    \"_meta\": {\n      \"title\": \"Width\"\n    }\n  },\n  \"267:247\": {\n    \"inputs\": {\n      \"text\": \"{{ $json.output.video_parameters.negative_prompt }}\",\n      \"clip\": [\n        \"267:272\",\n        1\n      ]\n    },\n    \"class_type\": \"CLIPTextEncode\",\n    \"_meta\": {\n      \"title\": \"CLIP Text Encode (Prompt)\"\n    }\n  },\n  \"267:231\": {\n    \"inputs\": {\n      \"cfg\": 1,\n      \"model\": [\n        \"267:232\",\n        0\n      ],\n      \"positive\": [\n        \"267:239\",\n        0\n      ],\n      \"negative\": [\n        \"267:239\",\n        1\n      ]\n    },\n    \"class_type\": \"CFGGuider\",\n    \"_meta\": {\n      \"title\": \"CFGGuider\"\n    }\n  },\n  \"267:251\": {\n    \"inputs\": {\n      \"tile_size\": 768,\n      \"overlap\": 64,\n      \"temporal_size\": 4096,\n      \"temporal_overlap\": 4,\n      \"samples\": [\n        \"267:218\",\n        0\n      ],\n      \"vae\": [\n        \"267:236\",\n        2\n      ]\n    },\n    \"class_type\": \"VAEDecodeTiled\",\n    \"_meta\": {\n      \"title\": \"VAE Decode (Tiled)\"\n    }\n  },\n  \"267:236\": {\n    \"inputs\": {\n      \"ckpt_name\": \"ltx-2.3-22b-dev-fp8.safetensors\"\n    },\n    \"class_type\": \"CheckpointLoaderSimple\",\n    \"_meta\": {\n      \"title\": \"Load Checkpoint\"\n    }\n  },\n  \"267:243\": {\n    \"inputs\": {\n      \"text_encoder\": \"gemma_3_12B_it_fp4_mixed.safetensors\",\n      \"ckpt_name\": \"ltx-2.3-22b-dev-fp8.safetensors\",\n      \"device\": \"default\"\n    },\n    \"class_type\": \"LTXAVTextEncoderLoader\",\n    \"_meta\": {\n      \"title\": \"LTXV Audio Text Encoder Loader\"\n    }\n  },\n  \"267:266\": {\n    \"inputs\": {\n      \"value\": \"{{ $json.output.video_parameters.prompt }}\"\n    },\n    \"class_type\": \"PrimitiveStringMultiline\",\n    \"_meta\": {\n      \"title\": \"Prompt\"\n    }\n  },\n  \"267:275\": {\n    \"inputs\": {\n      \"preview_markdown\": \"{{ $json.output.video_parameters.prompt }}\",\n      \"preview_text\": \"{{ $json.output.video_parameters.prompt }}\",\n      \"previewMode\": null,\n      \"source\": [\n        \"267:274\",\n        0\n      ]\n    },\n    \"class_type\": \"PreviewAny\",\n    \"_meta\": {\n      \"title\": \"Preview as Text\"\n    }\n  },\n  \"267:272\": {\n    \"inputs\": {\n      \"lora_name\": \"gemma-3-12b-it-abliterated_lora_rank64_bf16.safetensors\",\n      \"strength_model\": 1,\n      \"strength_clip\": 1,\n      \"model\": [\n        \"267:236\",\n        0\n      ],\n      \"clip\": [\n        \"267:243\",\n        0\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA (Model and CLIP)\"\n    }\n  },\n  \"267:222\": {\n    \"inputs\": {\n      \"video_latent\": [\n        \"267:249\",\n        0\n      ],\n      \"audio_latent\": [\n        \"267:214\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVConcatAVLatent\",\n    \"_meta\": {\n      \"title\": \"LTXVConcatAVLatent\"\n    }\n  },\n  \"267:237\": {\n    \"inputs\": {\n      \"noise_seed\": {{Math.ceil(Math.random() * 100000000000)}}\n    },\n    \"class_type\": \"RandomNoise\",\n    \"_meta\": {\n      \"title\": \"RandomNoise\"\n    }\n  },\n  \"267:274\": {\n    \"inputs\": {\n      \"prompt\": [\n        \"267:266\",\n        0\n      ],\n      \"max_length\": 1024,\n      \"sampling_mode\": \"on\",\n      \"sampling_mode.temperature\": 0.7,\n      \"sampling_mode.top_k\": 64,\n      \"sampling_mode.top_p\": 0.95,\n      \"sampling_mode.min_p\": 0.05,\n      \"sampling_mode.repetition_penalty\": 1.05,\n      \"sampling_mode.seed\": 0,\n      \"clip\": [\n        \"267:272\",\n        1\n      ]\n    },\n    \"class_type\": \"TextGenerateLTX2Prompt\",\n    \"_meta\": {\n      \"title\": \"TextGenerateLTX2Prompt\"\n    }\n  }\n}",
+        "outputFormat": "raw",
+        "timeout": 900
+      },
+      "type": "n8n-nodes-comfyui.comfyui",
+      "typeVersion": 1,
+      "position": [
+        2096,
+        480
+      ],
+      "id": "1ef84278-e143-4614-8b71-5c318b0bc237",
+      "name": "ComfyUI1",
+      "credentials": {
+        "comfyUIApi": {
+          "id": "03shGwFYK9rTfVc1",
+          "name": "ComfyUI account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "9am hour": [
+      {
+        "json": {
+          "timestamp": "2026-03-27T09:26:46.010-04:00",
+          "Readable date": "March 27th 2026, 9:26:46 am",
+          "Readable time": "9:26:46 am",
+          "Day of week": "Friday",
+          "Year": "2026",
+          "Month": "March",
+          "Day of month": "27",
+          "Hour": "09",
+          "Minute": "26",
+          "Second": "46",
+          "Timezone": "America/New_York (UTC-04:00)"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-04-06T14:00:37.876Z",
+      "createdAt": "2026-04-06T14:00:37.876Z",
+      "role": "workflow:owner",
+      "workflowId": "rvd313euLcJPEjCF",
+      "projectId": "t74UsjIgT3c9HuwP"
+    }
+  ],
+  "staticData": {
+    "node:9am hour": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-04-06T19:25:49.455Z",
+  "versionId": "a66f9485-4d69-4fa9-80ad-b9b0864cf9fa"
+}
