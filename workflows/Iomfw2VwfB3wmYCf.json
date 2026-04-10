@@ -1,0 +1,321 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-04-09T15:23:19.000Z",
+    "createdAt": "2026-04-09T15:23:12.603Z",
+    "versionId": "af699621-bf84-41b9-8cf9-31e1d5990160",
+    "workflowId": "Iomfw2VwfB3wmYCf",
+    "nodes": [
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://www.youtube-transcript.io/api/transcripts",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "=Basic {{ $json.value }}"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"ids\": [{{ $('extractFormIDs').item.json.ids.map(item => `\"${item}\"`) }}]\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          464,
+          240
+        ],
+        "id": "f9fcea3f-648d-4ed0-8153-978774900433",
+        "name": "Get Transcripts"
+      },
+      {
+        "parameters": {
+          "jsCode": "const trackToText = (track) => {\n  return track.transcript.map(t => t.text.replace(/[\\r\\n]/gm, '')).join(' ');\n}\nreturn $input.all().reduce((acc, cur) => ({...acc, [cur.json.id]: trackToText(cur.json.tracks[0])}), {})"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          688,
+          240
+        ],
+        "id": "36406bfc-60da-4d43-a0c2-bc6e745a4a3d",
+        "name": "Convert Response"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "SELECT value FROM variables WHERE key = 'youtubeTranscriptApiKey';",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          240,
+          240
+        ],
+        "id": "d2559d5e-4f39-4e0d-9eec-77a2f98cc71c",
+        "name": "Global Variables",
+        "credentials": {
+          "postgres": {
+            "id": "ONc4BCiTp5vVkE3z",
+            "name": "Postgres account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "return {\n  // add a maximum of 50 ids here\n  ids: $input.first().json.IDs.split(',')\n}"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          16,
+          240
+        ],
+        "id": "e8d0f076-d238-41ad-82f8-48ad00bc7be5",
+        "name": "extractFormIDs"
+      },
+      {
+        "parameters": {
+          "inputSource": "jsonExample",
+          "jsonExample": "{\n    \"IDs\": \"sAao4VprAVI,1O1gr_C1enI,IGK0wYXebmc,uvegUTGHpBw,xyus552yQFw,eoWul5RiJqo,rMUD4Ux96Jg,Pdy0uxaJl0E,axqrlk9xPeE,CaMAVqb7Fo4,zHnkUHsliSg,J6aFcT2VcNY,_byFgkNEtgQ\",\n    \"submittedAt\": \"2026-04-09T11:15:18.522-04:00\",\n    \"formMode\": \"test\"\n}\n"
+        },
+        "id": "8af033b4-dc34-47c7-b0bf-b158b1cb1220",
+        "typeVersion": 1.1,
+        "name": "Start",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "position": [
+          -208,
+          240
+        ]
+      }
+    ],
+    "connections": {
+      "Start": {
+        "main": [
+          [
+            {
+              "node": "extractFormIDs",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Transcripts": {
+        "main": [
+          [
+            {
+              "node": "Convert Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Global Variables": {
+        "main": [
+          [
+            {
+              "node": "Get Transcripts",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "extractFormIDs": {
+        "main": [
+          [
+            {
+              "node": "Global Variables",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Convert Response": {
+        "main": [
+          []
+        ]
+      }
+    },
+    "authors": "Jim Campbell",
+    "name": "Version af699621",
+    "description": "",
+    "autosaved": true
+  },
+  "activeVersionId": "af699621-bf84-41b9-8cf9-31e1d5990160",
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "extractFormIDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Transcripts": {
+      "main": [
+        [
+          {
+            "node": "Convert Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Global Variables": {
+      "main": [
+        [
+          {
+            "node": "Get Transcripts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "extractFormIDs": {
+      "main": [
+        [
+          {
+            "node": "Global Variables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Response": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "createdAt": "2026-04-09T11:47:35.484Z",
+  "id": "Iomfw2VwfB3wmYCf",
+  "isArchived": false,
+  "meta": null,
+  "name": "getYouTubeTranscripts",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://www.youtube-transcript.io/api/transcripts",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Basic {{ $json.value }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"ids\": [{{ $('extractFormIDs').item.json.ids.map(item => `\"${item}\"`) }}]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        464,
+        240
+      ],
+      "id": "f9fcea3f-648d-4ed0-8153-978774900433",
+      "name": "Get Transcripts"
+    },
+    {
+      "parameters": {
+        "jsCode": "const trackToText = (track) => {\n  return track.transcript.map(t => t.text.replace(/[\\r\\n]/gm, '')).join(' ');\n}\nreturn $input.all().reduce((acc, cur) => ({...acc, [cur.json.id]: trackToText(cur.json.tracks[0])}), {})"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        688,
+        240
+      ],
+      "id": "36406bfc-60da-4d43-a0c2-bc6e745a4a3d",
+      "name": "Convert Response"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT value FROM variables WHERE key = 'youtubeTranscriptApiKey';",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        240,
+        240
+      ],
+      "id": "d2559d5e-4f39-4e0d-9eec-77a2f98cc71c",
+      "name": "Global Variables",
+      "credentials": {
+        "postgres": {
+          "id": "ONc4BCiTp5vVkE3z",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return {\n  // add a maximum of 50 ids here\n  ids: $input.first().json.IDs.split(',')\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        16,
+        240
+      ],
+      "id": "e8d0f076-d238-41ad-82f8-48ad00bc7be5",
+      "name": "extractFormIDs"
+    },
+    {
+      "parameters": {
+        "inputSource": "jsonExample",
+        "jsonExample": "{\n    \"IDs\": \"sAao4VprAVI,1O1gr_C1enI,IGK0wYXebmc,uvegUTGHpBw,xyus552yQFw,eoWul5RiJqo,rMUD4Ux96Jg,Pdy0uxaJl0E,axqrlk9xPeE,CaMAVqb7Fo4,zHnkUHsliSg,J6aFcT2VcNY,_byFgkNEtgQ\",\n    \"submittedAt\": \"2026-04-09T11:15:18.522-04:00\",\n    \"formMode\": \"test\"\n}\n"
+      },
+      "id": "8af033b4-dc34-47c7-b0bf-b158b1cb1220",
+      "typeVersion": 1.1,
+      "name": "Start",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        -208,
+        240
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "binaryMode": "separate"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-04-09T11:47:35.495Z",
+      "createdAt": "2026-04-09T11:47:35.495Z",
+      "role": "workflow:owner",
+      "workflowId": "Iomfw2VwfB3wmYCf",
+      "projectId": "t74UsjIgT3c9HuwP"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-04-09T15:23:12.602Z",
+  "versionId": "af699621-bf84-41b9-8cf9-31e1d5990160"
+}
