@@ -1,0 +1,277 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-04-08T18:06:31.000Z",
+    "createdAt": "2026-04-08T18:06:13.066Z",
+    "versionId": "476f8fef-2924-4e17-aa3e-051036a5a468",
+    "workflowId": "rgwqGctMpP0qHren",
+    "nodes": [
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "SELECT \"guid\" FROM \"androidrss\"",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          -448,
+          384
+        ],
+        "id": "01d2129d-560d-46d9-a1f0-8a427064834d",
+        "name": "getStoredGuids",
+        "alwaysOutputData": true,
+        "executeOnce": true,
+        "retryOnFail": true,
+        "credentials": {
+          "postgres": {
+            "id": "ONc4BCiTp5vVkE3z",
+            "name": "Postgres account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "fieldsToAggregate": {
+            "fieldToAggregate": [
+              {
+                "fieldToAggregate": "guid",
+                "renameField": true,
+                "outputFieldName": "guids"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.aggregate",
+        "typeVersion": 1,
+        "position": [
+          -224,
+          384
+        ],
+        "id": "0b4fbc97-5c22-4557-a0f3-0abc608ca9b8",
+        "name": "Combine guids Array"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "d5d3a687-2f36-444f-903e-5d28c566cb92",
+                "name": "guids",
+                "value": "={{ $('Combine guids Array').item.json.guids }}",
+                "type": "array"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -16,
+          384
+        ],
+        "id": "5ba90b5e-a8b3-4776-8097-4b2da4cdf991",
+        "name": "Return"
+      },
+      {
+        "parameters": {
+          "inputSource": "passthrough"
+        },
+        "id": "ee45257c-de58-44bc-a8e4-0cbf92b5f71b",
+        "typeVersion": 1.1,
+        "name": "Start",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "position": [
+          -656,
+          384
+        ]
+      }
+    ],
+    "connections": {
+      "Start": {
+        "main": [
+          [
+            {
+              "node": "getStoredGuids",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Combine guids Array": {
+        "main": [
+          [
+            {
+              "node": "Return",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "getStoredGuids": {
+        "main": [
+          [
+            {
+              "node": "Combine guids Array",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jim Campbell",
+    "name": "Version 476f8fef",
+    "description": "",
+    "autosaved": true
+  },
+  "activeVersionId": "476f8fef-2924-4e17-aa3e-051036a5a468",
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "getStoredGuids",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine guids Array": {
+      "main": [
+        [
+          {
+            "node": "Return",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "getStoredGuids": {
+      "main": [
+        [
+          {
+            "node": "Combine guids Array",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-04-08T12:41:22.179Z",
+  "id": "rgwqGctMpP0qHren",
+  "isArchived": false,
+  "meta": null,
+  "name": "getPulishedLinkedInPostIDs",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \"guid\" FROM \"androidrss\"",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -448,
+        384
+      ],
+      "id": "01d2129d-560d-46d9-a1f0-8a427064834d",
+      "name": "getStoredGuids",
+      "alwaysOutputData": true,
+      "executeOnce": true,
+      "retryOnFail": true,
+      "credentials": {
+        "postgres": {
+          "id": "ONc4BCiTp5vVkE3z",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "guid",
+              "renameField": true,
+              "outputFieldName": "guids"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        384
+      ],
+      "id": "0b4fbc97-5c22-4557-a0f3-0abc608ca9b8",
+      "name": "Combine guids Array"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d5d3a687-2f36-444f-903e-5d28c566cb92",
+              "name": "guids",
+              "value": "={{ $('Combine guids Array').item.json.guids }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -16,
+        384
+      ],
+      "id": "5ba90b5e-a8b3-4776-8097-4b2da4cdf991",
+      "name": "Return"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "id": "ee45257c-de58-44bc-a8e4-0cbf92b5f71b",
+      "typeVersion": 1.1,
+      "name": "Start",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        -656,
+        384
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "binaryMode": "separate"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-04-08T12:41:22.190Z",
+      "createdAt": "2026-04-08T12:41:22.190Z",
+      "role": "workflow:owner",
+      "workflowId": "rgwqGctMpP0qHren",
+      "projectId": "t74UsjIgT3c9HuwP"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-04-08T18:06:13.065Z",
+  "versionId": "476f8fef-2924-4e17-aa3e-051036a5a468"
+}
