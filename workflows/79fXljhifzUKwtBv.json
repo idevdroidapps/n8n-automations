@@ -1,0 +1,642 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-04-08T22:29:18.000Z",
+    "createdAt": "2026-04-08T22:28:58.339Z",
+    "versionId": "ccaa3261-8e33-4924-8279-6c929104608f",
+    "workflowId": "79fXljhifzUKwtBv",
+    "nodes": [
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "826d99f2-56e1-4123-b89d-14b154f926d3",
+                "name": "title",
+                "value": "={{ $('Start').item.json.title }}",
+                "type": "string"
+              },
+              {
+                "id": "70120e67-63b4-4aa7-9a66-53ae840f4350",
+                "name": "contentSnippet",
+                "value": "={{ $('Start').item.json[\"content:encodedSnippet\"].replace(/\\r|\\n|\\t/g, '').replace(/Credit:.*?TL;DR/gs, \"\") }}",
+                "type": "string"
+              },
+              {
+                "id": "4344dbcf-7b9b-48da-af1e-b0ebe7c9755e",
+                "name": "url",
+                "value": "={{ $('Start').item.json.link }}",
+                "type": "string"
+              },
+              {
+                "id": "fe56dc6f-c90c-4602-b364-56c7a50b8964",
+                "name": "guid",
+                "value": "={{ $('Start').item.json.guid }}",
+                "type": "string"
+              },
+              {
+                "id": "52abd3e6-903d-4cc2-8615-cc0fe509c46f",
+                "name": "=img",
+                "value": "={{ $('Start').item.json[\"content:encoded\"]?.urlDecode().extractUrl().replace('\\\"',\"\") }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          448,
+          -128
+        ],
+        "id": "9c8d9190-62f3-4d57-99e8-aacc9c994e02",
+        "name": "Set Fields",
+        "notesInFlow": false
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "803a41cd-8fc5-4ee1-9dad-332349359602",
+                "leftValue": "={{ $('Filter by Keyword and Image').item.json.title }}",
+                "rightValue": "=",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "1b2ff2e4-da46-4123-8588-b1cd858c02ca",
+                "leftValue": "={{ $('Filter by Keyword and Image').item.json.img }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.3,
+        "position": [
+          896,
+          -128
+        ],
+        "id": "c767bc2a-26bf-4e2e-97ae-e997bf36201b",
+        "name": "Check for Required Fields"
+      },
+      {
+        "parameters": {
+          "jsCode": "const imageRegex = /\\.(jpg|jpeg|png|webp)$/i;\nconst keywordRegex = /Android|Galaxy/i;\n\nfor (const item of $input.all()) {\n  if(!imageRegex.test(item.json.img)){\n   item.json.img = \"\" \n  }\n  if(!keywordRegex.test(item.json.title)){\n    item.json.title = \"\"\n  }\n}\n\nreturn $input.all();"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          672,
+          -128
+        ],
+        "id": "24ee0e0f-aabc-4946-9581-835a7475cb23",
+        "name": "Filter by Keyword and Image"
+      },
+      {
+        "parameters": {
+          "mode": "raw",
+          "jsonOutput": "={\n    \"articles\": [\n      {\n        \"title\": \"Galaxy S25 Ultra Gets 'Ocean Mode' For Pro-Level Underwater Photography\",\n        \"contentSnippet\": \"A few years ago, Samsung developed a specialized camera tool to help scientists map coral reefs and monitor fragile underwater ecosystems. This technology was never originally intended for the public, but the company had a change of heart. After debuting on the latest Galaxy S26 Ultra, the specialized “Ocean Mode” is now making its way to the Galaxy S25 Ultra‘s camera app to boost the quality of underwater pictures.Galaxy S25 Ultra’s new Ocean Mode brings professional underwater photography for everyoneAs SamMobile reports, the feature is currently rolling out via an update to the Expert RAW app (version 5.0.08.2) for users running the One UI 8.5 beta. Its primary purpose is to solve the optical challenges of shooting beneath the surface. When you submerge a camera, water naturally bends light, which makes pictures look warped and less colorful. The result is often dull photos or with a blue/green tint.Ocean Mode uses smart algorithms to make up for these effects. According to reports from Samsung’s original coral reef restoration projects, the software corrects color balance and visual distortion in real-time. The result is a sharper, more vibrant image that more accurately reflects what the human eye sees.                                                                                                  While the focus is on the deep blue, the latest app update also includes a “Virtual Reflector” tool. This one mimics studio lighting to balance harsh shadows in tricky environments.A necessary reality check: Be careful with your device on these scenariosThe addition of Ocean Mode is exciting for the upcoming summer season. However, it’s important to distinguish between software capabilities and hardware limits. Ocean Mode is a digital processing tool, which means it does not change the physical water resistance of the phone.Samsung’s official guidelines remind users that Galaxy devices are IP-rated for fresh water. Saltwater and chlorine remain a threat to the watertight seals of any smartphone. During the original reef missions, researchers utilized professional watertight housing to protect the devices. For regular users, the same logic applies: a software update won’t keep your phone dry if the seals fail.Will older models join the dive?With the Galaxy S25 Ultra currently testing the feature, many are looking toward the Galaxy S24 Ultra. Since the technology was originally prototyped using that specific hardware for environmental research, there is a strong technical possibility that it will receive the update soon. For now, S25 Ultra users in the beta program can find the update in the Galaxy Store.The post Galaxy S25 Ultra Gets 'Ocean Mode' For Pro-Level Underwater Photography appeared first on Android Headlines.\",\n        \"url\": \"https://www.androidheadlines.com/2026/04/galaxy-s25-ultra-ocean-mode-expert-raw-update.html\",\n        \"guid\": \"https://www.androidheadlines.com/?p=1277341\",\n        \"img\": \"https://www.androidheadlines.com/wp-content/uploads/2025/01/Samsung-Galaxy-S25-ultra-AM-AH-24.jpg\"\n      },\n      {\n        \"title\": \"Exynos 2700 Spotted on Geekbench: Samsung’s Next 2nm Powerhouse for Galaxy S27\",\n        \"contentSnippet\": \"The Galaxy S26 series has only been on shelves for a few weeks. However, while users are still exploring the features of their new devices, the first signs of the successor devices have already appeared online. A recent leak in the Geekbench benchmarks database has given us an early look at what will likely be the brain of Samsung’s Galaxy S27 flagship lineup: the Exynos 2700 processor (model number S5E9975).Exynos 2700 benchmark leaks: Geekbench shows and unusual core sesignThe listing shows a revamped internal architecture. Instead of following the standard three-cluster design seen in previous generations, Samsung appears to be experimenting with a 10-core configuration split into four groups (arranged in a 4+1+4+1 layout).The clock speeds detected in these early tests are relatively modest—ranging from 2.30 GHz to 2.88 GHz. However, there is no reason for concern. Prototype chips often run at reduced frequencies during development to prioritize system stability over raw power.Early resultsIn terms of raw numbers, the chip scored 2,603 ​​in single-core and 10,350 in multi-core tests. These figures currently sit slightly below the current Exynos 2600, and it is pretty normal in the early development stage. Plus, experts suggest that Samsung’s primary goal with this generation is efficiency. Previous models have faced scrutiny for high power consumption under stress, so the Exynos 2700—built on an advanced 2nm process—aims to provide a more balanced performance and significantly better battery life.On the graphics side, Geekbench shows the chip is paired with the Xclipse 970 GPU. In early OpenCL benchmarks, this component has already surpassed 15,000 points, promising a robust visual experience for future users. Rumors suggest that the Xclipse 970 will be the last GPU based on any kind of AMD technology. A report from late 2025 claimed that Samsung successfully developed a fully in-house mobile GPU architecture. However, it won’t debut until the arrival of the Exynos 2800 chip next year.Galaxy S27 Pro?Beyond the processor, the leaked prototype was reportedly running Android 16 with 12GB of RAM. This indicates that software development is also well underway. Some industry whispers even suggest a shift in the device lineup, with a potential “Pro” model joining the traditional S27, Plus, and Ultra family next year. The “Pro” variant would be very similar to the S27 Ultra in specs but without S-Pen support.As with all early leaks, it is important to treat these numbers with caution. Samsung still has plenty of time to optimize and polish the processor. These developments tell us that the company is already on it.The post Exynos 2700 Spotted on Geekbench: Samsung’s Next 2nm Powerhouse for Galaxy S27 appeared first on Android Headlines.\",\n        \"url\": \"https://www.androidheadlines.com/2026/04/samsung-galaxy-s27-exynos-2700-benchmark-geekbench-leak.html\",\n        \"guid\": \"https://www.androidheadlines.com/?p=1277327\",\n        \"img\": \"https://www.androidheadlines.com/wp-content/uploads/2020/04/Samsung-Exynos-Logo-Illustration-AH-DB.jpg\"\n      },\n      {\n        \"title\": \"Samsung's discontinued Galaxy Z TriFold goes back on Sale this Friday\",\n        \"contentSnippet\": \"Just last month, Samsung announced that it was discontinuing its Galaxy Z TriFold device. Likely to focus on other foldables that are selling better, and preparing for the Galaxy Z Fold 8 Wide that’s launching this Summer. So color me surprised when Samsung announced today that the Galaxy Z TriFold will be back in stock – both online and in-store – this Friday. That’s right, on April 10, you’ll be able to purchase the Galaxy Z TriFold once again from Samsung’s 7 Experience Stores or from Samsung.com. It’s still quite pricey at $2,900, but this is more of a proof-of-concept device for Samsung. Proving that they can do a trifold device like Huawei. But it does make things quite confusing, considering Samsung announced that they were discontinuing it, instead of it just being a rumor. Samsung is working on a Galaxy Z TriFold 2Samsung is also working on a new Galaxy Z TriFold, though it’s unlikely that we’ll see it this year. Tipsters have reported that Samsung has approved the Galaxy Z TriFold 2 concept which will feature a refined hinge that is lighter and thinner than the original. And it’s set to launch around mid-2027. It’s expected that the second-generation Galaxy Z TriFold would be about 9mm thick versus the 13mm for the current TriFold, really slimming down the folded thickness. Of course, this isn’t the only concept that Samsung is working on. There’s also the Galaxy Z Slide, which is a sliding phone. This isn’t really new, as Samsung Display has been showing off concepts of a sliding phone for a few years now. Of course, we can’t forget about the Galaxy Z Fold 8 Wide, which is going to be a wider Galaxy Z Fold that is set to compete with the upcoming iPhone Fold. Thankfully, Samsung isn’t copying all of Apple’s products. The post Samsung's discontinued Galaxy Z TriFold goes back on Sale this Friday appeared first on Android Headlines.\",\n        \"url\": \"https://www.androidheadlines.com/2026/04/samsungs-discontinued-galaxy-z-trifold-goes-back-on-sale-this-friday.html\",\n        \"guid\": \"https://www.androidheadlines.com/?p=1277316\",\n        \"img\": \"https://www.androidheadlines.com/wp-content/uploads/2026/01/AH-Samsung-Galaxy-Z-TriFold-45.jpg\"\n      },\n      {\n        \"title\": \"Gemini Gets New Look: Google Refines the AI Experience on Android\",\n        \"contentSnippet\": \"Just weeks after its last update, a significant redesign is rolling out for the Google Gemini overlay and Gemini Live on Android. It seems that the company is pursuing a more integrated and less intrusive user experience for the use of its AI-powered chatbot.This is the Google Gemini redesigned overlay for AndroidAs spotted by 9to5Google, the changes are currently appearing in the Google app beta (version 17.3). The most immediate tweak is visible in the standard Gemini overlay. Google has changed the old layout to a narrower, more efficient “pill” design. The “Ask Gemini” prompt is now the main focus, with bigger text, and the microphone icon has changed to a clean, outlined style.The biggest functional change involves the “plus” button. Tapping it now reveals a redesigned bottom sheet that combines file attachments with the “Tools” menu. At the top of this menu, users will find a carousel of large, rounded squares. This carousel offers quick access to Photos, Camera, Files, and Drive. Below that, Google has grouped creative and analytical features—such as image generation, Deep Research, and Guided Learning—into a single, organized list. The design approach mirrors recent tests on the web version.                                                                                                                                                                                                                                                          Gemini Live goes floatingGemini Live, the conversational side of the AI, is also receiving a major visual overhaul. Instead of a pill that stretches across most of the screen, the interface now utilizes a floating window. This new look places the voice waveform at the center, flanked by essential controls like screen sharing and a keyboard to exit the session.A particularly human-centric touch is how the interface behaves during multitasking. When you navigate away to use another app, the Live overlay shrinks into a small, unobtrusive circle. This allows users to maintain their conversation without the AI blocking their view of other content. Interestingly, this new floating design has also replaced the old fullscreen interface within the main Gemini app.                                                                                                                                        For now, these updates are appearing for users on the Google app beta channel. While it hasn’t reached the stable version yet, those with the beta can often trigger the new look by force-stopping the app in their device settings.The post Gemini Gets New Look: Google Refines the AI Experience on Android appeared first on Android Headlines.\",\n        \"url\": \"https://www.androidheadlines.com/2026/04/google-gemini-android-redesign-overlay-live.html\",\n        \"guid\": \"https://www.androidheadlines.com/?p=1277228\",\n        \"img\": \"https://www.androidheadlines.com/wp-content/uploads/2024/08/Google-Gemini-Live-AM-AH-2.jpg\"\n      },\n      {\n        \"title\": \"Samsung is giving you another chance to not buy its incredibly expensive Galaxy Z TriFold\",\n        \"contentSnippet\": \"Samsung is bringing the Galaxy Z TriFold back.Availability will resume on April 10, 2026.You’ll be able to buy one on Samsung’s website or from select physical store locations.Despite its eye-watering $2,899 price tag, demand for Samsung’s multi-folding Galaxy Z TriFold outpaced the company’s limited inventory. As a result, a lot of fans who planned to purchase the foldable were unable to get their hands on one before the tech giant started winding down sales. While the TriFold was thought to be dead, Samsung is giving you another opportunity to pick one up.Don’t want to miss the best from Android Authority?\",\n        \"url\": \"https://www.androidauthority.com/galaxy-z-trifold-returns-3655898/\",\n        \"guid\": \"https://www.androidauthority.com/galaxy-z-trifold-returns-3655898/\",\n        \"img\": \"https://www.androidauthority.com/wp-content/uploads/2026/01/Samsung-Galaxy-Z-TriFold-at-CES-2026-5-of-6.jpg\"\n      },\n      {\n        \"title\": \"This weird little Android tablet takes a design cue from smartphones\",\n        \"contentSnippet\": \"An OPPO executive recently released a video that included a look at the company’s next compact tablet.The video shows a device with slim bezels and a centered punch-hole camera, like a smartphone.The OPPO Pad Mini will launch on April 21, 2026.OPPO is currently working on a compact tablet that could give Apple’s iPad Mini a run for its money. The Director of Smart Ecosystem Products at OPPO, Qiao Jiadong, has recently been teasing the device in a series of videos. However, the latest video gives us a clear first look at the tablet’s display.Don’t want to miss the best from Android Authority?\",\n        \"url\": \"https://www.androidauthority.com/oppo-pad-mini-teaser-3655867/\",\n        \"guid\": \"https://www.androidauthority.com/oppo-pad-mini-teaser-3655867/\",\n        \"img\": \"https://www.androidauthority.com/wp-content/uploads/2026/04/OPPO-Pad-Mini.jpg\"\n      },\n      {\n        \"title\": \"This new Android-compatible tracker doubles as a loud personal safety siren\",\n        \"contentSnippet\": \"The Pebblebee Halo is a location tracker compatible with Google and Apple networks that doubles as a personal safety device.It features a 130dB siren, strobe lights, and a Safety Circle tool that alerts five trusted contacts to your location via SMS.The device includes a rechargeable battery with a 1-year lifespan and is IP66-rated for water resistance.Based on our testing, Google’s Find Hub network has evolved into a more reliable and robust solution, to the point where we can start recommending modern Find Hub trackers to Android users. If you’re in the market for a tracker but want something a little more, Pebblebee has a new tracker, Halo, that doubles up as a personal safety device.At its heart, the Halo is a location tracker that is compatible with Google’s Find Hub network and Apple’s Find My network (one at a time). Beyond that, it’s a personal safety device with a physical emergency trigger for its 130dB siren and bright strobe lights.\",\n        \"url\": \"https://www.androidauthority.com/pebblebee-halo-3655826/\",\n        \"guid\": \"https://www.androidauthority.com/pebblebee-halo-3655826/\",\n        \"img\": \"https://www.androidauthority.com/wp-content/uploads/2026/04/pebblebee-halo-personal-safety-device-with-google-find-hub-keyring-in-hand.jpg\"\n      },\n      {\n        \"title\": \"Samsung Galaxy Watch Ultra 2 leak suggests plans for a pair of models\",\n        \"contentSnippet\": \"A firmware build for a device with the model number SM-L715F was spotted on Samsung’s servers.The model number is believed to belong to the Galaxy Watch Ultra 2.The “5” in the model number suggests this may be a 4G/LTE variant.Unlike last year’s refresh, it’s expected that Samsung will launch a sequel to the Galaxy Watch Ultra this year. Not too long ago, a device believed to be the Galaxy Watch Ultra 2 showed up in the IMEI database with the model number SM-L716. Another Ultra 2 leak has now surfaced, and it hints at an unexpected move by Samsung.Don’t want to miss the best from Android Authority?\",\n        \"url\": \"https://www.androidauthority.com/galaxy-watch-ultra-2-4g-3655637/\",\n        \"guid\": \"https://www.androidauthority.com/galaxy-watch-ultra-2-4g-3655637/\",\n        \"img\": \"https://www.androidauthority.com/wp-content/uploads/2024/09/Samsung-Galaxy-Watch-Ultra-MD323-scaled.jpg\"\n      },\n      {\n        \"title\": \"Survey reveals the brutal reality of Android Auto connectivity problems\",\n        \"contentSnippet\": \"Credit: Andy Walker / Android AuthorityAndroid Auto is supposed to make getting in the car and heading off a smoother and more enjoyable experience. The idea is you quickly get your maps and music up and carry on with your life. But if you’ve ever found yourself retrying a pairing or wondering why nothing is happening on the dash, you’re clearly not alone. After our recent coverage of Android Auto connection problems, we asked readers whether they’d ever had connectivity issues with the platform. You responded in your thousands.That poll followed reports on a growing wave of complaints from Android Auto users, particularly those with Pixel and Samsung phones. Readers and forum users said connections were suddenly failing, dropping out, or refusing to launch properly, with wired setups appearing to take the biggest hit. Google later acknowledged the issue and said fixes were starting to roll out, but not before plenty of people had already been left troubleshooting on their own.\",\n        \"url\": \"https://www.androidauthority.com/android-auto-connection-issues-poll-results-3655220/\",\n        \"guid\": \"https://www.androidauthority.com/android-auto-connection-issues-poll-results-3655220/\",\n        \"img\": \"https://www.androidauthority.com/wp-content/uploads/2025/10/android-auto-launcher-home-screen-1.jpg\"\n      },\n      {\n        \"title\": \"An embarrassing wait: Here’s when the Galaxy S25 could finally get stable One UI 8.5\",\n        \"contentSnippet\": \"A leak suggests Samsung will release the stable One UI 8.5 update for the Galaxy S25 series on April 30, starting in South Korea.International users can likely expect the rollout to begin on May 4, 2026, based on previous release patterns.The update follows a lengthy period of eight beta versions and weeks of exclusivity for the newer Galaxy S26 series.Galaxy S25 owners, your wait for One UI 8.5 might finally be coming to an end soon-ish. After releasing eight One UI 8.5 betas, Samsung is now expected to finally release One UI 8.5 stable for the Galaxy S25 series at the end of this month, according to a new leak.As per Tarun Vats on X, Samsung is expected to release One UI 8.5 stable for the Galaxy S25 series on April 30, starting with its home region of South Korea. Presuming the company follows last year’s pattern, international rollout could start from May 4, 2026, onwards.\",\n        \"url\": \"https://www.androidauthority.com/samsung-galaxy-s25-one-ui-8-5-stable-release-date-leak-3655056/\",\n        \"guid\": \"https://www.androidauthority.com/samsung-galaxy-s25-one-ui-8-5-stable-release-date-leak-3655056/\",\n        \"img\": \"https://www.androidauthority.com/wp-content/uploads/2025/05/samsung-galaxy-s25-ultra-joe-revisit-7-scaled.jpg\"\n      },\n      {\n        \"title\": \"The heat is on for Android rivals as Apple’s foldable reportedly enters production\",\n        \"contentSnippet\": \"A new rumor claims Apple’s first foldable iPhone has entered production at Foxconn.If true, Apple’s foldable plans may be moving through the gears faster than anticipated.The news won’t go unnoticed by Android foldable makers, especially considering the reported scale of Apple’s foldable ambitions.Android foldable fans have plenty to get excited about right now, not least the long-rumored Galaxy Z Fold 8 Wide expected to take center stage in the summer. But while the next wave of foldables is starting to take shape, Apple is looming large in the distance, as a fresh rumor suggests its first foldable iPhone is moving closer to reality.Don’t want to miss the best from Android Authority?\",\n        \"url\": \"https://www.androidauthority.com/apple-iphone-fold-in-production-rumor-3655190/\",\n        \"guid\": \"https://www.androidauthority.com/apple-iphone-fold-in-production-rumor-3655190/\",\n        \"img\": \"https://www.androidauthority.com/wp-content/uploads/2025/09/Apple-Store-front-facade-with-Pro-and-Air-logo-for-iPhone-17-Pro-and-iPhone-Air-scaled.jpg\"\n      },\n      {\n        \"title\": \"Samsung’s Galaxy Glasses just passed a major launch milestone\",\n        \"contentSnippet\": \"The battery unit for one or both of Samsung’s upcoming smart glasses was spotted on a certification database.The listing shows that the battery carries the model number EB-B0200AAY.Samsung is currently working on entering the smart glasses market. Similar to Google, the tech giant is believed to be developing multiple products in this category. The battery that will power at least one of these devices has recently been spotted on a certification database.Don’t want to miss the best from Android Authority?\",\n        \"url\": \"https://www.androidauthority.com/samsung-galaxy-glasses-battery-certification-3655162/\",\n        \"guid\": \"https://www.androidauthority.com/samsung-galaxy-glasses-battery-certification-3655162/\",\n        \"img\": \"https://www.androidauthority.com/wp-content/uploads/2026/01/amazfit-smart-glasses-hands-on-ces-4-scaled.jpg\"\n      },\n      {\n        \"title\": \"Hot deal: Samsung Galaxy Watch 8 Classic drops by $230! (Nearly half off)\",\n        \"contentSnippet\": \"Credit: Joe Maring / Android AuthoritySamsung makes some of the best smartwatches, and this one is their best-looking one. The Samsung Galaxy Watch 8 Classic is also pricey at $499.99. You don’t need to pay full price, though. Today’s discounts bring it down to a much more reasonable $269.99.Buy the Samsung Galaxy Watch 8 Classic for just $269.99 ($230 off)\",\n        \"url\": \"https://www.androidauthority.com/samsung-galaxy-watch-8-classic-deal-5-3655138/\",\n        \"guid\": \"https://www.androidauthority.com/samsung-galaxy-watch-8-classic-deal-5-3655138/\",\n        \"img\": \"https://www.androidauthority.com/wp-content/uploads/2025/08/samsung-galaxy-watch-8-classic-review-12-scaled.jpg\"\n      },\n      {\n        \"title\": \"This Android gaming handheld has a wild feature that could replace your Bluetooth controller\",\n        \"contentSnippet\": \"GAMEMT has a new handheld in the works called the E5 ModxThis emulation machine is unique in that its screen detaches, allowing the bottom half to become a Bluetooth mobile controller.The handheld has a MTK6771 Helio P60 chip and comes with 3GB/32GB and 3GB/64GB RAM storage options.Despite the RAM shortage hitting the handheld market hard, this is still shaping up to be an interesting year for emulation devices. Over the last few weeks, we’ve seen several leaks of ANBERNIC’s unique, screen-swiveling RG Rotate. Now, an even more intriguing handheld has surfaced, and it comes from the folks over at GAMEMT.Don’t want to miss the best from Android Authority?\",\n        \"url\": \"https://www.androidauthority.com/gamemt-e5-modx-android-handheld-3655101/\",\n        \"guid\": \"https://www.androidauthority.com/gamemt-e5-modx-android-handheld-3655101/\",\n        \"img\": \"https://www.androidauthority.com/wp-content/uploads/2026/04/GAMEMT-E5-Modx-render-2.jpg\"\n      }\n    ]\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1808,
+          80
+        ],
+        "id": "dfe504aa-b32e-4d59-b1c1-06a18afcf4c3",
+        "name": "Return",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "inputSource": "jsonExample",
+          "jsonExample": "{\n\"title\": \n\"Exclusive: Motorola Razr 70 Ultra Official Renders\",\n\"link\": \n\"https://www.androidheadlines.com/motorola-razr-70-ultra\",\n\"content:encodedSnippet\": \n\"Motorola is expected to announce the Razr 70 Ultra (or Razr Ultra 2026 if you’re in the US) very soon, and we’ve already seen CADs from Onleaks for this new device. Now, courtesy of Onleaks, we have a couple of press renders.\\nThese press renders show the Razr 70 Ultra in two new colors: Orient Blue Alcantara and Pantone Cocoa Wood. So Motorola is sticking with the wood and alcantara color options from last year, which were a major hit with the Razr 60 Ultra (Razr Ultra 2025). \\nIt’s very likely that these are not the only colors for the Razr 70 Ultra this year. We’ve already seen it leak in a “Pantone African Violet” color, and last year, the Razr 60 Ultra was available in four colors. \\nOne of the first things you’ll notice here is that there’s no front-facing camera on the Razr 70 Ultra. Which means one of two things: either Motorola has decided to go with an under-display camera, or Motorola forgot to render it in these press renders. It’s most likely the latter. Though we would love to see a UDC on the Razr this year. \\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\nMotorola Razr 70 Ultra is expected to use the Snapdragon 8 Elite Gen 5\\nLast year, when Motorola first debuted the ‘Ultra’ variant of the Razr family, it did so using the Snapdragon 8 Elite, and we expect that to be the case again this year with the Snapdragon 8 Elite Gen 5. This is despite the Razr Fold being announced with the Snapdragon 8 Gen 5 already. \\nMotorola is also expected to pair this with 16GB of RAM and 512GB of storage again, like last year’s model had. Which could cause a price increase, but we won’t know for certain until later this Summer. The Razr 60 Ultra was only available in two storage models, with a 1TB model also being available. \\nMotorola is also sticking to two cameras here, with both of them being 50-megapixel sensors, and a 50-megapixel front-facing camera. \\nThe battery inside is expected to stick to about 4,700mAh, which is quite impressive for a flip-style foldable, and it’ll have 68W charging. This is actually pretty impressive since this is USB-C PD charging and not USB-A charging like a lot of the other Chinese devices on the market. \\n\\n\\n\\n            \\n                    \\n                  \\n                    \\n                  \\n\\n          \\nWhen will Motorola announce the Razr 70 Ultra?\\nMotorola hasn’t officially announced the Razr event yet, but based on the past few years, we are expecting it to happen later this month. \\n\\nDeviceLaunch Date\\n\\nRazr 50 SeriesJune 2024\\nRazr 60 SeriesApril 2025\\nRazr 70 SeriesExpected April 2026\\n\\n\\n\\n\\n\\nWhich means that we don’t have much longer to wait for the Razr 70 series, or the Razr 2026 in the US. Motorola is likely looking to do an earlier announcement this year, so it can get the FIFA World Cup models out ahead of the World Cup. As that World Cup is taking place in North America this year, starting in early June. \\nThe post Exclusive: Motorola Razr 70 Ultra Official Renders appeared first on Android Headlines.\",\n\"guid\": \n\"https://www.androidheadlines.com/?p=1277295\",\n\"content:encoded\": \n\"<img fetchpriority=\\\"high\\\" decoding=\\\"async\\\" width=\\\"600\\\" height=\\\"338\\\" src=\\\"https://www.androidheadlines.com/wp-content/uploads/2026/04/motorola-razr-70-ultra-AH.jpg\\\" class=\\\"attachment-medium size-medium wp-post-image\\\" alt=\\\"motorola razr 70 ultra AH\\\" style=\\\"float:right; margin:0 0 10px 10px;\\\" srcset=\\\"https://www.androidheadlines.com/wp-content/uploads/2026/04/motorola-razr-70-ultra-AH.jpg 1600w, https://www.androidheadlines.com/wp-content/uploads/2026/04/motorola-razr-70-ultra-AH-1420x799.jpg 1420w, https://www.androidheadlines.com/wp-content/uploads/2026/04/motorola-razr-70-ultra-AH-355x200.jpg 355w, https://www.androidheadlines.com/wp-content/uploads/2026/04/motorola-razr-70-ultra-AH-555x312.jpg 555w, https://www.androidheadlines.com/wp-content/uploads/2026/04/motorola-razr-70-ultra-AH-1154x649.jpg 1154w\\\" sizes=\\\"(max-width: 600px) 100vw, 600px\\\" />\\n<p>Motorola is expected to announce the Razr 70 Ultra (or Razr Ultra 2026 if you’re in the US) very soon, and we’ve already seen CADs from Onleaks for this new device. Now, courtesy of Onleaks, we have a couple of press renders.</p>\\n\\n\\n\\n<p>These press renders show the Razr 70 Ultra in two new colors: Orient Blue Alcantara and Pantone Cocoa Wood. So Motorola is sticking with the wood and alcantara color options from last year, which were a major hit with the Razr 60 Ultra (Razr Ultra 2025). </p>\\n\\n\\n\\n<p>It’s very likely that these are not the only colors for the Razr 70 Ultra this year. We’ve already seen it leak in a “Pantone African Violet” color, and last year, the Razr 60 Ultra was available in four colors. </p>\\n\\n\\n\\n<p>One of the first things you’ll notice here is that there’s no front-facing camera on the Razr 70 Ultra. Which means one of two things: either Motorola has decided to go with an under-display camera, or Motorola forgot to render it in these press renders. It’s most likely the latter. Though we would love to see a UDC on the Razr this year. </p>\\n\\n\\n\\n<figure class=\\\"wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-4-3 wp-has-aspect-ratio\\\"><div class=\\\"wp-block-embed__wrapper\\\">\\n<figure class=\\\"video-container youtube-lazy-container\\\" data-video-id=\\\"Z5mPUHG7kTQ\\\" id=\\\"youtube-lazy-69d6629358ae3\\\"><div class=\\\"youtube-lazy-placeholder\\\"><img decoding=\\\"async\\\" src=\\\"https://img.youtube.com/vi/Z5mPUHG7kTQ/hqdefault.jpg\\\" alt=\\\"YouTube video thumbnail\\\" class=\\\"youtube-lazy-thumbnail\\\" loading=\\\"lazy\\\"><button class=\\\"youtube-lazy-play\\\" aria-label=\\\"Play video\\\"><svg width=\\\"68\\\" height=\\\"48\\\" viewbox=\\\"0 0 68 48\\\"><path d=\\\"M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.63-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z\\\" fill=\\\"#f00\\\"></path><path d=\\\"M 45,24 27,14 27,34\\\" fill=\\\"#fff\\\"></path></svg></button></div><div class=\\\"youtube-lazy-iframe\\\" style=\\\"display:none;\\\" data-iframe-html=\\\"PGlmcmFtZSB0aXRsZT0iRXhjbHVzaXZlOiBNb3Rvcm9sYSBSYXpyIDcwIFVsdHJhIE9mZmljaWFsIFJlbmRlcnMiIHdpZHRoPSI3MzUiIGhlaWdodD0iNTUxIiBzcmM9Imh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL2VtYmVkL1o1bVBVSEc3a1RRP2ZlYXR1cmU9b2VtYmVkIiBmcmFtZWJvcmRlcj0iMCIgYWxsb3c9ImFjY2VsZXJvbWV0ZXI7IGF1dG9wbGF5OyBjbGlwYm9hcmQtd3JpdGU7IGVuY3J5cHRlZC1tZWRpYTsgZ3lyb3Njb3BlOyBwaWN0dXJlLWluLXBpY3R1cmU7IHdlYi1zaGFyZSIgcmVmZXJyZXJwb2xpY3k9InN0cmljdC1vcmlnaW4td2hlbi1jcm9zcy1vcmlnaW4iIGFsbG93ZnVsbHNjcmVlbj48L2lmcmFtZT4=\\\"></div></figure>\\n</div></figure>\\n\\n\\n\\n<h2 class=\\\"wp-block-heading\\\" id=\\\"h-motorola-razr-70-ultra-is-expected-to-use-the-snapdragon-8-elite-gen-5\\\">Motorola Razr 70 Ultra is expected to use the Snapdragon 8 Elite Gen 5</h2>\\n\\n\\n\\n<p>Last year, when Motorola first debuted the ‘Ultra’ variant of the Razr family, it did so using the Snapdragon 8 Elite, and we expect that to be the case again this year with the Snapdragon 8 Elite Gen 5. This is despite the Razr Fold being announced with the Snapdragon 8 Gen 5 already. </p>\\n\\n\\n\\n<p>Motorola is also expected to pair this with 16GB of RAM and 512GB of storage again, like last year’s model had. Which could cause a price increase, but we won’t know for certain until later this Summer. The Razr 60 Ultra was only available in two storage models, with a 1TB model also being available. </p>\\n\\n\\n\\n<p>Motorola is also sticking to two cameras here, with both of them being 50-megapixel sensors, and a 50-megapixel front-facing camera. </p>\\n\\n\\n\\n<p>The battery inside is expected to stick to about 4,700mAh, which is quite impressive for a flip-style foldable, and it’ll have 68W charging. This is actually pretty impressive since this is USB-C PD charging and not USB-A charging like a lot of the other Chinese devices on the market. </p>\\n\\n\\n    <section class=\\\"section mt-4\\\">\\n    <div class=\\\"container px-0\\\">\\n              <!-- Single Column Carousel: first main slide is eager; thumbs stay lazy after the first small thumb. -->\\n        <div class=\\\"image-slider-wrap single-column\\\">\\n          <div class=\\\"slider-main position-relative\\\">\\n            <!-- Generated by IcoMoon.io -->\\n<svg version=\\\"1.1\\\" xmlns=\\\"http://www.w3.org/2000/svg\\\" width=\\\"1024\\\" height=\\\"1024\\\" viewbox=\\\"0 0 1024 1024\\\">\\n<g id=\\\"icomoon-ignore\\\">\\n</g>\\n<path d=\\\"M34.133 953.173c0 2.389 0.183 4.772 0.733 7.154 0.183 1.099 0.55 2.198 0.917 3.12 0.367 1.283 0.733 2.383 1.1 3.666 0.55 1.283 1.284 2.383 1.834 3.666 0.55 0.915 0.917 1.836 1.467 2.751 2.751 4.035 6.235 7.516 10.085 10.083 0.917 0.553 1.834 0.922 2.751 1.468 1.1 0.737 2.384 1.283 3.667 1.836 1.284 0.546 2.384 0.73 3.667 1.099 1.1 0.369 2.017 0.73 3.117 0.915 2.384 0.553 4.768 0.737 7.152 0.737h266.622c20.171 0 36.674-16.507 36.674-36.673 0-20.173-16.503-36.68-36.674-36.68h-178.054l222.979-222.795c14.303-14.303 14.303-37.591 0-51.894s-37.591-14.303-51.894 0l-222.797 223.161v-165.949c0-20.171-16.503-36.674-36.674-36.674s-36.674 16.503-36.674 36.674v254.334zM376.321 70.808c0-20.171-16.503-36.674-36.674-36.674h-268.823c-2.384 0-4.768 0.183-7.152 0.733-1.1 0.183-2.017 0.55-3.117 0.917-1.284 0.367-2.567 0.733-3.667 1.1-1.284 0.55-2.384 1.1-3.484 1.834-0.917 0.55-2.017 0.917-2.934 1.65-4.034 2.751-7.518 6.051-10.085 10.085-0.55 0.917-0.917 1.834-1.467 2.751-0.55 1.1-1.284 2.201-1.834 3.484s-0.733 2.384-1.1 3.667c-0.367 1.1-0.734 2.017-0.917 3.117-0.55 2.384-0.733 4.768-0.733 7.152v280.008c0 20.171 16.503 36.675 36.674 36.675s36.674-16.503 36.674-36.675v-191.44l217.296 217.296c7.152 7.151 16.503 10.819 25.855 10.819s18.704-3.668 25.856-10.819c14.303-14.303 14.303-37.592 0-51.894l-217.479-217.113h180.438c20.354 0 36.674-16.503 36.674-36.674zM647.531 376.505c7.152 7.152 16.503 10.819 25.856 10.819 9.355 0 18.7-3.667 25.855-10.819l217.293-217.296v191.44c0 20.171 16.507 36.674 36.68 36.674 20.166 0 36.673-16.503 36.673-36.674v-279.825c0-2.384-0.184-4.768-0.737-7.152-0.177-1.1-0.546-2.017-0.915-3.117-0.369-1.284-0.73-2.567-1.099-3.667-0.553-1.284-1.283-2.384-1.836-3.484-0.546-0.917-0.915-1.834-1.468-2.751-2.744-4.034-6.048-7.518-10.083-10.085-0.915-0.55-2.014-1.1-2.935-1.65-1.099-0.55-2.198-1.284-3.482-1.834s-2.567-0.733-3.85-1.1c-1.099-0.367-2.021-0.734-3.12-0.917-2.383-0.55-4.765-0.733-7.148-0.733h-268.090c-20.173 0-36.676 16.503-36.676 36.674s16.503 36.674 36.676 36.674h179.705l-217.298 217.113c-14.486 14.303-14.486 37.407 0 51.711zM641.821 693.535l222.981 222.986h-175.118c-20.174 0-36.678 16.5-36.678 36.673s16.503 36.673 36.678 36.673h263.687c2.383 0 4.765-0.184 7.148-0.73 1.106-0.184 2.021-0.553 3.12-0.922 1.283-0.362 2.567-0.73 3.666-1.099 1.283-0.546 2.383-1.283 3.488-1.836 0.915-0.546 2.014-0.915 2.744-1.461 4.035-2.751 7.523-6.24 10.090-10.090 0.546-0.915 0.915-1.83 1.468-2.751 0.73-1.099 1.283-2.383 1.83-3.666 0.553-1.283 0.737-2.383 1.106-3.666 0.362-1.099 0.73-2.021 0.915-3.12 0.546-2.383 0.73-4.765 0.73-7.148v-254.703c0-20.173-16.5-36.677-36.673-36.677s-36.673 16.503-36.673 36.677v165.949l-222.795-222.797c-14.306-14.303-37.594-14.303-51.897 0s-14.303 37.407 0.184 51.707z\\\"></path>\\n</svg>\\n\\n            <div id=\\\"block_93eb2717518353b923e1e9b6ea7eeac5-large\\\" data-navfor=\\\"block_93eb2717518353b923e1e9b6ea7eeac5-thumb\\\" class=\\\"image-slider-large\\\">\\n                                <div class=\\\"slide\\\" data-imgid=\\\"1277296\\\">\\n                    <img width=\\\"800\\\" height=\\\"826\\\" src=\\\"https://www.androidheadlines.com/wp-content/uploads/2026/04/Moto-Razr-70-Ultra-Press2.jpg\\\" class=\\\"media__image attachment-homepage-lg-feature size-homepage-lg-feature\\\" alt=\\\"Moto Razr 70 Ultra Press2\\\" loading=\\\"eager\\\" decoding=\\\"sync\\\" srcset=\\\"https://www.androidheadlines.com/wp-content/uploads/2026/04/Moto-Razr-70-Ultra-Press2.jpg 800w, https://www.androidheadlines.com/wp-content/uploads/2026/04/Moto-Razr-70-Ultra-Press2-355x367.jpg 355w, https://www.androidheadlines.com/wp-content/uploads/2026/04/Moto-Razr-70-Ultra-Press2-555x573.jpg 555w\\\" sizes=\\\"(max-width: 800px) 100vw, 800px\\\">                    \\n                  </div>\\n                                                <div class=\\\"slide\\\" data-imgid=\\\"1277297\\\">\\n                    <img width=\\\"800\\\" height=\\\"828\\\" src=\\\"https://www.androidheadlines.com/wp-content/uploads/2026/04/Moto-Razr-70-Ultra-Press1.jpg\\\" class=\\\"media__image attachment-homepage-lg-feature size-homepage-lg-feature\\\" alt=\\\"Moto Razr 70 Ultra Press1\\\" loading=\\\"lazy\\\" decoding=\\\"async\\\" srcset=\\\"https://www.androidheadlines.com/wp-content/uploads/2026/04/Moto-Razr-70-Ultra-Press1.jpg 800w, https://www.androidheadlines.com/wp-content/uploads/2026/04/Moto-Razr-70-Ultra-Press1-355x367.jpg 355w, https://www.androidheadlines.com/wp-content/uploads/2026/04/Moto-Razr-70-Ultra-Press1-555x574.jpg 555w\\\" sizes=\\\"auto, (max-width: 800px) 100vw, 800px\\\">                    \\n                  </div>\\n                                          </div>\\n            <div class=\\\"arrow-navigation\\\"></div>\\n          </div>\\n          <div id=\\\"block_93eb2717518353b923e1e9b6ea7eeac5-thumb\\\" data-navfor=\\\"block_93eb2717518353b923e1e9b6ea7eeac5-large\\\" class=\\\"image-slider-thumb\\\">\\n                            <div class=\\\"slide\\\" data-imgid=\\\"1277296\\\">\\n                                  </div>\\n                                          <div class=\\\"slide\\\" data-imgid=\\\"1277297\\\">\\n                                  </div>\\n                                    </div>\\n        </div>\\n          </div>\\n  </section>\\n\\n\\n\\n<h2 class=\\\"wp-block-heading\\\" id=\\\"h-when-will-motorola-announce-the-razr-70-ultra\\\">When will Motorola announce the Razr 70 Ultra?</h2>\\n\\n\\n\\n<p>Motorola hasn’t officially announced the Razr event yet, but based on the past few years, we are expecting it to happen later this month. </p>\\n\\n\\n\\n<figure class=\\\"wp-block-table\\\"><table class=\\\"has-fixed-layout\\\"><thead><tr><th>Device</th><th>Launch Date</th></tr></thead><tbody><tr><td>Razr 50 Series</td><td>June 2024</td></tr><tr><td>Razr 60 Series</td><td>April 2025</td></tr><tr><td>Razr 70 Series</td><td>Expected April 2026</td></tr></tbody></table></figure>\\n\\n\\n\\n<p>Which means that we don’t have much longer to wait for the Razr 70 series, or the Razr 2026 in the US. Motorola is likely looking to do an earlier announcement this year, so it can get the FIFA World Cup models out ahead of the World Cup. As that World Cup is taking place in North America this year, starting in early June. </p>\\n<p>The post <a href=\\\"https://www.androidheadlines.com/motorola-razr-70-ultra\\\">Exclusive: Motorola Razr 70 Ultra Official Renders</a> appeared first on <a href=\\\"https://www.androidheadlines.com\\\">Android Headlines</a>.</p>\\n\"\n}"
+        },
+        "id": "4c1e63b9-f2f5-4359-809e-d7faa40fd593",
+        "typeVersion": 1.1,
+        "name": "Start",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "position": [
+          224,
+          -128
+        ]
+      },
+      {
+        "parameters": {
+          "workflowId": {
+            "__rl": true,
+            "value": "rgwqGctMpP0qHren",
+            "mode": "list",
+            "cachedResultUrl": "/workflow/rgwqGctMpP0qHren",
+            "cachedResultName": "getPulishedLinkedInPostIDs"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {},
+            "matchingColumns": [],
+            "schema": [],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": true
+          },
+          "mode": "each",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.3,
+        "position": [
+          1120,
+          -128
+        ],
+        "id": "797ccfa1-3e87-4da3-85ca-8c8364acad3c",
+        "name": "getPulishedLinkedInPostIDs",
+        "executeOnce": true,
+        "retryOnFail": true
+      },
+      {
+        "parameters": {
+          "jsCode": "const articles = $('Check for Required Fields').all();\nconst guids = $('getPulishedLinkedInPostIDs').first().json.guids;\nconst filtered = [];\n\narticles.forEach((article) => {\n  if(!guids.includes(article.json.guid)){\n    filtered.push(article)\n  }\n});\n\nreturn filtered;"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1344,
+          -128
+        ],
+        "id": "eed97da4-71d6-41f0-9baa-212f9ea5931c",
+        "name": "Check if Previously Published"
+      },
+      {
+        "parameters": {
+          "aggregate": "aggregateAllItemData",
+          "destinationFieldName": "articles",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.aggregate",
+        "typeVersion": 1,
+        "position": [
+          1584,
+          80
+        ],
+        "id": "81a2fcae-d8cd-4188-9f4b-e66223040148",
+        "name": "Aggregate",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "d01535de-5fdd-4411-9783-ebb50c36299f",
+                "name": "title",
+                "value": "={{ $json.title }}",
+                "type": "string"
+              },
+              {
+                "id": "c90072b1-372c-4550-9df4-24ee8782d363",
+                "name": "contentSnippet",
+                "value": "={{ $json.contentSnippet }}",
+                "type": "string"
+              },
+              {
+                "id": "cd769221-2d08-4643-ba96-97b501502887",
+                "name": "url",
+                "value": "={{ $json.url }}",
+                "type": "string"
+              },
+              {
+                "id": "180c6b1e-7826-4ddd-a361-36840adfbf6d",
+                "name": "guid",
+                "value": "={{ $json.guid }}",
+                "type": "string"
+              },
+              {
+                "id": "3899303a-e214-4320-a454-1170dd32261b",
+                "name": "img",
+                "value": "={{ $json.img }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1552,
+          -128
+        ],
+        "id": "514c2b29-b458-4f7e-bb05-61df2b8d87bc",
+        "name": "Return1"
+      }
+    ],
+    "connections": {
+      "Start": {
+        "main": [
+          [
+            {
+              "node": "Set Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Check for Required Fields": {
+        "main": [
+          [
+            {
+              "node": "getPulishedLinkedInPostIDs",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter by Keyword and Image": {
+        "main": [
+          [
+            {
+              "node": "Check for Required Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set Fields": {
+        "main": [
+          [
+            {
+              "node": "Filter by Keyword and Image",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "getPulishedLinkedInPostIDs": {
+        "main": [
+          [
+            {
+              "node": "Check if Previously Published",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Check if Previously Published": {
+        "main": [
+          [
+            {
+              "node": "Return1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Aggregate": {
+        "main": [
+          [
+            {
+              "node": "Return",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jim Campbell",
+    "name": "Version ccaa3261",
+    "description": "",
+    "autosaved": true
+  },
+  "activeVersionId": "ccaa3261-8e33-4924-8279-6c929104608f",
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Set Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check for Required Fields": {
+      "main": [
+        [
+          {
+            "node": "getPulishedLinkedInPostIDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter by Keyword and Image": {
+      "main": [
+        [
+          {
+            "node": "Check for Required Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Fields": {
+      "main": [
+        [
+          {
+            "node": "Filter by Keyword and Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "getPulishedLinkedInPostIDs": {
+      "main": [
+        [
+          {
+            "node": "Check if Previously Published",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check if Previously Published": {
+      "main": [
+        [
+          {
+            "node": "Return1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-04-08T13:17:24.211Z",
+  "id": "79fXljhifzUKwtBv",
+  "isArchived": false,
+  "meta": null,
+  "name": "setAndroidArticles",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "826d99f2-56e1-4123-b89d-14b154f926d3",
+              "name": "title",
+              "value": "={{ $('Start').item.json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "70120e67-63b4-4aa7-9a66-53ae840f4350",
+              "name": "contentSnippet",
+              "value": "={{ $('Start').item.json[\"content:encodedSnippet\"].replace(/\\r|\\n|\\t/g, '').replace(/Credit:.*?TL;DR/gs, \"\") }}",
+              "type": "string"
+            },
+            {
+              "id": "4344dbcf-7b9b-48da-af1e-b0ebe7c9755e",
+              "name": "url",
+              "value": "={{ $('Start').item.json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "fe56dc6f-c90c-4602-b364-56c7a50b8964",
+              "name": "guid",
+              "value": "={{ $('Start').item.json.guid }}",
+              "type": "string"
+            },
+            {
+              "id": "52abd3e6-903d-4cc2-8615-cc0fe509c46f",
+              "name": "=img",
+              "value": "={{ $('Start').item.json[\"content:encoded\"]?.urlDecode().extractUrl().replace('\\\"',\"\") }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        448,
+        -128
+      ],
+      "id": "9c8d9190-62f3-4d57-99e8-aacc9c994e02",
+      "name": "Set Fields",
+      "notesInFlow": false
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "803a41cd-8fc5-4ee1-9dad-332349359602",
+              "leftValue": "={{ $('Filter by Keyword and Image').item.json.title }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "1b2ff2e4-da46-4123-8588-b1cd858c02ca",
+              "leftValue": "={{ $('Filter by Keyword and Image').item.json.img }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        896,
+        -128
+      ],
+      "id": "c767bc2a-26bf-4e2e-97ae-e997bf36201b",
+      "name": "Check for Required Fields"
+    },
+    {
+      "parameters": {
+        "jsCode": "const imageRegex = /\\.(jpg|jpeg|png|webp)$/i;\nconst keywordRegex = /Android|Galaxy/i;\n\nfor (const item of $input.all()) {\n  if(!imageRegex.test(item.json.img)){\n   item.json.img = \"\" \n  }\n  if(!keywordRegex.test(item.json.title)){\n    item.json.title = \"\"\n  }\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        -128
+      ],
+      "id": "24ee0e0f-aabc-4946-9581-835a7475cb23",
+      "name": "Filter by Keyword and Image"
+    },
+    {
+      "parameters": {
+        "inputSource": "jsonExample",
+        "jsonExample": "{\n\"title\": \n\"Exclusive: Motorola Razr 70 Ultra Official Renders\",\n\"link\": \n\"https://www.androidheadlines.com/motorola-razr-70-ultra\",\n\"content:encodedSnippet\": \n\"Motorola is expected to announce the Razr 70 Ultra (or Razr Ultra 2026 if you’re in the US) very soon, and we’ve already seen CADs from Onleaks for this new device. Now, courtesy of Onleaks, we have a couple of press renders.\\nThese press renders show the Razr 70 Ultra in two new colors: Orient Blue Alcantara and Pantone Cocoa Wood. So Motorola is sticking with the wood and alcantara color options from last year, which were a major hit with the Razr 60 Ultra (Razr Ultra 2025). \\nIt’s very likely that these are not the only colors for the Razr 70 Ultra this year. We’ve already seen it leak in a “Pantone African Violet” color, and last year, the Razr 60 Ultra was available in four colors. \\nOne of the first things you’ll notice here is that there’s no front-facing camera on the Razr 70 Ultra. Which means one of two things: either Motorola has decided to go with an under-display camera, or Motorola forgot to render it in these press renders. It’s most likely the latter. Though we would love to see a UDC on the Razr this year. \\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\nMotorola Razr 70 Ultra is expected to use the Snapdragon 8 Elite Gen 5\\nLast year, when Motorola first debuted the ‘Ultra’ variant of the Razr family, it did so using the Snapdragon 8 Elite, and we expect that to be the case again this year with the Snapdragon 8 Elite Gen 5. This is despite the Razr Fold being announced with the Snapdragon 8 Gen 5 already. \\nMotorola is also expected to pair this with 16GB of RAM and 512GB of storage again, like last year’s model had. Which could cause a price increase, but we won’t know for certain until later this Summer. The Razr 60 Ultra was only available in two storage models, with a 1TB model also being available. \\nMotorola is also sticking to two cameras here, with both of them being 50-megapixel sensors, and a 50-megapixel front-facing camera. \\nThe battery inside is expected to stick to about 4,700mAh, which is quite impressive for a flip-style foldable, and it’ll have 68W charging. This is actually pretty impressive since this is USB-C PD charging and not USB-A charging like a lot of the other Chinese devices on the market. \\n\\n\\n\\n            \\n                    \\n                  \\n                    \\n                  \\n\\n          \\nWhen will Motorola announce the Razr 70 Ultra?\\nMotorola hasn’t officially announced the Razr event yet, but based on the past few years, we are expecting it to happen later this month. \\n\\nDeviceLaunch Date\\n\\nRazr 50 SeriesJune 2024\\nRazr 60 SeriesApril 2025\\nRazr 70 SeriesExpected April 2026\\n\\n\\n\\n\\n\\nWhich means that we don’t have much longer to wait for the Razr 70 series, or the Razr 2026 in the US. Motorola is likely looking to do an earlier announcement this year, so it can get the FIFA World Cup models out ahead of the World Cup. As that World Cup is taking place in North America this year, starting in early June. \\nThe post Exclusive: Motorola Razr 70 Ultra Official Renders appeared first on Android Headlines.\",\n\"guid\": \n\"https://www.androidheadlines.com/?p=1277295\",\n\"content:encoded\": \n\"<img fetchpriority=\\\"high\\\" decoding=\\\"async\\\" width=\\\"600\\\" height=\\\"338\\\" src=\\\"https://www.androidheadlines.com/wp-content/uploads/2026/04/motorola-razr-70-ultra-AH.jpg\\\" class=\\\"attachment-medium size-medium wp-post-image\\\" alt=\\\"motorola razr 70 ultra AH\\\" style=\\\"float:right; margin:0 0 10px 10px;\\\" srcset=\\\"https://www.androidheadlines.com/wp-content/uploads/2026/04/motorola-razr-70-ultra-AH.jpg 1600w, https://www.androidheadlines.com/wp-content/uploads/2026/04/motorola-razr-70-ultra-AH-1420x799.jpg 1420w, https://www.androidheadlines.com/wp-content/uploads/2026/04/motorola-razr-70-ultra-AH-355x200.jpg 355w, https://www.androidheadlines.com/wp-content/uploads/2026/04/motorola-razr-70-ultra-AH-555x312.jpg 555w, https://www.androidheadlines.com/wp-content/uploads/2026/04/motorola-razr-70-ultra-AH-1154x649.jpg 1154w\\\" sizes=\\\"(max-width: 600px) 100vw, 600px\\\" />\\n<p>Motorola is expected to announce the Razr 70 Ultra (or Razr Ultra 2026 if you’re in the US) very soon, and we’ve already seen CADs from Onleaks for this new device. Now, courtesy of Onleaks, we have a couple of press renders.</p>\\n\\n\\n\\n<p>These press renders show the Razr 70 Ultra in two new colors: Orient Blue Alcantara and Pantone Cocoa Wood. So Motorola is sticking with the wood and alcantara color options from last year, which were a major hit with the Razr 60 Ultra (Razr Ultra 2025). </p>\\n\\n\\n\\n<p>It’s very likely that these are not the only colors for the Razr 70 Ultra this year. We’ve already seen it leak in a “Pantone African Violet” color, and last year, the Razr 60 Ultra was available in four colors. </p>\\n\\n\\n\\n<p>One of the first things you’ll notice here is that there’s no front-facing camera on the Razr 70 Ultra. Which means one of two things: either Motorola has decided to go with an under-display camera, or Motorola forgot to render it in these press renders. It’s most likely the latter. Though we would love to see a UDC on the Razr this year. </p>\\n\\n\\n\\n<figure class=\\\"wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-4-3 wp-has-aspect-ratio\\\"><div class=\\\"wp-block-embed__wrapper\\\">\\n<figure class=\\\"video-container youtube-lazy-container\\\" data-video-id=\\\"Z5mPUHG7kTQ\\\" id=\\\"youtube-lazy-69d6629358ae3\\\"><div class=\\\"youtube-lazy-placeholder\\\"><img decoding=\\\"async\\\" src=\\\"https://img.youtube.com/vi/Z5mPUHG7kTQ/hqdefault.jpg\\\" alt=\\\"YouTube video thumbnail\\\" class=\\\"youtube-lazy-thumbnail\\\" loading=\\\"lazy\\\"><button class=\\\"youtube-lazy-play\\\" aria-label=\\\"Play video\\\"><svg width=\\\"68\\\" height=\\\"48\\\" viewbox=\\\"0 0 68 48\\\"><path d=\\\"M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.63-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z\\\" fill=\\\"#f00\\\"></path><path d=\\\"M 45,24 27,14 27,34\\\" fill=\\\"#fff\\\"></path></svg></button></div><div class=\\\"youtube-lazy-iframe\\\" style=\\\"display:none;\\\" data-iframe-html=\\\"PGlmcmFtZSB0aXRsZT0iRXhjbHVzaXZlOiBNb3Rvcm9sYSBSYXpyIDcwIFVsdHJhIE9mZmljaWFsIFJlbmRlcnMiIHdpZHRoPSI3MzUiIGhlaWdodD0iNTUxIiBzcmM9Imh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL2VtYmVkL1o1bVBVSEc3a1RRP2ZlYXR1cmU9b2VtYmVkIiBmcmFtZWJvcmRlcj0iMCIgYWxsb3c9ImFjY2VsZXJvbWV0ZXI7IGF1dG9wbGF5OyBjbGlwYm9hcmQtd3JpdGU7IGVuY3J5cHRlZC1tZWRpYTsgZ3lyb3Njb3BlOyBwaWN0dXJlLWluLXBpY3R1cmU7IHdlYi1zaGFyZSIgcmVmZXJyZXJwb2xpY3k9InN0cmljdC1vcmlnaW4td2hlbi1jcm9zcy1vcmlnaW4iIGFsbG93ZnVsbHNjcmVlbj48L2lmcmFtZT4=\\\"></div></figure>\\n</div></figure>\\n\\n\\n\\n<h2 class=\\\"wp-block-heading\\\" id=\\\"h-motorola-razr-70-ultra-is-expected-to-use-the-snapdragon-8-elite-gen-5\\\">Motorola Razr 70 Ultra is expected to use the Snapdragon 8 Elite Gen 5</h2>\\n\\n\\n\\n<p>Last year, when Motorola first debuted the ‘Ultra’ variant of the Razr family, it did so using the Snapdragon 8 Elite, and we expect that to be the case again this year with the Snapdragon 8 Elite Gen 5. This is despite the Razr Fold being announced with the Snapdragon 8 Gen 5 already. </p>\\n\\n\\n\\n<p>Motorola is also expected to pair this with 16GB of RAM and 512GB of storage again, like last year’s model had. Which could cause a price increase, but we won’t know for certain until later this Summer. The Razr 60 Ultra was only available in two storage models, with a 1TB model also being available. </p>\\n\\n\\n\\n<p>Motorola is also sticking to two cameras here, with both of them being 50-megapixel sensors, and a 50-megapixel front-facing camera. </p>\\n\\n\\n\\n<p>The battery inside is expected to stick to about 4,700mAh, which is quite impressive for a flip-style foldable, and it’ll have 68W charging. This is actually pretty impressive since this is USB-C PD charging and not USB-A charging like a lot of the other Chinese devices on the market. </p>\\n\\n\\n    <section class=\\\"section mt-4\\\">\\n    <div class=\\\"container px-0\\\">\\n              <!-- Single Column Carousel: first main slide is eager; thumbs stay lazy after the first small thumb. -->\\n        <div class=\\\"image-slider-wrap single-column\\\">\\n          <div class=\\\"slider-main position-relative\\\">\\n            <!-- Generated by IcoMoon.io -->\\n<svg version=\\\"1.1\\\" xmlns=\\\"http://www.w3.org/2000/svg\\\" width=\\\"1024\\\" height=\\\"1024\\\" viewbox=\\\"0 0 1024 1024\\\">\\n<g id=\\\"icomoon-ignore\\\">\\n</g>\\n<path d=\\\"M34.133 953.173c0 2.389 0.183 4.772 0.733 7.154 0.183 1.099 0.55 2.198 0.917 3.12 0.367 1.283 0.733 2.383 1.1 3.666 0.55 1.283 1.284 2.383 1.834 3.666 0.55 0.915 0.917 1.836 1.467 2.751 2.751 4.035 6.235 7.516 10.085 10.083 0.917 0.553 1.834 0.922 2.751 1.468 1.1 0.737 2.384 1.283 3.667 1.836 1.284 0.546 2.384 0.73 3.667 1.099 1.1 0.369 2.017 0.73 3.117 0.915 2.384 0.553 4.768 0.737 7.152 0.737h266.622c20.171 0 36.674-16.507 36.674-36.673 0-20.173-16.503-36.68-36.674-36.68h-178.054l222.979-222.795c14.303-14.303 14.303-37.591 0-51.894s-37.591-14.303-51.894 0l-222.797 223.161v-165.949c0-20.171-16.503-36.674-36.674-36.674s-36.674 16.503-36.674 36.674v254.334zM376.321 70.808c0-20.171-16.503-36.674-36.674-36.674h-268.823c-2.384 0-4.768 0.183-7.152 0.733-1.1 0.183-2.017 0.55-3.117 0.917-1.284 0.367-2.567 0.733-3.667 1.1-1.284 0.55-2.384 1.1-3.484 1.834-0.917 0.55-2.017 0.917-2.934 1.65-4.034 2.751-7.518 6.051-10.085 10.085-0.55 0.917-0.917 1.834-1.467 2.751-0.55 1.1-1.284 2.201-1.834 3.484s-0.733 2.384-1.1 3.667c-0.367 1.1-0.734 2.017-0.917 3.117-0.55 2.384-0.733 4.768-0.733 7.152v280.008c0 20.171 16.503 36.675 36.674 36.675s36.674-16.503 36.674-36.675v-191.44l217.296 217.296c7.152 7.151 16.503 10.819 25.855 10.819s18.704-3.668 25.856-10.819c14.303-14.303 14.303-37.592 0-51.894l-217.479-217.113h180.438c20.354 0 36.674-16.503 36.674-36.674zM647.531 376.505c7.152 7.152 16.503 10.819 25.856 10.819 9.355 0 18.7-3.667 25.855-10.819l217.293-217.296v191.44c0 20.171 16.507 36.674 36.68 36.674 20.166 0 36.673-16.503 36.673-36.674v-279.825c0-2.384-0.184-4.768-0.737-7.152-0.177-1.1-0.546-2.017-0.915-3.117-0.369-1.284-0.73-2.567-1.099-3.667-0.553-1.284-1.283-2.384-1.836-3.484-0.546-0.917-0.915-1.834-1.468-2.751-2.744-4.034-6.048-7.518-10.083-10.085-0.915-0.55-2.014-1.1-2.935-1.65-1.099-0.55-2.198-1.284-3.482-1.834s-2.567-0.733-3.85-1.1c-1.099-0.367-2.021-0.734-3.12-0.917-2.383-0.55-4.765-0.733-7.148-0.733h-268.090c-20.173 0-36.676 16.503-36.676 36.674s16.503 36.674 36.676 36.674h179.705l-217.298 217.113c-14.486 14.303-14.486 37.407 0 51.711zM641.821 693.535l222.981 222.986h-175.118c-20.174 0-36.678 16.5-36.678 36.673s16.503 36.673 36.678 36.673h263.687c2.383 0 4.765-0.184 7.148-0.73 1.106-0.184 2.021-0.553 3.12-0.922 1.283-0.362 2.567-0.73 3.666-1.099 1.283-0.546 2.383-1.283 3.488-1.836 0.915-0.546 2.014-0.915 2.744-1.461 4.035-2.751 7.523-6.24 10.090-10.090 0.546-0.915 0.915-1.83 1.468-2.751 0.73-1.099 1.283-2.383 1.83-3.666 0.553-1.283 0.737-2.383 1.106-3.666 0.362-1.099 0.73-2.021 0.915-3.12 0.546-2.383 0.73-4.765 0.73-7.148v-254.703c0-20.173-16.5-36.677-36.673-36.677s-36.673 16.503-36.673 36.677v165.949l-222.795-222.797c-14.306-14.303-37.594-14.303-51.897 0s-14.303 37.407 0.184 51.707z\\\"></path>\\n</svg>\\n\\n            <div id=\\\"block_93eb2717518353b923e1e9b6ea7eeac5-large\\\" data-navfor=\\\"block_93eb2717518353b923e1e9b6ea7eeac5-thumb\\\" class=\\\"image-slider-large\\\">\\n                                <div class=\\\"slide\\\" data-imgid=\\\"1277296\\\">\\n                    <img width=\\\"800\\\" height=\\\"826\\\" src=\\\"https://www.androidheadlines.com/wp-content/uploads/2026/04/Moto-Razr-70-Ultra-Press2.jpg\\\" class=\\\"media__image attachment-homepage-lg-feature size-homepage-lg-feature\\\" alt=\\\"Moto Razr 70 Ultra Press2\\\" loading=\\\"eager\\\" decoding=\\\"sync\\\" srcset=\\\"https://www.androidheadlines.com/wp-content/uploads/2026/04/Moto-Razr-70-Ultra-Press2.jpg 800w, https://www.androidheadlines.com/wp-content/uploads/2026/04/Moto-Razr-70-Ultra-Press2-355x367.jpg 355w, https://www.androidheadlines.com/wp-content/uploads/2026/04/Moto-Razr-70-Ultra-Press2-555x573.jpg 555w\\\" sizes=\\\"(max-width: 800px) 100vw, 800px\\\">                    \\n                  </div>\\n                                                <div class=\\\"slide\\\" data-imgid=\\\"1277297\\\">\\n                    <img width=\\\"800\\\" height=\\\"828\\\" src=\\\"https://www.androidheadlines.com/wp-content/uploads/2026/04/Moto-Razr-70-Ultra-Press1.jpg\\\" class=\\\"media__image attachment-homepage-lg-feature size-homepage-lg-feature\\\" alt=\\\"Moto Razr 70 Ultra Press1\\\" loading=\\\"lazy\\\" decoding=\\\"async\\\" srcset=\\\"https://www.androidheadlines.com/wp-content/uploads/2026/04/Moto-Razr-70-Ultra-Press1.jpg 800w, https://www.androidheadlines.com/wp-content/uploads/2026/04/Moto-Razr-70-Ultra-Press1-355x367.jpg 355w, https://www.androidheadlines.com/wp-content/uploads/2026/04/Moto-Razr-70-Ultra-Press1-555x574.jpg 555w\\\" sizes=\\\"auto, (max-width: 800px) 100vw, 800px\\\">                    \\n                  </div>\\n                                          </div>\\n            <div class=\\\"arrow-navigation\\\"></div>\\n          </div>\\n          <div id=\\\"block_93eb2717518353b923e1e9b6ea7eeac5-thumb\\\" data-navfor=\\\"block_93eb2717518353b923e1e9b6ea7eeac5-large\\\" class=\\\"image-slider-thumb\\\">\\n                            <div class=\\\"slide\\\" data-imgid=\\\"1277296\\\">\\n                                  </div>\\n                                          <div class=\\\"slide\\\" data-imgid=\\\"1277297\\\">\\n                                  </div>\\n                                    </div>\\n        </div>\\n          </div>\\n  </section>\\n\\n\\n\\n<h2 class=\\\"wp-block-heading\\\" id=\\\"h-when-will-motorola-announce-the-razr-70-ultra\\\">When will Motorola announce the Razr 70 Ultra?</h2>\\n\\n\\n\\n<p>Motorola hasn’t officially announced the Razr event yet, but based on the past few years, we are expecting it to happen later this month. </p>\\n\\n\\n\\n<figure class=\\\"wp-block-table\\\"><table class=\\\"has-fixed-layout\\\"><thead><tr><th>Device</th><th>Launch Date</th></tr></thead><tbody><tr><td>Razr 50 Series</td><td>June 2024</td></tr><tr><td>Razr 60 Series</td><td>April 2025</td></tr><tr><td>Razr 70 Series</td><td>Expected April 2026</td></tr></tbody></table></figure>\\n\\n\\n\\n<p>Which means that we don’t have much longer to wait for the Razr 70 series, or the Razr 2026 in the US. Motorola is likely looking to do an earlier announcement this year, so it can get the FIFA World Cup models out ahead of the World Cup. As that World Cup is taking place in North America this year, starting in early June. </p>\\n<p>The post <a href=\\\"https://www.androidheadlines.com/motorola-razr-70-ultra\\\">Exclusive: Motorola Razr 70 Ultra Official Renders</a> appeared first on <a href=\\\"https://www.androidheadlines.com\\\">Android Headlines</a>.</p>\\n\"\n}"
+      },
+      "id": "4c1e63b9-f2f5-4359-809e-d7faa40fd593",
+      "typeVersion": 1.1,
+      "name": "Start",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        224,
+        -128
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "rgwqGctMpP0qHren",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/rgwqGctMpP0qHren",
+          "cachedResultName": "getPulishedLinkedInPostIDs"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        1120,
+        -128
+      ],
+      "id": "797ccfa1-3e87-4da3-85ca-8c8364acad3c",
+      "name": "getPulishedLinkedInPostIDs",
+      "executeOnce": true,
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const articles = $('Check for Required Fields').all();\nconst guids = $('getPulishedLinkedInPostIDs').first().json.guids;\nconst filtered = [];\n\narticles.forEach((article) => {\n  if(!guids.includes(article.json.guid)){\n    filtered.push(article)\n  }\n});\n\nreturn filtered;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1344,
+        -128
+      ],
+      "id": "eed97da4-71d6-41f0-9baa-212f9ea5931c",
+      "name": "Check if Previously Published"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d01535de-5fdd-4411-9783-ebb50c36299f",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "c90072b1-372c-4550-9df4-24ee8782d363",
+              "name": "contentSnippet",
+              "value": "={{ $json.contentSnippet }}",
+              "type": "string"
+            },
+            {
+              "id": "cd769221-2d08-4643-ba96-97b501502887",
+              "name": "url",
+              "value": "={{ $json.url }}",
+              "type": "string"
+            },
+            {
+              "id": "180c6b1e-7826-4ddd-a361-36840adfbf6d",
+              "name": "guid",
+              "value": "={{ $json.guid }}",
+              "type": "string"
+            },
+            {
+              "id": "3899303a-e214-4320-a454-1170dd32261b",
+              "name": "img",
+              "value": "={{ $json.img }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1552,
+        -128
+      ],
+      "id": "514c2b29-b458-4f7e-bb05-61df2b8d87bc",
+      "name": "Return1"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "binaryMode": "separate"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-04-08T13:17:24.218Z",
+      "createdAt": "2026-04-08T13:17:24.218Z",
+      "role": "workflow:owner",
+      "workflowId": "79fXljhifzUKwtBv",
+      "projectId": "t74UsjIgT3c9HuwP"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-04-09T11:49:02.475Z",
+  "versionId": "f84e41c2-81fd-491a-9945-b03fb4186061"
+}
