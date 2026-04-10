@@ -3,136 +3,6 @@
   "activeVersion": null,
   "activeVersionId": null,
   "connections": {
-    "Android Authority": {
-      "main": [
-        [
-          {
-            "node": "Merge",
-            "type": "main",
-            "index": 1
-          }
-        ]
-      ]
-    },
-    "Android Police": {
-      "main": [
-        [
-          {
-            "node": "Merge",
-            "type": "main",
-            "index": 2
-          }
-        ]
-      ]
-    },
-    "Droid Life": {
-      "main": [
-        [
-          {
-            "node": "Merge",
-            "type": "main",
-            "index": 3
-          }
-        ]
-      ]
-    },
-    "Android Headlines": {
-      "main": [
-        [
-          {
-            "node": "Merge",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Android Central": {
-      "main": [
-        [
-          {
-            "node": "Merge",
-            "type": "main",
-            "index": 4
-          }
-        ]
-      ]
-    },
-    "Merge": {
-      "main": [
-        [
-          {
-            "node": "Set Fields",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Set Fields": {
-      "main": [
-        [
-          {
-            "node": "Filter by Keyword and Image",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "OnClick": {
-      "main": [
-        [
-          {
-            "node": "getStoredGuids",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "getStoredGuids": {
-      "main": [
-        [
-          {
-            "node": "Combine guids Array",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Combine guids Array": {
-      "main": [
-        [
-          {
-            "node": "Android Police",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Android Authority",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Android Headlines",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Droid Life",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Android Central",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Get UserInfo": {
       "main": [
         [
@@ -155,241 +25,9 @@
         ]
       ]
     },
-    "Content Builder Agent": {
-      "main": [
-        [
-          {
-            "node": "Image Prompt Generator",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Check for Required Fields": {
-      "main": [
-        [
-          {
-            "node": "Get Snippets",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Filter by Keyword and Image": {
-      "main": [
-        [
-          {
-            "node": "Check for Required Fields",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get Snippets": {
-      "main": [
-        [
-          {
-            "node": "Aggregate",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Aggregate": {
-      "main": [
-        [
-          {
-            "node": "Postgres PGVector Store",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Embeddings Ollama": {
-      "ai_embedding": [
-        [
-          {
-            "node": "Postgres PGVector Store",
-            "type": "ai_embedding",
-            "index": 0
-          },
-          {
-            "node": "Article Vectors Retriever",
-            "type": "ai_embedding",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Article Data Loader": {
-      "ai_document": [
-        [
-          {
-            "node": "Postgres PGVector Store",
-            "type": "ai_document",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Postgres PGVector Store": {
-      "main": [
-        [
-          {
-            "node": "Selector Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Article Vectors Retriever": {
-      "ai_tool": [
-        [
-          {
-            "node": "Selector Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Selector Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Selector Agent",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Selector Output Parser": {
-      "ai_outputParser": [
-        [
-          {
-            "node": "Selector Agent",
-            "type": "ai_outputParser",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Selector Agent": {
-      "main": [
-        [
-          {
-            "node": "getMatchingArticle",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Save article": {
       "main": [
         []
-      ]
-    },
-    "Reranker Cohere": {
-      "ai_reranker": [
-        [
-          {
-            "node": "Article Vectors Retriever",
-            "type": "ai_reranker",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If": {
-      "main": [
-        [
-          {
-            "node": "Content Builder Agent",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Selector Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Builder Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Content Builder Agent",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "getMatchingArticle": {
-      "main": [
-        [
-          {
-            "node": "If",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Prompt Output Parser": {
-      "ai_outputParser": [
-        [
-          {
-            "node": "Image Prompt Generator",
-            "type": "ai_outputParser",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Builder Output Parser": {
-      "ai_outputParser": [
-        [
-          {
-            "node": "Content Builder Agent",
-            "type": "ai_outputParser",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Prompt Generation Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Image Prompt Generator",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Image Prompt Generator": {
-      "main": [
-        [
-          {
-            "node": "ComfyUI",
-            "type": "main",
-            "index": 0
-          }
-        ]
       ]
     },
     "ComfyUI": {
@@ -462,11 +100,38 @@
       "main": [
         [
           {
-            "node": "getStoredGuids",
+            "node": "getAndroidRssFeeds",
             "type": "main",
             "index": 0
           }
         ]
+      ]
+    },
+    "getAndroidRssFeeds": {
+      "main": [
+        [
+          {
+            "node": "setAndroidArticles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "setAndroidArticles": {
+      "main": [
+        [
+          {
+            "node": "agenticImagePromptGenerator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "agenticImagePromptGenerator": {
+      "main": [
+        []
       ]
     }
   },
@@ -478,214 +143,6 @@
   },
   "name": "runAndroidRssPostWithVideo",
   "nodes": [
-    {
-      "parameters": {
-        "url": "https://www.androidauthority.com/feed/",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.rssFeedRead",
-      "typeVersion": 1.2,
-      "position": [
-        0,
-        192
-      ],
-      "id": "702e9ebd-f91e-4db3-baba-4353e51f27a9",
-      "name": "Android Authority",
-      "retryOnFail": true,
-      "waitBetweenTries": 5000,
-      "alwaysOutputData": true,
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "url": "https://www.androidpolice.com/feed/",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.rssFeedRead",
-      "typeVersion": 1.2,
-      "position": [
-        0,
-        384
-      ],
-      "id": "898e1d4c-dfed-4e1f-b39e-6dca7135997f",
-      "name": "Android Police",
-      "retryOnFail": true,
-      "waitBetweenTries": 5000,
-      "alwaysOutputData": true,
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "url": "https://www.droid-life.com/feed/",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.rssFeedRead",
-      "typeVersion": 1.2,
-      "position": [
-        0,
-        576
-      ],
-      "id": "5b021a9c-7a7b-4999-9c65-26483590c03f",
-      "name": "Droid Life",
-      "alwaysOutputData": true,
-      "retryOnFail": true,
-      "waitBetweenTries": 5000,
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "url": "https://www.androidheadlines.com/feed",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.rssFeedRead",
-      "typeVersion": 1.2,
-      "position": [
-        0,
-        0
-      ],
-      "id": "82dda5e5-8b0f-41da-b0bf-95d404e3e73d",
-      "name": "Android Headlines",
-      "alwaysOutputData": true,
-      "retryOnFail": true,
-      "waitBetweenTries": 5000,
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "url": "https://www.androidcentral.com/feeds.xml",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.rssFeedRead",
-      "typeVersion": 1.2,
-      "position": [
-        0,
-        768
-      ],
-      "id": "52da53b6-eed1-4804-9d87-dc08ff0b5ef9",
-      "name": "Android Central",
-      "alwaysOutputData": true,
-      "retryOnFail": true,
-      "waitBetweenTries": 5000,
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "numberInputs": 5
-      },
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3.2,
-      "position": [
-        224,
-        336
-      ],
-      "id": "da422ab0-6ccc-488b-ba18-c8900a5b9b35",
-      "name": "Merge",
-      "alwaysOutputData": false,
-      "retryOnFail": false
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "826d99f2-56e1-4123-b89d-14b154f926d3",
-              "name": "title",
-              "value": "={{ $json.title }}",
-              "type": "string"
-            },
-            {
-              "id": "70120e67-63b4-4aa7-9a66-53ae840f4350",
-              "name": "contentSnippet",
-              "value": "={{ $json[\"content:encodedSnippet\"].replace(/\\r|\\n|\\t/g, '').replace(/Credit:.*?TL;DR/gs, \"\") }}",
-              "type": "string"
-            },
-            {
-              "id": "4344dbcf-7b9b-48da-af1e-b0ebe7c9755e",
-              "name": "url",
-              "value": "={{ $json.link }}",
-              "type": "string"
-            },
-            {
-              "id": "fe56dc6f-c90c-4602-b364-56c7a50b8964",
-              "name": "guid",
-              "value": "={{ $json.guid }}",
-              "type": "string"
-            },
-            {
-              "id": "52abd3e6-903d-4cc2-8615-cc0fe509c46f",
-              "name": "=img",
-              "value": "={{ $json[\"content:encoded\"]?.urlDecode().extractUrl().replace('\\\"',\"\") }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        432,
-        0
-      ],
-      "id": "9c8d9190-62f3-4d57-99e8-aacc9c994e02",
-      "name": "Set Fields",
-      "notesInFlow": false
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
-      "position": [
-        -672,
-        480
-      ],
-      "id": "36cad5ba-f6f7-462c-87ce-cf0dcf9c1751",
-      "name": "OnClick"
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "SELECT \"guid\" FROM \"androidrss\"",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        -448,
-        384
-      ],
-      "id": "01d2129d-560d-46d9-a1f0-8a427064834d",
-      "name": "getStoredGuids",
-      "alwaysOutputData": true,
-      "credentials": {
-        "postgres": {
-          "id": "ONc4BCiTp5vVkE3z",
-          "name": "Postgres account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "fieldsToAggregate": {
-          "fieldToAggregate": [
-            {
-              "fieldToAggregate": "guid",
-              "renameField": true,
-              "outputFieldName": "guids"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.aggregate",
-      "typeVersion": 1,
-      "position": [
-        -224,
-        384
-      ],
-      "id": "0b4fbc97-5c22-4557-a0f3-0abc608ca9b8",
-      "name": "Combine guids Array"
-    },
     {
       "parameters": {
         "schema": {
@@ -756,8 +213,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        2208,
-        848
+        3200,
+        480
       ],
       "id": "a7c08b37-b30b-4ad7-a3fd-90ee60dbea96",
       "name": "Save article",
@@ -778,8 +235,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        1392,
-        848
+        2304,
+        480
       ],
       "id": "b8c721e7-889b-49de-9c95-6d6413338e85",
       "name": "Get UserInfo",
@@ -804,8 +261,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        2016,
-        848
+        2976,
+        480
       ],
       "id": "d6602e6e-5ba2-4dc2-b8db-5bfc5d2b710a",
       "name": "Submit Post",
@@ -818,142 +275,6 @@
     },
     {
       "parameters": {
-        "promptType": "define",
-        "text": "=Role: Act as a Senior Tech Writer with a sharp, engaging, and conversational writing style.\n\nTask: Review the provided article title and snippet. Then, write a short, personalized commentary (2–4 sentences) ending in an additional sentence in the first person (\"I\"). Also, provide a list of 3–5 relevant, trending hashtags. The first hashtag is to always be \"#Android\".\n\nPunctuation & Syntax (CRITICAL):\n\nZERO TOLERANCE for dashes or hyphens. Do not use em dashes (—), en dashes (–), or hyphens (-).\n\nNo compound words. Instead of \"wake-up call,\" use \"wakeup call\" or \"call to action.\" Instead of \"high-speed,\" use \"fast.\"\n\nStructure: If you feel the urge to use a dash to connect two thoughts, use a period and start a new sentence instead. \nVoice Guidelines:\n\nBe Authentic: No \"In today's world\" nor \"This article explains\".  Do not start with first person voice.\n\nTone: Provocative but optimistic.\n\nOutput:\nA json object with two required properties, a string (commentary) and an array of strings (hastags).\n\nInputs:\n\nArticle Headline: {{ $json.title }}\nArticle Snippet: {{ $json.contentSnippet }}",
-        "hasOutputParser": true,
-        "options": {
-          "maxIterations": 60
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 3.1,
-      "position": [
-        1584,
-        64
-      ],
-      "id": "e564a54a-8d0b-4501-b7aa-1d8d0d4eacf6",
-      "name": "Content Builder Agent",
-      "retryOnFail": true,
-      "waitBetweenTries": 1000,
-      "executeOnce": true,
-      "alwaysOutputData": false,
-      "maxTries": 5
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 3
-          },
-          "conditions": [
-            {
-              "id": "803a41cd-8fc5-4ee1-9dad-332349359602",
-              "leftValue": "={{ $json.title }}",
-              "rightValue": "=",
-              "operator": {
-                "type": "string",
-                "operation": "notEmpty",
-                "singleValue": true
-              }
-            },
-            {
-              "id": "b7494cd2-42a4-411a-8664-3e3684c44d82",
-              "leftValue": "={{ $('Combine guids Array').item.json.guids }}",
-              "rightValue": "={{ $json.guid }}",
-              "operator": {
-                "type": "array",
-                "operation": "notContains",
-                "rightType": "any"
-              }
-            },
-            {
-              "id": "1b2ff2e4-da46-4123-8588-b1cd858c02ca",
-              "leftValue": "={{ $json.img }}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "notEmpty",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.filter",
-      "typeVersion": 2.3,
-      "position": [
-        880,
-        0
-      ],
-      "id": "c767bc2a-26bf-4e2e-97ae-e997bf36201b",
-      "name": "Check for Required Fields"
-    },
-    {
-      "parameters": {
-        "jsCode": "const imageRegex = /\\.(jpg|jpeg|png|webp)$/i;\nconst keywordRegex = /Android|Galaxy/i;\n\nfor (const item of $input.all()) {\n  if(!imageRegex.test(item.json.img)){\n   item.json.img = \"\" \n  }\n  if(!keywordRegex.test(item.json.title)){\n    item.json.title = \"\"\n  }\n}\n\nreturn $input.all();"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        656,
-        0
-      ],
-      "id": "24ee0e0f-aabc-4946-9581-835a7475cb23",
-      "name": "Filter by Keyword and Image"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "db2da957-b5ce-4595-a17e-853ddc9db69f",
-              "name": "title",
-              "value": "={{ $json.title }}",
-              "type": "string"
-            },
-            {
-              "id": "4089df73-e686-4080-9e6d-5be598d3badf",
-              "name": "contentSnippet",
-              "value": "={{ $json.contentSnippet }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        1104,
-        0
-      ],
-      "id": "e71275d7-4e08-46f4-9c8f-c3cbf10e6445",
-      "name": "Get Snippets"
-    },
-    {
-      "parameters": {
-        "aggregate": "aggregateAllItemData",
-        "destinationFieldName": "articles",
-        "include": "specifiedFields",
-        "fieldsToInclude": "contentSnippet",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.aggregate",
-      "typeVersion": 1,
-      "position": [
-        1328,
-        0
-      ],
-      "id": "81a2fcae-d8cd-4188-9f4b-e66223040148",
-      "name": "Aggregate"
-    },
-    {
-      "parameters": {
         "operation": "executeQuery",
         "query": "TRUNCATE TABLE \"n8n_vectors_androidrss\";\n",
         "options": {}
@@ -961,8 +282,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        2432,
-        848
+        3200,
+        688
       ],
       "id": "7e8ab3cb-1d05-4fe3-ac0a-88e021cdef0a",
       "name": "Truncate Ai Agent Tables",
@@ -976,316 +297,7 @@
     },
     {
       "parameters": {
-        "mode": "insert",
-        "tableName": "n8n_vectors_androidrss",
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
-      "typeVersion": 1.3,
-      "position": [
-        464,
-        224
-      ],
-      "id": "74b5fb22-935a-4556-9584-42b584b5764b",
-      "name": "Postgres PGVector Store",
-      "credentials": {
-        "postgres": {
-          "id": "ONc4BCiTp5vVkE3z",
-          "name": "Postgres account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "model": "qwen3-embedding:4b"
-      },
-      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
-      "typeVersion": 1,
-      "position": [
-        464,
-        704
-      ],
-      "id": "ce8a9e22-be6c-4e72-a968-b4f17d26acd0",
-      "name": "Embeddings Ollama",
-      "credentials": {
-        "ollamaApi": {
-          "id": "jyKY7vCSm6TQQSr0",
-          "name": "Ollama account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "jsonMode": "expressionData",
-        "jsonData": "={{ $('Aggregate').item.json.articles }}",
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
-      "typeVersion": 1.1,
-      "position": [
-        560,
-        384
-      ],
-      "id": "09aa363d-f819-4ce2-a1fc-4bb04342f30f",
-      "name": "Article Data Loader"
-    },
-    {
-      "parameters": {
-        "mode": "retrieve-as-tool",
-        "toolDescription": "=News_Articles. Use this tool to select a news article.",
-        "tableName": "n8n_vectors_androidrss",
-        "topK": 30,
-        "useReranker": true,
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
-      "typeVersion": 1.3,
-      "position": [
-        832,
-        608
-      ],
-      "id": "1544a14c-f7e6-48b8-8f5e-651fbdc7b399",
-      "name": "Article Vectors Retriever",
-      "credentials": {
-        "postgres": {
-          "id": "ONc4BCiTp5vVkE3z",
-          "name": "Postgres account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "=You are an Expert News Editor. You are provided a Vector Store Tool which contains a list of articles. Your task is to select the single most 'interesting' article based on three metrics: Novelty (how unique it is), Impact (potential for market disruption), and Controversy (how much it challenges existing norms). You are to respond to the user with only the content of the article that you selected as most 'interesting'.\n\nSelection Criteria:\n\nControversy: High levels of conflicting viewpoints or provocative statements.\nImpact: Significant social, political, or economic implications.\nNovelty: Unusual developments that deviate from standard news cycles.\n\nWhich one is the single most 'interesting' news article in your Vector Store?\n\n",
-        "hasOutputParser": true,
-        "options": {
-          "maxIterations": 60
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 3.1,
-      "position": [
-        816,
-        224
-      ],
-      "id": "966ed5c4-4d1b-41ed-9657-cb42b3f71ad6",
-      "name": "Selector Agent",
-      "executeOnce": true,
-      "alwaysOutputData": true,
-      "retryOnFail": true,
-      "maxTries": 5
-    },
-    {
-      "parameters": {
-        "model": "qwen3.5:4b",
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
-      "typeVersion": 1,
-      "position": [
-        816,
-        464
-      ],
-      "id": "6221b9a3-f77e-4663-a2d8-471f735fe686",
-      "name": "Selector Model",
-      "credentials": {
-        "ollamaApi": {
-          "id": "jyKY7vCSm6TQQSr0",
-          "name": "Ollama account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "jsonSchemaExample": "{\n\"contentSnippet\": \"This is an example content snippet from the article selected as most interesting.\"\n}"
-      },
-      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
-      "typeVersion": 1.3,
-      "position": [
-        992,
-        464
-      ],
-      "id": "c43d15ed-3741-4631-9609-20f928b06615",
-      "name": "Selector Output Parser"
-    },
-    {
-      "parameters": {
-        "topN": 1
-      },
-      "type": "@n8n/n8n-nodes-langchain.rerankerCohere",
-      "typeVersion": 1,
-      "position": [
-        880,
-        784
-      ],
-      "id": "8751c3c5-4543-4b1b-834b-e7020e74d433",
-      "name": "Reranker Cohere",
-      "credentials": {
-        "cohereApi": {
-          "id": "ur0ba6VbGRm2LwOG",
-          "name": "Cohere account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 3
-          },
-          "conditions": [
-            {
-              "id": "8560af86-b971-4fd6-9171-4235ac2432a5",
-              "leftValue": "={{ $json.contentSnippet }}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "notEmpty",
-                "singleValue": true
-              }
-            },
-            {
-              "id": "2abc98eb-7d60-47e9-a8b5-ebdcbb8d0ed1",
-              "leftValue": "={{ $json.url }}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "notEmpty",
-                "singleValue": true
-              }
-            },
-            {
-              "id": "6f047c64-8d69-4e21-a57f-d497707099fe",
-              "leftValue": "={{ $json.guid }}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "notEmpty",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.3,
-      "position": [
-        1296,
-        224
-      ],
-      "id": "fee90346-0c97-4167-9007-01c1bb63b4bd",
-      "name": "If"
-    },
-    {
-      "parameters": {
-        "model": "qwen3.5:4b",
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
-      "typeVersion": 1,
-      "position": [
-        1584,
-        304
-      ],
-      "id": "c9dd5e97-f942-4d96-addf-a15c85f39919",
-      "name": "Builder Model",
-      "credentials": {
-        "ollamaApi": {
-          "id": "jyKY7vCSm6TQQSr0",
-          "name": "Ollama account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "jsCode": "const targetMatch = $input.first().json.output.contentSnippet;\nconst searchItems = $('Check for Required Fields').all();\nconst regX = /(?<=[.!?])\\s/;\n\nreturn searchItems.filter(item => {\n  const text = item.json.contentSnippet || \"\";\n  // Extract first sentence: split by punctuation followed by space\n  const firstSentence = text.split(regX)[0].trim();\n  return targetMatch.includes(firstSentence);\n});"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1120,
-        224
-      ],
-      "id": "4adabf67-c7cd-4163-ae5e-dfc0605b6254",
-      "name": "getMatchingArticle",
-      "alwaysOutputData": true,
-      "executeOnce": true
-    },
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "=# ROLE\nYou are an expert Editorial Photo Director and AI Art Prompt Engineer. Your task is to transform a news article into a highly detailed, professional image generation prompt (for Midjourney, DALL-E 3, or Stable Diffusion).\n\n# INPUT DATA\n<news_article>\n{{ $('getMatchingArticle').item.json.contentSnippet }}\n</news_article>\n\n# INSTRUCTIONS\nFollow these steps to generate the final image prompt:\n\n1. **Core Analysis**: Identify the central \"hero\" of the story (a person, a technology, a landscape, or a symbolic concept).\n2. **Atmosphere Extraction**: Determine the emotional tone of the article (e.g., somber, futuristic, chaotic, hopeful, clinical).\n3. **Visual Metaphor**: If the article is abstract (like \"inflation\" or \"policy\"), brainstorm a concrete visual metaphor.\n4. **Technical Specifications**: Assign professional photography or art styles (e.g., 35mm film, cinematic lighting, isometric 3D, or editorial illustration).\n\n# CONSTRAINTS\n- Avoid \"floating heads\" or generic AI-looking collages.\n- Do not use \"buzzwords\" like \"photorealistic\" or \"4k.\" Instead, describe lighting, textures, and camera lenses.\n- Focus on a single, high-impact composition rather than trying to depict every detail of the article.\n\n# OUTPUT\nThe full, descriptive prompt.",
-        "hasOutputParser": true,
-        "options": {
-          "maxIterations": 60
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 3.1,
-      "position": [
-        1936,
-        64
-      ],
-      "id": "5f4c4d7e-8799-4a70-9d0c-31b3407b4cd7",
-      "name": "Image Prompt Generator",
-      "executeOnce": true,
-      "retryOnFail": true,
-      "maxTries": 5
-    },
-    {
-      "parameters": {
-        "jsonSchemaExample": "{\n  \"image_generation_prompt\": \"Your high-impact visual description goes here, incorporating the news article's core subject, specific lighting conditions, camera angles, and professional artistic styles.\"\n}"
-      },
-      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
-      "typeVersion": 1.3,
-      "position": [
-        2080,
-        304
-      ],
-      "id": "a8a2ca0c-f423-46c4-909b-8531019595bd",
-      "name": "Prompt Output Parser"
-    },
-    {
-      "parameters": {
-        "jsonSchemaExample": "{\n\t\"commentary\": \"This is the generated and personalized content exmample.\",\n\t\"hashtags\": [\"#Android\", \"#AndroidEngineer\", \"#Mobile\"]\n}"
-      },
-      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
-      "typeVersion": 1.3,
-      "position": [
-        1728,
-        304
-      ],
-      "id": "342619ec-8f51-489c-9f83-6178290d263d",
-      "name": "Builder Output Parser"
-    },
-    {
-      "parameters": {
-        "model": "qwen3.5:4b",
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
-      "typeVersion": 1,
-      "position": [
-        1936,
-        304
-      ],
-      "id": "3321c495-f2db-4a14-bee1-dd8ce6a65fd9",
-      "name": "Prompt Generation Model",
-      "credentials": {
-        "ollamaApi": {
-          "id": "jyKY7vCSm6TQQSr0",
-          "name": "Ollama account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "workflow": "={\n  \"9\": {\n    \"inputs\": {\n      \"filename_prefix\": \"z-image\",\n      \"images\": [\n        \"76:65\",\n        0\n      ]\n    },\n    \"class_type\": \"SaveImage\",\n    \"_meta\": {\n      \"title\": \"Save Image\"\n    }\n  },\n  \"76:68\": {\n    \"inputs\": {\n      \"width\": 512,\n      \"height\": 512,\n      \"batch_size\": 1\n    },\n    \"class_type\": \"EmptySD3LatentImage\",\n    \"_meta\": {\n      \"title\": \"EmptySD3LatentImage\"\n    }\n  },\n  \"76:63\": {\n    \"inputs\": {\n      \"vae_name\": \"ae.safetensors\"\n    },\n    \"class_type\": \"VAELoader\",\n    \"_meta\": {\n      \"title\": \"Load VAE\"\n    }\n  },\n  \"76:62\": {\n    \"inputs\": {\n      \"clip_name\": \"qwen_3_4b.safetensors\",\n      \"type\": \"lumina2\",\n      \"device\": \"default\"\n    },\n    \"class_type\": \"CLIPLoader\",\n    \"_meta\": {\n      \"title\": \"Load CLIP\"\n    }\n  },\n  \"76:65\": {\n    \"inputs\": {\n      \"samples\": [\n        \"76:69\",\n        0\n      ],\n      \"vae\": [\n        \"76:63\",\n        0\n      ]\n    },\n    \"class_type\": \"VAEDecode\",\n    \"_meta\": {\n      \"title\": \"VAE Decode\"\n    }\n  },\n  \"76:70\": {\n    \"inputs\": {\n      \"shift\": 3,\n      \"model\": [\n        \"76:66\",\n        0\n      ]\n    },\n    \"class_type\": \"ModelSamplingAuraFlow\",\n    \"_meta\": {\n      \"title\": \"ModelSamplingAuraFlow\"\n    }\n  },\n  \"76:66\": {\n    \"inputs\": {\n      \"unet_name\": \"z_image_bf16.safetensors\",\n      \"weight_dtype\": \"default\"\n    },\n    \"class_type\": \"UNETLoader\",\n    \"_meta\": {\n      \"title\": \"Load Diffusion Model\"\n    }\n  },\n  \"76:71\": {\n    \"inputs\": {\n      \"text\": \"\",\n      \"clip\": [\n        \"76:62\",\n        0\n      ]\n    },\n    \"class_type\": \"CLIPTextEncode\",\n    \"_meta\": {\n      \"title\": \"CLIP Text Encode (Negative Prompt)\"\n    }\n  },\n  \"76:69\": {\n    \"inputs\": {\n      \"seed\": {{Math.ceil(Math.random() * 100000000000)}},\n      \"steps\": 20,\n      \"cfg\": 2,\n      \"sampler_name\": \"res_multistep\",\n      \"scheduler\": \"simple\",\n      \"denoise\": 1,\n      \"model\": [\n        \"76:70\",\n        0\n      ],\n      \"positive\": [\n        \"76:67\",\n        0\n      ],\n      \"negative\": [\n        \"76:71\",\n        0\n      ],\n      \"latent_image\": [\n        \"76:68\",\n        0\n      ]\n    },\n    \"class_type\": \"KSampler\",\n    \"_meta\": {\n      \"title\": \"KSampler\"\n    }\n  },\n  \"76:67\": {\n    \"inputs\": {\n      \"text\": \"{{ $json.output.image_generation_prompt }}\",\n      \"clip\": [\n        \"76:62\",\n        0\n      ]\n    },\n    \"class_type\": \"CLIPTextEncode\",\n    \"_meta\": {\n      \"title\": \"CLIP Text Encode (Positive Prompt)\"\n    }\n  }\n}",
+        "workflow": "={\n  \"9\": {\n    \"inputs\": {\n      \"filename_prefix\": \"z-image\",\n      \"images\": [\n        \"76:65\",\n        0\n      ]\n    },\n    \"class_type\": \"SaveImage\",\n    \"_meta\": {\n      \"title\": \"Save Image\"\n    }\n  },\n  \"76:68\": {\n    \"inputs\": {\n      \"width\": 512,\n      \"height\": 512,\n      \"batch_size\": 1\n    },\n    \"class_type\": \"EmptySD3LatentImage\",\n    \"_meta\": {\n      \"title\": \"EmptySD3LatentImage\"\n    }\n  },\n  \"76:63\": {\n    \"inputs\": {\n      \"vae_name\": \"ae.safetensors\"\n    },\n    \"class_type\": \"VAELoader\",\n    \"_meta\": {\n      \"title\": \"Load VAE\"\n    }\n  },\n  \"76:62\": {\n    \"inputs\": {\n      \"clip_name\": \"qwen_3_4b.safetensors\",\n      \"type\": \"lumina2\",\n      \"device\": \"default\"\n    },\n    \"class_type\": \"CLIPLoader\",\n    \"_meta\": {\n      \"title\": \"Load CLIP\"\n    }\n  },\n  \"76:65\": {\n    \"inputs\": {\n      \"samples\": [\n        \"76:69\",\n        0\n      ],\n      \"vae\": [\n        \"76:63\",\n        0\n      ]\n    },\n    \"class_type\": \"VAEDecode\",\n    \"_meta\": {\n      \"title\": \"VAE Decode\"\n    }\n  },\n  \"76:70\": {\n    \"inputs\": {\n      \"shift\": 3,\n      \"model\": [\n        \"76:66\",\n        0\n      ]\n    },\n    \"class_type\": \"ModelSamplingAuraFlow\",\n    \"_meta\": {\n      \"title\": \"ModelSamplingAuraFlow\"\n    }\n  },\n  \"76:66\": {\n    \"inputs\": {\n      \"unet_name\": \"z_image_bf16.safetensors\",\n      \"weight_dtype\": \"default\"\n    },\n    \"class_type\": \"UNETLoader\",\n    \"_meta\": {\n      \"title\": \"Load Diffusion Model\"\n    }\n  },\n  \"76:71\": {\n    \"inputs\": {\n      \"text\": \"\",\n      \"clip\": [\n        \"76:62\",\n        0\n      ]\n    },\n    \"class_type\": \"CLIPTextEncode\",\n    \"_meta\": {\n      \"title\": \"CLIP Text Encode (Negative Prompt)\"\n    }\n  },\n  \"76:69\": {\n    \"inputs\": {\n      \"seed\": {{Math.ceil(Math.random() * 100000000000)}},\n      \"steps\": 20,\n      \"cfg\": 2,\n      \"sampler_name\": \"res_multistep\",\n      \"scheduler\": \"simple\",\n      \"denoise\": 1,\n      \"model\": [\n        \"76:70\",\n        0\n      ],\n      \"positive\": [\n        \"76:67\",\n        0\n      ],\n      \"negative\": [\n        \"76:71\",\n        0\n      ],\n      \"latent_image\": [\n        \"76:68\",\n        0\n      ]\n    },\n    \"class_type\": \"KSampler\",\n    \"_meta\": {\n      \"title\": \"KSampler\"\n    }\n  },\n  \"76:67\": {\n    \"inputs\": {\n      \"text\": \"{{ $json.output_image_generation_prompt }}\",\n      \"clip\": [\n        \"76:62\",\n        0\n      ]\n    },\n    \"class_type\": \"CLIPTextEncode\",\n    \"_meta\": {\n      \"title\": \"CLIP Text Encode (Positive Prompt)\"\n    }\n  }\n}",
         "jpegQuality": 90,
         "timeout": 90
       },
@@ -1318,8 +330,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        1600,
-        848
+        2528,
+        480
       ],
       "id": "58301c61-fdd7-43bd-aea2-51d765a58ce3",
       "name": "Register Upload Request",
@@ -1344,8 +356,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        1808,
-        848
+        2752,
+        480
       ],
       "id": "f3a2a301-eebc-435b-b577-92ecebc088cf",
       "name": "Upload Media",
@@ -1445,11 +457,161 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.3,
       "position": [
-        -672,
-        288
+        544,
+        480
       ],
       "id": "490d4e56-f494-42e4-8917-edfbd734fa05",
       "name": "8am hour"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "HWf84wreOe5hJMIA",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/HWf84wreOe5hJMIA",
+          "cachedResultName": "getAndroidRssFeeds"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        752,
+        480
+      ],
+      "name": "getAndroidRssFeeds",
+      "id": "561b9035-93ce-42b9-8184-dc5bbc24a66d",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "79fXljhifzUKwtBv",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/79fXljhifzUKwtBv",
+          "cachedResultName": "setAndroidArticles"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "title": "={{ $json.title }}",
+            "link": "={{ $json.link }}",
+            "content:encodedSnippet": "={{ $json[\"content:encodedSnippet\"] }}",
+            "guid": "={{ $json.guid }}",
+            "content:encoded": "={{ $json[\"content:encoded\"] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "link",
+              "displayName": "link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "content:encodedSnippet",
+              "displayName": "content:encodedSnippet",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "guid",
+              "displayName": "guid",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "content:encoded",
+              "displayName": "content:encoded",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        976,
+        480
+      ],
+      "name": "setAndroidArticles",
+      "id": "f665715a-b0a4-4dea-9ac0-d1e863af147e",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "wYF27US84AdgLVZ1",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/wYF27US84AdgLVZ1",
+          "cachedResultName": "agenticImagePromptGenerator"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [
+            "Check_for_Required_Fields_allItems_firstItem"
+          ],
+          "schema": [
+            {
+              "id": "Check_for_Required_Fields_allItems_firstItem",
+              "displayName": "Check_for_Required_Fields_allItems_firstItem",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        1200,
+        480
+      ],
+      "name": "agenticImagePromptGenerator",
+      "id": "aefca7dd-b60b-4238-87ee-7c6c12953224"
     }
   ],
   "pinData": {
@@ -1495,6 +657,6 @@
   },
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2026-04-07T13:08:31.882Z",
-  "versionId": "98f98c08-e9ff-488f-a7fa-b783795d773e"
+  "updatedAt": "2026-04-08T22:23:41.193Z",
+  "versionId": "20a25cee-0a42-4b47-b665-d335e388b46e"
 }
