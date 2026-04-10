@@ -1,0 +1,1239 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-04-08T22:57:50.000Z",
+    "createdAt": "2026-04-08T22:57:40.977Z",
+    "versionId": "ec34322b-d970-4c7c-a4c0-ad9f09f0f059",
+    "workflowId": "wYF27US84AdgLVZ1",
+    "nodes": [
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=Role: Act as a Senior Tech Writer with a sharp, engaging, and conversational writing style.\n\nTask: Review the provided article title and snippet. Then, write a short, personalized commentary (2–4 sentences) ending in an additional sentence in the first person (\"I\"). Also, provide a list of 3–5 relevant, trending hashtags. The first hashtag is to always be \"#Android\".\n\nPunctuation & Syntax (CRITICAL):\n\nZERO TOLERANCE for dashes or hyphens. Do not use em dashes (—), en dashes (–), or hyphens (-).\n\nNo compound words. Instead of \"wake-up call,\" use \"wakeup call\" or \"call to action.\" Instead of \"high-speed,\" use \"fast.\"\n\nStructure: If you feel the urge to use a dash to connect two thoughts, use a period and start a new sentence instead. \nVoice Guidelines:\n\nBe Authentic: No \"In today's world\" nor \"This article explains\".  Do not start with first person voice.\n\nTone: Provocative but optimistic.\n\nOutput:\nA json object with two required properties, a string (commentary) and an array of strings (hastags).\n\nInputs:\n\nArticle Headline: {{ $json.title }}\nArticle Snippet: {{ $json.contentSnippet }}",
+          "hasOutputParser": true,
+          "options": {
+            "maxIterations": 60
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 3.1,
+        "position": [
+          1920,
+          -448
+        ],
+        "id": "e564a54a-8d0b-4501-b7aa-1d8d0d4eacf6",
+        "name": "Content Builder Agent",
+        "retryOnFail": true,
+        "waitBetweenTries": 1000,
+        "executeOnce": true,
+        "alwaysOutputData": false,
+        "maxTries": 5
+      },
+      {
+        "parameters": {
+          "mode": "insert",
+          "tableName": "n8n_vectors_androidrss",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+        "typeVersion": 1.3,
+        "position": [
+          496,
+          -448
+        ],
+        "id": "74b5fb22-935a-4556-9584-42b584b5764b",
+        "name": "Postgres PGVector Store",
+        "credentials": {
+          "postgres": {
+            "id": "ONc4BCiTp5vVkE3z",
+            "name": "Postgres account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "model": "qwen3-embedding:4b"
+        },
+        "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+        "typeVersion": 1,
+        "position": [
+          496,
+          -64
+        ],
+        "id": "ce8a9e22-be6c-4e72-a968-b4f17d26acd0",
+        "name": "Embeddings Ollama",
+        "credentials": {
+          "ollamaApi": {
+            "id": "jyKY7vCSm6TQQSr0",
+            "name": "Ollama account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsonMode": "expressionData",
+          "jsonData": "={{ $json.snippets }}",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+        "typeVersion": 1.1,
+        "position": [
+          640,
+          -224
+        ],
+        "id": "09aa363d-f819-4ce2-a1fc-4bb04342f30f",
+        "name": "Article Data Loader"
+      },
+      {
+        "parameters": {
+          "mode": "retrieve-as-tool",
+          "toolDescription": "=News_Articles. Use this tool to select a news article.",
+          "tableName": "n8n_vectors_androidrss",
+          "topK": 30,
+          "useReranker": true,
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+        "typeVersion": 1.3,
+        "position": [
+          992,
+          -160
+        ],
+        "id": "1544a14c-f7e6-48b8-8f5e-651fbdc7b399",
+        "name": "Article Vectors Retriever",
+        "credentials": {
+          "postgres": {
+            "id": "ONc4BCiTp5vVkE3z",
+            "name": "Postgres account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=You are an Expert News Editor. You are provided a Vector Store Tool which contains a list of articles. Your task is to select the single most 'interesting' article based on three metrics: Novelty (how unique it is), Impact (potential for market disruption), and Controversy (how much it challenges existing norms). You are to respond to the user with only the content of the article that you selected as most 'interesting'.\n\nSelection Criteria:\n\nControversy: High levels of conflicting viewpoints or provocative statements.\nImpact: Significant social, political, or economic implications.\nNovelty: Unusual developments that deviate from standard news cycles.\n\nWhich one is the single most 'interesting' news article in your Vector Store?\n\n",
+          "hasOutputParser": true,
+          "options": {
+            "maxIterations": 60
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 3.1,
+        "position": [
+          992,
+          -448
+        ],
+        "id": "966ed5c4-4d1b-41ed-9657-cb42b3f71ad6",
+        "name": "Selector Agent",
+        "executeOnce": true,
+        "alwaysOutputData": true,
+        "retryOnFail": true,
+        "maxTries": 5
+      },
+      {
+        "parameters": {
+          "model": "qwen3.5:4b",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+        "typeVersion": 1,
+        "position": [
+          848,
+          -224
+        ],
+        "id": "6221b9a3-f77e-4663-a2d8-471f735fe686",
+        "name": "Selector Model",
+        "credentials": {
+          "ollamaApi": {
+            "id": "jyKY7vCSm6TQQSr0",
+            "name": "Ollama account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsonSchemaExample": "{\n\"contentSnippet\": \"This is an example content snippet from the article selected as most interesting.\"\n}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.3,
+        "position": [
+          1264,
+          -224
+        ],
+        "id": "c43d15ed-3741-4631-9609-20f928b06615",
+        "name": "Selector Output Parser"
+      },
+      {
+        "parameters": {
+          "topN": 1
+        },
+        "type": "@n8n/n8n-nodes-langchain.rerankerCohere",
+        "typeVersion": 1,
+        "position": [
+          1040,
+          16
+        ],
+        "id": "8751c3c5-4543-4b1b-834b-e7020e74d433",
+        "name": "Reranker Cohere",
+        "credentials": {
+          "cohereApi": {
+            "id": "ur0ba6VbGRm2LwOG",
+            "name": "Cohere account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "8560af86-b971-4fd6-9171-4235ac2432a5",
+                "leftValue": "={{ $json.contentSnippet }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "2abc98eb-7d60-47e9-a8b5-ebdcbb8d0ed1",
+                "leftValue": "={{ $json.url }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "6f047c64-8d69-4e21-a57f-d497707099fe",
+                "leftValue": "={{ $json.guid }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          1696,
+          -448
+        ],
+        "id": "fee90346-0c97-4167-9007-01c1bb63b4bd",
+        "name": "If"
+      },
+      {
+        "parameters": {
+          "model": "qwen3.5:4b",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+        "typeVersion": 1,
+        "position": [
+          1936,
+          -224
+        ],
+        "id": "c9dd5e97-f942-4d96-addf-a15c85f39919",
+        "name": "Builder Model",
+        "credentials": {
+          "ollamaApi": {
+            "id": "jyKY7vCSm6TQQSr0",
+            "name": "Ollama account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const targetMatch = $input.first().json.output.contentSnippet;\nconst searchItems = $('Start').all();\nconst regX = /(?<=[.!?])\\s/;\n\nreturn searchItems.filter(item => {\n  const text = item.json.contentSnippet || \"\";\n  // Extract first sentence: split by punctuation followed by space\n  const firstSentence = text.split(regX)[0].trim();\n  return targetMatch.includes(firstSentence);\n});"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1440,
+          -496
+        ],
+        "id": "4adabf67-c7cd-4163-ae5e-dfc0605b6254",
+        "name": "getMatchingArticle",
+        "alwaysOutputData": true,
+        "executeOnce": true
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=# ROLE\nYou are an expert Editorial Photo Director and AI Art Prompt Engineer. Your task is to transform a news article into a highly detailed, professional image generation prompt (for Midjourney, DALL-E 3, or Stable Diffusion).\n\n# INPUT DATA\n<news_article>\n{{ $('getMatchingArticle').item.json.contentSnippet }}\n</news_article>\n\n# INSTRUCTIONS\nFollow these steps to generate the final image prompt:\n\n1. **Core Analysis**: Identify the central \"hero\" of the story (a person, a technology, a landscape, or a symbolic concept).\n2. **Atmosphere Extraction**: Determine the emotional tone of the article (e.g., somber, futuristic, chaotic, hopeful, clinical).\n3. **Visual Metaphor**: If the article is abstract (like \"inflation\" or \"policy\"), brainstorm a concrete visual metaphor.\n4. **Technical Specifications**: Assign professional photography or art styles (e.g., 35mm film, cinematic lighting, isometric 3D, or editorial illustration).\n\n# CONSTRAINTS\n- Avoid \"floating heads\" or generic AI-looking collages.\n- Do not use \"buzzwords\" like \"photorealistic\" or \"4k.\" Instead, describe lighting, textures, and camera lenses.\n- Focus on a single, high-impact composition rather than trying to depict every detail of the article.\n\n# OUTPUT\nThe full, descriptive prompt.",
+          "hasOutputParser": true,
+          "options": {
+            "maxIterations": 60
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 3.1,
+        "position": [
+          2272,
+          -448
+        ],
+        "id": "5f4c4d7e-8799-4a70-9d0c-31b3407b4cd7",
+        "name": "Image Prompt Generator",
+        "executeOnce": true,
+        "retryOnFail": true,
+        "maxTries": 5
+      },
+      {
+        "parameters": {
+          "jsonSchemaExample": "{\n  \"image_generation_prompt\": \"Your high-impact visual description goes here, incorporating the news article's core subject, specific lighting conditions, camera angles, and professional artistic styles.\"\n}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.3,
+        "position": [
+          2416,
+          -224
+        ],
+        "id": "a8a2ca0c-f423-46c4-909b-8531019595bd",
+        "name": "Prompt Output Parser"
+      },
+      {
+        "parameters": {
+          "jsonSchemaExample": "{\n\t\"commentary\": \"This is the generated and personalized content exmample.\",\n\t\"hashtags\": [\"#Android\", \"#AndroidEngineer\", \"#Mobile\"]\n}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.3,
+        "position": [
+          2064,
+          -224
+        ],
+        "id": "342619ec-8f51-489c-9f83-6178290d263d",
+        "name": "Builder Output Parser"
+      },
+      {
+        "parameters": {
+          "model": "qwen3.5:4b",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+        "typeVersion": 1,
+        "position": [
+          2288,
+          -224
+        ],
+        "id": "3321c495-f2db-4a14-bee1-dd8ce6a65fd9",
+        "name": "Prompt Generation Model",
+        "credentials": {
+          "ollamaApi": {
+            "id": "jyKY7vCSm6TQQSr0",
+            "name": "Ollama account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "f7bae84f-53c9-40b4-9bb6-4aa9ba2eec82",
+                "name": "output_image_generation_prompt",
+                "value": "={{ $json.output.image_generation_prompt }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          2624,
+          -448
+        ],
+        "id": "467f450f-24d1-49dd-b1e8-3fb86c4e6e63",
+        "name": "Return"
+      },
+      {
+        "parameters": {
+          "inputSource": "jsonExample",
+          "jsonExample": "{\n\"title\": \n\"Samsung’s Galaxy Glasses just passed a major launch milestone\",\n\"contentSnippet\": \n\"The battery unit for one or both of Samsung’s upcoming smart glasses was spotted on a certification database.The listing shows that the battery carries the model number EB-B0200AAY.Samsung is currently working on entering the smart glasses market. Similar to Google, the tech giant is believed to be developing multiple products in this category. The battery that will power at least one of these devices has recently been spotted on a certification database.Don’t want to miss the best from Android Authority?\",\n\"url\": \n\"https://www.androidauthority.com/samsung-galaxy-glasses-battery-certification-3655162/\",\n\"guid\": \n\"https://www.androidauthority.com/samsung-galaxy-glasses-battery-certification-3655162/\",\n\"img\": \n\"https://www.androidauthority.com/wp-content/uploads/2026/01/amazfit-smart-glasses-hands-on-ces-4-scaled.jpg\"\n}"
+        },
+        "id": "aa2d95f2-7019-4b04-b764-822875657655",
+        "typeVersion": 1.1,
+        "name": "Start",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "position": [
+          48,
+          -448
+        ]
+      },
+      {
+        "parameters": {
+          "aggregate": "aggregateAllItemData",
+          "destinationFieldName": "snippets",
+          "include": "specifiedFields",
+          "fieldsToInclude": "contentSnippet",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.aggregate",
+        "typeVersion": 1,
+        "position": [
+          272,
+          -448
+        ],
+        "id": "71ebe6b3-008b-4769-8ced-7e548f05ff85",
+        "name": "Aggregate"
+      }
+    ],
+    "connections": {
+      "Start": {
+        "main": [
+          [
+            {
+              "node": "Aggregate",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Image Prompt Generator": {
+        "main": [
+          [
+            {
+              "node": "Return",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Article Data Loader": {
+        "ai_document": [
+          [
+            {
+              "node": "Postgres PGVector Store",
+              "type": "ai_document",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Embeddings Ollama": {
+        "ai_embedding": [
+          [
+            {
+              "node": "Postgres PGVector Store",
+              "type": "ai_embedding",
+              "index": 0
+            },
+            {
+              "node": "Article Vectors Retriever",
+              "type": "ai_embedding",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Reranker Cohere": {
+        "ai_reranker": [
+          [
+            {
+              "node": "Article Vectors Retriever",
+              "type": "ai_reranker",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Selector Output Parser": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "Selector Agent",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Selector Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Selector Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Postgres PGVector Store": {
+        "main": [
+          [
+            {
+              "node": "Selector Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Selector Agent": {
+        "main": [
+          [
+            {
+              "node": "getMatchingArticle",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "getMatchingArticle": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "Content Builder Agent",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Selector Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Builder Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Content Builder Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Builder Output Parser": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "Content Builder Agent",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Content Builder Agent": {
+        "main": [
+          [
+            {
+              "node": "Image Prompt Generator",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prompt Generation Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Image Prompt Generator",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prompt Output Parser": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "Image Prompt Generator",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Article Vectors Retriever": {
+        "ai_tool": [
+          [
+            {
+              "node": "Selector Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Aggregate": {
+        "main": [
+          [
+            {
+              "node": "Postgres PGVector Store",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jim Campbell",
+    "name": "Version ec34322b",
+    "description": "",
+    "autosaved": true
+  },
+  "activeVersionId": "ec34322b-d970-4c7c-a4c0-ad9f09f0f059",
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Image Prompt Generator": {
+      "main": [
+        [
+          {
+            "node": "Return",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Article Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Ollama": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "ai_embedding",
+            "index": 0
+          },
+          {
+            "node": "Article Vectors Retriever",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reranker Cohere": {
+      "ai_reranker": [
+        [
+          {
+            "node": "Article Vectors Retriever",
+            "type": "ai_reranker",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Selector Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Selector Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Selector Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Selector Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres PGVector Store": {
+      "main": [
+        [
+          {
+            "node": "Selector Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Selector Agent": {
+      "main": [
+        [
+          {
+            "node": "getMatchingArticle",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "getMatchingArticle": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Content Builder Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Selector Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Builder Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Content Builder Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Builder Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Content Builder Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Content Builder Agent": {
+      "main": [
+        [
+          {
+            "node": "Image Prompt Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompt Generation Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Image Prompt Generator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompt Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Image Prompt Generator",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Article Vectors Retriever": {
+      "ai_tool": [
+        [
+          {
+            "node": "Selector Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-04-08T19:24:51.224Z",
+  "id": "wYF27US84AdgLVZ1",
+  "isArchived": false,
+  "meta": null,
+  "name": "agenticImagePromptGenerator",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Role: Act as a Senior Tech Writer with a sharp, engaging, and conversational writing style.\n\nTask: Review the provided article title and snippet. Then, write a short, personalized commentary (2–4 sentences) ending in an additional sentence in the first person (\"I\"). Also, provide a list of 3–5 relevant, trending hashtags. The first hashtag is to always be \"#Android\".\n\nPunctuation & Syntax (CRITICAL):\n\nZERO TOLERANCE for dashes or hyphens. Do not use em dashes (—), en dashes (–), or hyphens (-).\n\nNo compound words. Instead of \"wake-up call,\" use \"wakeup call\" or \"call to action.\" Instead of \"high-speed,\" use \"fast.\"\n\nStructure: If you feel the urge to use a dash to connect two thoughts, use a period and start a new sentence instead. \nVoice Guidelines:\n\nBe Authentic: No \"In today's world\" nor \"This article explains\".  Do not start with first person voice.\n\nTone: Provocative but optimistic.\n\nOutput:\nA json object with two required properties, a string (commentary) and an array of strings (hastags).\n\nInputs:\n\nArticle Headline: {{ $json.title }}\nArticle Snippet: {{ $json.contentSnippet }}",
+        "hasOutputParser": true,
+        "options": {
+          "maxIterations": 60
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1920,
+        -448
+      ],
+      "id": "e564a54a-8d0b-4501-b7aa-1d8d0d4eacf6",
+      "name": "Content Builder Agent",
+      "retryOnFail": true,
+      "waitBetweenTries": 1000,
+      "executeOnce": true,
+      "alwaysOutputData": false,
+      "maxTries": 5
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": "n8n_vectors_androidrss",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+      "typeVersion": 1.3,
+      "position": [
+        496,
+        -448
+      ],
+      "id": "74b5fb22-935a-4556-9584-42b584b5764b",
+      "name": "Postgres PGVector Store",
+      "credentials": {
+        "postgres": {
+          "id": "ONc4BCiTp5vVkE3z",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "qwen3-embedding:4b"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+      "typeVersion": 1,
+      "position": [
+        496,
+        -64
+      ],
+      "id": "ce8a9e22-be6c-4e72-a968-b4f17d26acd0",
+      "name": "Embeddings Ollama",
+      "credentials": {
+        "ollamaApi": {
+          "id": "jyKY7vCSm6TQQSr0",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "={{ $json.snippets }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        640,
+        -224
+      ],
+      "id": "09aa363d-f819-4ce2-a1fc-4bb04342f30f",
+      "name": "Article Data Loader"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "=News_Articles. Use this tool to select a news article.",
+        "tableName": "n8n_vectors_androidrss",
+        "topK": 30,
+        "useReranker": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+      "typeVersion": 1.3,
+      "position": [
+        992,
+        -160
+      ],
+      "id": "1544a14c-f7e6-48b8-8f5e-651fbdc7b399",
+      "name": "Article Vectors Retriever",
+      "credentials": {
+        "postgres": {
+          "id": "ONc4BCiTp5vVkE3z",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an Expert News Editor. You are provided a Vector Store Tool which contains a list of articles. Your task is to select the single most 'interesting' article based on three metrics: Novelty (how unique it is), Impact (potential for market disruption), and Controversy (how much it challenges existing norms). You are to respond to the user with only the content of the article that you selected as most 'interesting'.\n\nSelection Criteria:\n\nControversy: High levels of conflicting viewpoints or provocative statements.\nImpact: Significant social, political, or economic implications.\nNovelty: Unusual developments that deviate from standard news cycles.\n\nWhich one is the single most 'interesting' news article in your Vector Store?\n\n",
+        "hasOutputParser": true,
+        "options": {
+          "maxIterations": 60
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        992,
+        -448
+      ],
+      "id": "966ed5c4-4d1b-41ed-9657-cb42b3f71ad6",
+      "name": "Selector Agent",
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 5
+    },
+    {
+      "parameters": {
+        "model": "qwen3.5:4b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        848,
+        -224
+      ],
+      "id": "6221b9a3-f77e-4663-a2d8-471f735fe686",
+      "name": "Selector Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "jyKY7vCSm6TQQSr0",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\"contentSnippet\": \"This is an example content snippet from the article selected as most interesting.\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1264,
+        -224
+      ],
+      "id": "c43d15ed-3741-4631-9609-20f928b06615",
+      "name": "Selector Output Parser"
+    },
+    {
+      "parameters": {
+        "topN": 1
+      },
+      "type": "@n8n/n8n-nodes-langchain.rerankerCohere",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        16
+      ],
+      "id": "8751c3c5-4543-4b1b-834b-e7020e74d433",
+      "name": "Reranker Cohere",
+      "credentials": {
+        "cohereApi": {
+          "id": "ur0ba6VbGRm2LwOG",
+          "name": "Cohere account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "8560af86-b971-4fd6-9171-4235ac2432a5",
+              "leftValue": "={{ $json.contentSnippet }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "2abc98eb-7d60-47e9-a8b5-ebdcbb8d0ed1",
+              "leftValue": "={{ $json.url }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "6f047c64-8d69-4e21-a57f-d497707099fe",
+              "leftValue": "={{ $json.guid }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1696,
+        -448
+      ],
+      "id": "fee90346-0c97-4167-9007-01c1bb63b4bd",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "model": "qwen3.5:4b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        1936,
+        -224
+      ],
+      "id": "c9dd5e97-f942-4d96-addf-a15c85f39919",
+      "name": "Builder Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "jyKY7vCSm6TQQSr0",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const targetMatch = $input.first().json.output.contentSnippet;\nconst searchItems = $('Start').all();\nconst regX = /(?<=[.!?])\\s/;\n\nreturn searchItems.filter(item => {\n  const text = item.json.contentSnippet || \"\";\n  // Extract first sentence: split by punctuation followed by space\n  const firstSentence = text.split(regX)[0].trim();\n  return targetMatch.includes(firstSentence);\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1440,
+        -496
+      ],
+      "id": "4adabf67-c7cd-4163-ae5e-dfc0605b6254",
+      "name": "getMatchingArticle",
+      "alwaysOutputData": true,
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=# ROLE\nYou are an expert Editorial Photo Director and AI Art Prompt Engineer. Your task is to transform a news article into a highly detailed, professional image generation prompt (for Midjourney, DALL-E 3, or Stable Diffusion).\n\n# INPUT DATA\n<news_article>\n{{ $('getMatchingArticle').item.json.contentSnippet }}\n</news_article>\n\n# INSTRUCTIONS\nFollow these steps to generate the final image prompt:\n\n1. **Core Analysis**: Identify the central \"hero\" of the story (a person, a technology, a landscape, or a symbolic concept).\n2. **Atmosphere Extraction**: Determine the emotional tone of the article (e.g., somber, futuristic, chaotic, hopeful, clinical).\n3. **Visual Metaphor**: If the article is abstract (like \"inflation\" or \"policy\"), brainstorm a concrete visual metaphor.\n4. **Technical Specifications**: Assign professional photography or art styles (e.g., 35mm film, cinematic lighting, isometric 3D, or editorial illustration).\n\n# CONSTRAINTS\n- Avoid \"floating heads\" or generic AI-looking collages.\n- Do not use \"buzzwords\" like \"photorealistic\" or \"4k.\" Instead, describe lighting, textures, and camera lenses.\n- Focus on a single, high-impact composition rather than trying to depict every detail of the article.\n\n# OUTPUT\nThe full, descriptive prompt.",
+        "hasOutputParser": true,
+        "options": {
+          "maxIterations": 60
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        2272,
+        -448
+      ],
+      "id": "5f4c4d7e-8799-4a70-9d0c-31b3407b4cd7",
+      "name": "Image Prompt Generator",
+      "executeOnce": true,
+      "retryOnFail": true,
+      "maxTries": 5
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"image_generation_prompt\": \"Your high-impact visual description goes here, incorporating the news article's core subject, specific lighting conditions, camera angles, and professional artistic styles.\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        2416,
+        -224
+      ],
+      "id": "a8a2ca0c-f423-46c4-909b-8531019595bd",
+      "name": "Prompt Output Parser"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"commentary\": \"This is the generated and personalized content exmample.\",\n\t\"hashtags\": [\"#Android\", \"#AndroidEngineer\", \"#Mobile\"]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        2064,
+        -224
+      ],
+      "id": "342619ec-8f51-489c-9f83-6178290d263d",
+      "name": "Builder Output Parser"
+    },
+    {
+      "parameters": {
+        "model": "qwen3.5:4b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        2288,
+        -224
+      ],
+      "id": "3321c495-f2db-4a14-bee1-dd8ce6a65fd9",
+      "name": "Prompt Generation Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "jyKY7vCSm6TQQSr0",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f7bae84f-53c9-40b4-9bb6-4aa9ba2eec82",
+              "name": "output_image_generation_prompt",
+              "value": "={{ $json.output.image_generation_prompt }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2624,
+        -448
+      ],
+      "id": "467f450f-24d1-49dd-b1e8-3fb86c4e6e63",
+      "name": "Return"
+    },
+    {
+      "parameters": {
+        "inputSource": "jsonExample",
+        "jsonExample": "{\n\"title\": \n\"Samsung’s Galaxy Glasses just passed a major launch milestone\",\n\"contentSnippet\": \n\"The battery unit for one or both of Samsung’s upcoming smart glasses was spotted on a certification database.The listing shows that the battery carries the model number EB-B0200AAY.Samsung is currently working on entering the smart glasses market. Similar to Google, the tech giant is believed to be developing multiple products in this category. The battery that will power at least one of these devices has recently been spotted on a certification database.Don’t want to miss the best from Android Authority?\",\n\"url\": \n\"https://www.androidauthority.com/samsung-galaxy-glasses-battery-certification-3655162/\",\n\"guid\": \n\"https://www.androidauthority.com/samsung-galaxy-glasses-battery-certification-3655162/\",\n\"img\": \n\"https://www.androidauthority.com/wp-content/uploads/2026/01/amazfit-smart-glasses-hands-on-ces-4-scaled.jpg\"\n}"
+      },
+      "id": "aa2d95f2-7019-4b04-b764-822875657655",
+      "typeVersion": 1.1,
+      "name": "Start",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        48,
+        -448
+      ]
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "snippets",
+        "include": "specifiedFields",
+        "fieldsToInclude": "contentSnippet",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        272,
+        -448
+      ],
+      "id": "71ebe6b3-008b-4769-8ced-7e548f05ff85",
+      "name": "Aggregate"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "binaryMode": "separate"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-04-08T19:24:51.231Z",
+      "createdAt": "2026-04-08T19:24:51.231Z",
+      "role": "workflow:owner",
+      "workflowId": "wYF27US84AdgLVZ1",
+      "projectId": "t74UsjIgT3c9HuwP"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-04-08T22:57:40.973Z",
+  "versionId": "ec34322b-d970-4c7c-a4c0-ad9f09f0f059"
+}
