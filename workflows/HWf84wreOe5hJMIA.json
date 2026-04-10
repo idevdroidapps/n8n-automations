@@ -1,0 +1,621 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-04-08T14:12:54.000Z",
+    "createdAt": "2026-04-08T13:37:48.679Z",
+    "versionId": "f5a55ae0-e462-4f55-93bb-7d3a3af23bb8",
+    "workflowId": "HWf84wreOe5hJMIA",
+    "nodes": [
+      {
+        "parameters": {
+          "url": "https://www.androidauthority.com/feed/",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.rssFeedRead",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          192
+        ],
+        "id": "702e9ebd-f91e-4db3-baba-4353e51f27a9",
+        "name": "Android Authority",
+        "retryOnFail": true,
+        "waitBetweenTries": 5000,
+        "alwaysOutputData": true,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "url": "https://www.androidpolice.com/feed/",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.rssFeedRead",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          384
+        ],
+        "id": "898e1d4c-dfed-4e1f-b39e-6dca7135997f",
+        "name": "Android Police",
+        "retryOnFail": true,
+        "waitBetweenTries": 5000,
+        "alwaysOutputData": true,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "url": "https://www.droid-life.com/feed/",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.rssFeedRead",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          576
+        ],
+        "id": "5b021a9c-7a7b-4999-9c65-26483590c03f",
+        "name": "Droid Life",
+        "alwaysOutputData": true,
+        "retryOnFail": true,
+        "waitBetweenTries": 5000,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "url": "https://www.androidheadlines.com/feed",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.rssFeedRead",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          0
+        ],
+        "id": "82dda5e5-8b0f-41da-b0bf-95d404e3e73d",
+        "name": "Android Headlines",
+        "alwaysOutputData": true,
+        "retryOnFail": true,
+        "waitBetweenTries": 5000,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "url": "https://www.androidcentral.com/feeds.xml",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.rssFeedRead",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          768
+        ],
+        "id": "52da53b6-eed1-4804-9d87-dc08ff0b5ef9",
+        "name": "Android Central",
+        "alwaysOutputData": true,
+        "retryOnFail": true,
+        "waitBetweenTries": 5000,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "numberInputs": 5
+        },
+        "type": "n8n-nodes-base.merge",
+        "typeVersion": 3.2,
+        "position": [
+          224,
+          336
+        ],
+        "id": "da422ab0-6ccc-488b-ba18-c8900a5b9b35",
+        "name": "Merge",
+        "alwaysOutputData": false,
+        "retryOnFail": false
+      },
+      {
+        "parameters": {
+          "amount": 1
+        },
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          -224,
+          384
+        ],
+        "id": "99b75522-e5cb-402a-87b0-e0b1d8f2070b",
+        "name": "Wait",
+        "webhookId": "6a55274c-dafe-43b5-bb6d-30e6bac1fee4"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "bd24ac2d-e66b-4ddc-91ec-c053c0ac096c",
+                "name": "title",
+                "value": "={{ $json.title }}",
+                "type": "string"
+              },
+              {
+                "id": "5abda4b4-8333-4222-910c-48fb8c372bc8",
+                "name": "link",
+                "value": "={{ $json.link }}",
+                "type": "string"
+              },
+              {
+                "id": "754a62e6-24e5-4622-8816-3ee36d541844",
+                "name": "content:encodedSnippet",
+                "value": "={{ $json[\"content:encodedSnippet\"] }}",
+                "type": "string"
+              },
+              {
+                "id": "b13f16bc-60ca-4c25-bde9-f9fdf3814944",
+                "name": "guid",
+                "value": "={{ $json.guid }}",
+                "type": "string"
+              },
+              {
+                "id": "ba3be383-571d-4eda-9d2d-0cacfc50877c",
+                "name": "content:encoded",
+                "value": "={{ $json[\"content:encoded\"] }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          448,
+          384
+        ],
+        "id": "74892c5d-0489-4515-9621-99ec58c45050",
+        "name": "Return"
+      },
+      {
+        "parameters": {
+          "inputSource": "passthrough"
+        },
+        "id": "f0cd2221-7260-4bc5-b32a-653d53ffbfaf",
+        "typeVersion": 1.1,
+        "name": "Start",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "position": [
+          -448,
+          384
+        ]
+      }
+    ],
+    "connections": {
+      "Start": {
+        "main": [
+          [
+            {
+              "node": "Wait",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Merge": {
+        "main": [
+          [
+            {
+              "node": "Return",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait": {
+        "main": [
+          [
+            {
+              "node": "Android Headlines",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Android Authority",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Android Police",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Droid Life",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Android Central",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Android Headlines": {
+        "main": [
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Android Authority": {
+        "main": [
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Android Police": {
+        "main": [
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 2
+            }
+          ]
+        ]
+      },
+      "Droid Life": {
+        "main": [
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 3
+            }
+          ]
+        ]
+      },
+      "Android Central": {
+        "main": [
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 4
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jim Campbell",
+    "name": "Version 20260408",
+    "description": "",
+    "autosaved": true
+  },
+  "activeVersionId": "f5a55ae0-e462-4f55-93bb-7d3a3af23bb8",
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Return",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Android Headlines",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Android Authority",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Android Police",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Droid Life",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Android Central",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Android Headlines": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Android Authority": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Android Police": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Droid Life": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Android Central": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-04-08T12:48:18.757Z",
+  "id": "HWf84wreOe5hJMIA",
+  "isArchived": false,
+  "meta": null,
+  "name": "getAndroidRssFeeds",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://www.androidauthority.com/feed/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        192
+      ],
+      "id": "702e9ebd-f91e-4db3-baba-4353e51f27a9",
+      "name": "Android Authority",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://www.androidpolice.com/feed/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        384
+      ],
+      "id": "898e1d4c-dfed-4e1f-b39e-6dca7135997f",
+      "name": "Android Police",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://www.droid-life.com/feed/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        576
+      ],
+      "id": "5b021a9c-7a7b-4999-9c65-26483590c03f",
+      "name": "Droid Life",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://www.androidheadlines.com/feed",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "82dda5e5-8b0f-41da-b0bf-95d404e3e73d",
+      "name": "Android Headlines",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://www.androidcentral.com/feeds.xml",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        768
+      ],
+      "id": "52da53b6-eed1-4804-9d87-dc08ff0b5ef9",
+      "name": "Android Central",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "numberInputs": 5
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        224,
+        336
+      ],
+      "id": "da422ab0-6ccc-488b-ba18-c8900a5b9b35",
+      "name": "Merge",
+      "alwaysOutputData": false,
+      "retryOnFail": false
+    },
+    {
+      "parameters": {
+        "amount": 1
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -224,
+        384
+      ],
+      "id": "99b75522-e5cb-402a-87b0-e0b1d8f2070b",
+      "name": "Wait",
+      "webhookId": "6a55274c-dafe-43b5-bb6d-30e6bac1fee4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bd24ac2d-e66b-4ddc-91ec-c053c0ac096c",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "5abda4b4-8333-4222-910c-48fb8c372bc8",
+              "name": "link",
+              "value": "={{ $json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "754a62e6-24e5-4622-8816-3ee36d541844",
+              "name": "content:encodedSnippet",
+              "value": "={{ $json[\"content:encodedSnippet\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "b13f16bc-60ca-4c25-bde9-f9fdf3814944",
+              "name": "guid",
+              "value": "={{ $json.guid }}",
+              "type": "string"
+            },
+            {
+              "id": "ba3be383-571d-4eda-9d2d-0cacfc50877c",
+              "name": "content:encoded",
+              "value": "={{ $json[\"content:encoded\"] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        448,
+        384
+      ],
+      "id": "74892c5d-0489-4515-9621-99ec58c45050",
+      "name": "Return"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "id": "f0cd2221-7260-4bc5-b32a-653d53ffbfaf",
+      "typeVersion": 1.1,
+      "name": "Start",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        -448,
+        384
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "binaryMode": "separate"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-04-08T12:48:18.761Z",
+      "createdAt": "2026-04-08T12:48:18.761Z",
+      "role": "workflow:owner",
+      "workflowId": "HWf84wreOe5hJMIA",
+      "projectId": "t74UsjIgT3c9HuwP"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-04-08T13:37:48.677Z",
+  "versionId": "f5a55ae0-e462-4f55-93bb-7d3a3af23bb8"
+}
