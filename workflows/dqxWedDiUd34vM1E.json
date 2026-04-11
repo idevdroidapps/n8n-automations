@@ -246,17 +246,6 @@
         ]
       ]
     },
-    "Highlights Parser": {
-      "ai_outputParser": [
-        [
-          {
-            "node": "Highlights Extractor Agent",
-            "type": "ai_outputParser",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Highlights Reranker": {
       "ai_reranker": [
         [
@@ -294,19 +283,8 @@
       "main": [
         [
           {
-            "node": "Edit Fields",
+            "node": "Split Out",
             "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Script Parser": {
-      "ai_outputParser": [
-        [
-          {
-            "node": "Script Writer Agent",
-            "type": "ai_outputParser",
             "index": 0
           }
         ]
@@ -323,26 +301,9 @@
         ]
       ]
     },
-    "Edit Fields": {
-      "main": [
-        [
-          {
-            "node": "Script Writer Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Script Writer Agent": {
       "main": [
-        [
-          {
-            "node": "Sanitize Strings",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Script Chat Memory": {
@@ -382,7 +343,7 @@
       "main": [
         [
           {
-            "node": "Video Prompt Generator",
+            "node": "Filter Fields",
             "type": "main",
             "index": 0
           }
@@ -391,13 +352,34 @@
     },
     "Sanitize Strings": {
       "main": [
+        []
+      ]
+    },
+    "Tactics Parser": {
+      "ai_outputParser": [
         [
           {
-            "node": "Split Out",
+            "node": "Highlights Extractor Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Fields": {
+      "main": [
+        [
+          {
+            "node": "Script Writer Agent",
             "type": "main",
             "index": 0
           }
         ]
+      ]
+    },
+    "Video Prompt Generator": {
+      "main": [
+        []
       ]
     }
   },
@@ -477,7 +459,7 @@
       "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
       "typeVersion": 1.1,
       "position": [
-        328,
+        336,
         464
       ],
       "id": "7e92325f-6d23-488a-b1dc-54bfa27f6d89",
@@ -492,8 +474,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        -480,
-        672
+        2656,
+        240
       ],
       "id": "faa80163-528e-4614-9e0c-1ac5d42ce183",
       "name": "Truncate Ai Agent Tables",
@@ -512,8 +494,8 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
       "typeVersion": 1,
       "position": [
-        200,
-        464
+        192,
+        624
       ],
       "id": "53fd5a4a-f978-44b0-80c6-5a1306e37bc2",
       "name": "Vector Model",
@@ -527,7 +509,10 @@
     {
       "parameters": {
         "model": "qwen3.5:4b",
-        "options": {}
+        "options": {
+          "temperature": 0,
+          "format": "json"
+        }
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
       "typeVersion": 1,
@@ -550,19 +535,20 @@
         "text": "=You are a Senior Content Analyst specializing in technical report writing. You have access to a Vector Store Tool containing transcripts from multiple related videos. Your objective is to perform a cross-video synthesis to create a single, unified technical manual of specific, actionable tactics.\n\n### Task Instructions:\n1. Retrieval: Query the Vector Store for all relevant content related to {{$('Subject Entry').item.json.Subject}}. Focus specifically on actionable maneuvers, procedures, and techniques.\n2. Synthesis: Identify individual tactics. Do not provide high-level summaries or general concepts. If multiple videos describe the same maneuver, synthesize those details into a single, highly detailed technical paragraph for that specific tactic.\n3. Content Depth: Each tactic must be accompanied by a comprehensive paragraph (4-6 sentences) explaining the \"how\" and \"why,\" merging all technical nuances found across the transcripts.\n\n### Constraints:\n1. If specific data (names, dates, or technical specs) conflicts between transcripts, highlight the discrepancy within the 'tactic_description' field.\n2. Output any Metric measurements or units as converted Imperial Units.\n3. Never mention the source transcripts or videos in the output.\n4. Ensure every entry in 'tactical_analysis' represents a distinct action or procedure rather than a general theme.\n5. Do not output any conversational text, introductions, or markdown formatting outside of the JSON block.\n\nBegin your analysis now.",
         "hasOutputParser": true,
         "options": {
-          "maxIterations": 100
+          "maxIterations": 50
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        680,
+        688,
         240
       ],
       "id": "e3b315f3-4f03-44f4-af1e-90ab64ff0ef6",
       "name": "Highlights Extractor Agent",
       "executeOnce": true,
-      "retryOnFail": true
+      "retryOnFail": true,
+      "maxTries": 5
     },
     {
       "parameters": {
@@ -611,25 +597,12 @@
     },
     {
       "parameters": {
-        "jsonSchemaExample": "{\n  \"report_metadata\": { \"topic\": \"\", \"tactics_count\": 0 },\n  \"tactical_analysis\": [\n    {\n      \"tactic_name\": \"Name of the specific maneuver or procedure\",\n      \"tactic_description\": \"A detailed, technical paragraph synthesizing all relevant data points from the transcripts into a cohesive explanation.\",\n      \"criticality_rating\": \"Scale of 1-5\"\n    }\n  ]\n}"
-      },
-      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
-      "typeVersion": 1.3,
-      "position": [
-        960,
-        464
-      ],
-      "id": "2d232bb6-100d-482c-b5e3-a922d73aa396",
-      "name": "Highlights Parser"
-    },
-    {
-      "parameters": {
         "topN": 10
       },
       "type": "@n8n/n8n-nodes-langchain.rerankerCohere",
       "typeVersion": 1,
       "position": [
-        752,
+        720,
         672
       ],
       "id": "9b37f4ff-86f1-4d03-b641-b1a20e2bb0f9",
@@ -676,7 +649,7 @@
       "typeVersion": 1.3,
       "position": [
         672,
-        464
+        528
       ],
       "id": "d30d53b4-3dd5-46b2-a68b-e933de117ec1",
       "name": "Transcript Vector Retrieval",
@@ -690,43 +663,33 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=You are a Professional Scriptwriter specializing in tactical training. Your goal is to transform the provided JSON data into high-engagement video scripts while ensuring each script feels unique and narratively distinct.\n\n### Task:\nTransform the provided tactical JSON into a JSON array of video scripts (150-300 words each).\n\n### Narrative & Voice Constraints:\n1. **Strict Second Person:** Use \"You\" and \"Your.\" Never use \"I,\" \"We,\" or \"Us.\"\n2. **Hook Variety (CRITICAL):** Do not start scripts with the same phrase. You must rotate through different opening styles for every entry:\n   - **The \"In Media Res\" Start:** Jump straight into the action (e.g., \"Hit the deck immediately.\")\n   - **The \"Scenario\" Start:** Set a specific scene (e.g., \"The sound of a high-pitched buzz overhead means you have seconds to react.\")\n   - **The \"Consequence\" Start:** Start with what happens if they fail (e.g., \"Staying stationary in an open field is a death sentence.\")\n   - **The \"Question\" Start:** Pose a tactical problem (e.g., \"How do you disappear when there is nowhere to hide?\")\n3. **Sentence Flow:** Vary your sentence starters. Avoid starting multiple consecutive sentences with \"You will\" or \"Position yourself.\" Use transition phrases like \"By doing this,\" \"Instead of,\" \"Once you've secured,\" or \"Your next move is.\"\n\n### Script Structure:\n- **Hook:** A unique, high-stakes opening.\n- **The Procedure:** Detailed, technical \"how-to\" instructions.\n- **The Why:** The tactical reasoning behind the move.\n- **Closing:** A sharp, punchy command.\n\n### Unit Constraint:\nConvert all Metric units to Imperial (e.g., feet, miles, mph).\n\nBegin processing the following data:\n{{ $json.output.tactical_analysis }}",
-        "hasOutputParser": true,
+        "text": "=You are a Professional Scriptwriter specializing in tactical training. Your goal is to transform the provided JSON data into a high-engagement edutainment video script.\n\n### CRITICAL RULE:\nYour entire response must be a single, valid JSON object. Do not include a \"Thinking Process,\" \"Analysis,\" or \"Intro.\" Do not include markdown formatting (like ```json) outside the JSON block. Start with { and end with }.\n\n### Input:\nGeneral Subject Matter:{{ $json['output.report_metadata.topic'] }}\nTactic Name:{{ $json['output.tactics'].tactic_name }}\nTactic Description:{{ $json['output.tactics'].tactic_description }}\n\n### Task:\nTransform the input JSON into a video script (150-300 words).\n\n### Narrative & Voice Constraints:\n1. **Strict Second Person:** Use \"You\" and \"Your.\" Never use \"I,\" \"We,\" or \"Us.\"\n2. **Hook Variety (CRITICAL):** Do not start script with the same phrase. You must rotate through different opening styles for every entry:\n   - **The \"In Media Res\" Start:** Jump straight into the action (e.g., \"Hit the deck immediately.\")\n   - **The \"Scenario\" Start:** Set a specific scene (e.g., \"The sound of a high-pitched buzz overhead means you have seconds to react.\")\n   - **The \"Consequence\" Start:** Start with what happens if they fail (e.g., \"Staying stationary in an open field is a death sentence.\")\n   - **The \"Question\" Start:** Pose a tactical problem (e.g., \"How do you disappear when there is nowhere to hide?\")\n3. **Sentence Flow:** Vary your sentence starters. Avoid starting multiple consecutive sentences with \"You will\" or \"Position yourself.\" Use transition phrases like \"By doing this,\" \"Instead of,\" \"Once you've secured,\" or \"Your next move is.\"\n\n### Script Structure:\n- **Hook:** A unique, high-stakes opening.\n- **The Procedure:** Detailed, technical \"how-to\" instructions.\n- **The Why:** The tactical reasoning behind the move.\n- **Closing:** A sharp, punchy command.\n\n### Unit Constraint:\nConvert all Metric units to Imperial (e.g., feet, miles, mph).\n\n### CRITICAL CONSTRAINTS:\n1. NO PREAMBLE: Do not say \"Here is the script\" or \"I have updated the output.\"\n2. NO THINKING: Do not include any <thinking> blocks or \"Analysis\" sections.\n3. OUTPUT FORMAT: Your response must START with '{' and END with '}'. Anything outside of those characters is a critical failure.\n4. NO MARKDOWN: Do not use triple backticks (```json) to wrap the output.\n\n### OUTPUT FORMAT:\n{\n  \"title\": \"The Tactic Name\",\n  \"topic\": \"The overall topic\",\n  \"estimated_runtime\": \"1:30\",\n  \"word_count\": 0,\n  \"script_content\": \"The full instructional script goes here...\"\n}",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        1448,
+        1680,
         240
       ],
       "id": "9917590c-8d96-45eb-977f-92347d11f0b1",
       "name": "Script Writer Agent",
-      "executeOnce": true,
-      "retryOnFail": true
-    },
-    {
-      "parameters": {
-        "jsonSchemaExample": "{\"scripts\":[{\n    \"tactic_title\": \"The name of the tactic\",\n    \"estimated_runtime\": \"1:30\",\n    \"word_count\": 0,\n    \"script_content\": \"The full instructional script goes here...\"\n}]}"
-      },
-      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
-      "typeVersion": 1.3,
-      "position": [
-        1648,
-        464
-      ],
-      "id": "46eba6b2-c7c0-44a3-954d-584d8df2f5f4",
-      "name": "Script Parser"
+      "executeOnce": false,
+      "retryOnFail": true,
+      "maxTries": 5
     },
     {
       "parameters": {
         "model": "qwen3.5:4b",
-        "options": {}
+        "options": {
+          "temperature": 0,
+          "format": "json"
+        }
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
       "typeVersion": 1,
       "position": [
-        1392,
+        1616,
         464
       ],
       "id": "22cd9978-0c0f-4aa8-9ad6-b18e33748bee",
@@ -740,43 +703,13 @@
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "bf11aba1-fa0a-4112-b535-811cf284110a",
-              "name": "sessionId",
-              "value": "={{ JSON.stringify({ \"sessionId\": $now }) }}",
-              "type": "object"
-            },
-            {
-              "id": "b7451564-cde6-4eea-b25c-f45e4ad68fe3",
-              "name": "tactics",
-              "value": "={{ $json.output.tactical_analysis }}",
-              "type": "string"
-            }
-          ]
-        },
-        "includeOtherFields": true,
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        1168,
-        240
-      ],
-      "id": "33ed8cdb-9f2d-45d3-a251-7892a165d888",
-      "name": "Edit Fields"
-    },
-    {
-      "parameters": {
         "tableName": "n8n_script_writer_chat_histories",
         "contextWindowLength": 10
       },
       "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
       "typeVersion": 1.3,
       "position": [
-        1520,
+        1744,
         464
       ],
       "id": "a4a09a40-04c4-4a6a-a38d-b509b4172698",
@@ -797,7 +730,7 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        2360,
+        2304,
         240
       ],
       "id": "abdaefaf-d8ee-4f52-b204-f641a601fe00",
@@ -808,13 +741,13 @@
     },
     {
       "parameters": {
-        "model": "qwen3.5:4b",
+        "model": "gemma4:e4b",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
       "typeVersion": 1,
       "position": [
-        2304,
+        2320,
         464
       ],
       "id": "d3ab19c3-810c-4b53-b93e-fd141cd70ec5",
@@ -829,14 +762,14 @@
     {
       "parameters": {
         "sessionIdType": "customKey",
-        "sessionKey": "={{ $('Edit Fields').item.json.sessionId.sessionId }}",
+        "sessionKey": "={{ $('Filter Fields').item.json.sessionId.sessionId }}",
         "tableName": "n8n_video_prompt_chat_histories",
         "contextWindowLength": 10
       },
       "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
       "typeVersion": 1.3,
       "position": [
-        2432,
+        2448,
         464
       ],
       "id": "986f9995-eff8-4918-8e35-2308fa17a978",
@@ -853,13 +786,15 @@
     },
     {
       "parameters": {
-        "fieldToSplitOut": "output.scripts",
+        "fieldToSplitOut": "output.tactics",
+        "include": "selectedOtherFields",
+        "fieldsToInclude": "output.report_metadata.topic",
         "options": {}
       },
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        2080,
+        1168,
         240
       ],
       "id": "47015270-e149-4305-ae1f-ae68991e9c67",
@@ -872,11 +807,48 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1856,
+        2080,
         240
       ],
       "id": "534c8757-0188-4cd1-87ff-ca35ba534d23",
       "name": "Sanitize Strings"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"report_metadata\": { \"topic\": \"\", \"tactics_count\": 0 },\n  \"tactics\": [\n    {\n      \"tactic_name\": \"Name of the specific maneuver or procedure\",\n      \"tactic_description\": \"A detailed, technical paragraph synthesizing all relevant data points from the transcripts into a cohesive explanation.\"\n    }\n  ]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        960,
+        464
+      ],
+      "id": "2d232bb6-100d-482c-b5e3-a922d73aa396",
+      "name": "Tactics Parser"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bf11aba1-fa0a-4112-b535-811cf284110a",
+              "name": "sessionId",
+              "value": "={{ JSON.stringify({ \"sessionId\": $now }) }}",
+              "type": "object"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1392,
+        240
+      ],
+      "id": "33ed8cdb-9f2d-45d3-a251-7892a165d888",
+      "name": "Filter Fields"
     }
   ],
   "pinData": {},
@@ -896,6 +868,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-04-10T02:48:41.052Z",
-  "versionId": "55224a3c-4ae9-4eab-91b0-92bef5e08a01"
+  "updatedAt": "2026-04-10T22:24:44.358Z",
+  "versionId": "a02a5b32-118c-4b69-87e3-9a8d6c397ce2"
 }
