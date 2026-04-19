@@ -1,0 +1,102 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Read Video Prompt Guide",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Video Prompt Guide": {
+      "main": [
+        [
+          {
+            "node": "JSON Video Prompt Guide",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "JSON Video Prompt Guide": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "createdAt": "2026-04-18T13:51:05.877Z",
+  "id": "wLa1tXIM0hYXgCbe",
+  "isArchived": false,
+  "meta": null,
+  "name": "getLtxVideoPromptGuide",
+  "nodes": [
+    {
+      "parameters": {
+        "fileSelector": "/home/human/.n8n-files/ltx_video_prompt_guide.txt",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        368,
+        48
+      ],
+      "id": "0bc03e66-15ce-4d5a-a3af-4789558ff090",
+      "name": "Read Video Prompt Guide"
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        560,
+        48
+      ],
+      "id": "8403ad5b-86e5-4436-8948-bc89784267a7",
+      "name": "JSON Video Prompt Guide"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "id": "f5bcb9d8-a0aa-48e7-8104-e27854c2c733",
+      "typeVersion": 1.1,
+      "name": "Start",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        176,
+        48
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "binaryMode": "separate"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-04-18T13:51:05.886Z",
+      "createdAt": "2026-04-18T13:51:05.886Z",
+      "role": "workflow:owner",
+      "workflowId": "wLa1tXIM0hYXgCbe",
+      "projectId": "t74UsjIgT3c9HuwP"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-04-18T15:15:16.247Z",
+  "versionId": "12e0cf8c-66da-4f3a-b55d-ec1a833d5beb"
+}
