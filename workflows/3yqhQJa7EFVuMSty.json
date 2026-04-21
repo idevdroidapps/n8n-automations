@@ -1,0 +1,170 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-04-20T18:57:11.587Z",
+    "createdAt": "2026-04-20T18:57:11.587Z",
+    "versionId": "6f0961fc-d39c-4d9e-b387-1160511f587f",
+    "workflowId": "3yqhQJa7EFVuMSty",
+    "nodes": [
+      {
+        "type": "n8n-nodes-comfyui.comfyui",
+        "typeVersion": 1,
+        "position": [
+          1344,
+          544
+        ],
+        "id": "9975fa0a-67b0-4d18-ba68-c08443952967",
+        "name": "ComfyUI - Video Generation on Kevin",
+        "disabled": false,
+        "parameters": {
+          "workflow": "={\n  \"75\": {\n    \"inputs\": {\n      \"filename_prefix\": \"{{$json.id}}\",\n      \"format\": \"auto\",\n      \"codec\": \"auto\",\n      \"video\": [\n        \"320:310\",\n        0\n      ]\n    },\n    \"class_type\": \"SaveVideo\",\n    \"_meta\": {\n      \"title\": \"Save Video\"\n    }\n  },\n  \"324\": {\n    \"inputs\": {\n      \"image\": \"{{ $json.id }}_0000{{ $json.beat }}_.png [output]\",\n      \"refresh\": \"refresh\"\n    },\n    \"class_type\": \"LoadImageOutput\",\n    \"_meta\": {\n      \"title\": \"Load Image (from Outputs)\"\n    }\n  },\n  \"320:276\": {\n    \"inputs\": {\n      \"noise_seed\": 42\n    },\n    \"class_type\": \"RandomNoise\",\n    \"_meta\": {\n      \"title\": \"RandomNoise\"\n    }\n  },\n  \"320:277\": {\n    \"inputs\": {\n      \"noise_seed\": {{(Math.floor(Math.random() * (Math.floor(100) - Math.ceil(1) + 1)) + Math.ceil(1))}}\n    },\n    \"class_type\": \"RandomNoise\",\n    \"_meta\": {\n      \"title\": \"RandomNoise\"\n    }\n  },\n  \"320:278\": {\n    \"inputs\": {\n      \"video_latent\": [\n        \"320:288\",\n        0\n      ],\n      \"audio_latent\": [\n        \"320:307\",\n        1\n      ]\n    },\n    \"class_type\": \"LTXVConcatAVLatent\",\n    \"_meta\": {\n      \"title\": \"LTXVConcatAVLatent\"\n    }\n  },\n  \"320:279\": {\n    \"inputs\": {\n      \"ckpt_name\": \"ltx-2.3-22b-dev-fp8.safetensors\"\n    },\n    \"class_type\": \"LTXVAudioVAELoader\",\n    \"_meta\": {\n      \"title\": \"LTXV Audio VAE Loader\"\n    }\n  },\n  \"320:280\": {\n    \"inputs\": {\n      \"sampler_name\": \"euler_cfg_pp\"\n    },\n    \"class_type\": \"KSamplerSelect\",\n    \"_meta\": {\n      \"title\": \"KSamplerSelect\"\n    }\n  },\n  \"320:281\": {\n    \"inputs\": {\n      \"sigmas\": \"0.85, 0.7250, 0.4219, 0.0\"\n    },\n    \"class_type\": \"ManualSigmas\",\n    \"_meta\": {\n      \"title\": \"ManualSigmas\"\n    }\n  },\n  \"320:282\": {\n    \"inputs\": {\n      \"cfg\": 1,\n      \"model\": [\n        \"320:285\",\n        0\n      ],\n      \"positive\": [\n        \"320:284\",\n        0\n      ],\n      \"negative\": [\n        \"320:284\",\n        1\n      ]\n    },\n    \"class_type\": \"CFGGuider\",\n    \"_meta\": {\n      \"title\": \"CFGGuider\"\n    }\n  },\n  \"320:283\": {\n    \"inputs\": {\n      \"noise\": [\n        \"320:277\",\n        0\n      ],\n      \"guider\": [\n        \"320:314\",\n        0\n      ],\n      \"sampler\": [\n        \"320:291\",\n        0\n      ],\n      \"sigmas\": [\n        \"320:306\",\n        0\n      ],\n      \"latent_image\": [\n        \"320:318\",\n        0\n      ]\n    },\n    \"class_type\": \"SamplerCustomAdvanced\",\n    \"_meta\": {\n      \"title\": \"SamplerCustomAdvanced\"\n    }\n  },\n  \"320:284\": {\n    \"inputs\": {\n      \"positive\": [\n        \"320:304\",\n        0\n      ],\n      \"negative\": [\n        \"320:304\",\n        1\n      ],\n      \"latent\": [\n        \"320:307\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVCropGuides\",\n    \"_meta\": {\n      \"title\": \"LTXVCropGuides\"\n    }\n  },\n  \"320:285\": {\n    \"inputs\": {\n      \"lora_name\": \"ltx-2.3-22b-distilled-lora-384.safetensors\",\n      \"strength_model\": 0.5,\n      \"model\": [\n        \"320:316\",\n        0\n      ]\n    },\n    \"class_type\": \"LoraLoaderModelOnly\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"320:286\": {\n    \"inputs\": {\n      \"longer_edge\": 1536,\n      \"images\": [\n        \"320:290\",\n        0\n      ]\n    },\n    \"class_type\": \"ResizeImagesByLongerEdge\",\n    \"_meta\": {\n      \"title\": \"Resize Images by Longer Edge\"\n    }\n  },\n  \"320:287\": {\n    \"inputs\": {\n      \"samples\": [\n        \"320:307\",\n        0\n      ],\n      \"upscale_model\": [\n        \"320:311\",\n        0\n      ],\n      \"vae\": [\n        \"320:316\",\n        2\n      ]\n    },\n    \"class_type\": \"LTXVLatentUpsampler\",\n    \"_meta\": {\n      \"title\": \"LTXVLatentUpsampler\"\n    }\n  },\n  \"320:288\": {\n    \"inputs\": {\n      \"strength\": 1,\n      \"bypass\": [\n        \"320:302\",\n        0\n      ],\n      \"vae\": [\n        \"320:316\",\n        2\n      ],\n      \"image\": [\n        \"320:289\",\n        0\n      ],\n      \"latent\": [\n        \"320:287\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVImgToVideoInplace\",\n    \"_meta\": {\n      \"title\": \"LTXVImgToVideoInplace\"\n    }\n  },\n  \"320:289\": {\n    \"inputs\": {\n      \"img_compression\": 18,\n      \"image\": [\n        \"320:286\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVPreprocess\",\n    \"_meta\": {\n      \"title\": \"LTXVPreprocess\"\n    }\n  },\n  \"320:290\": {\n    \"inputs\": {\n      \"resize_type\": \"scale dimensions\",\n      \"resize_type.width\": [\n        \"320:312\",\n        0\n      ],\n      \"resize_type.height\": [\n        \"320:299\",\n        0\n      ],\n      \"resize_type.crop\": \"center\",\n      \"scale_method\": \"lanczos\",\n      \"input\": [\n        \"324\",\n        0\n      ]\n    },\n    \"class_type\": \"ResizeImageMaskNode\",\n    \"_meta\": {\n      \"title\": \"Resize Image/Mask\"\n    }\n  },\n  \"320:291\": {\n    \"inputs\": {\n      \"sampler_name\": \"euler_ancestral_cfg_pp\"\n    },\n    \"class_type\": \"KSamplerSelect\",\n    \"_meta\": {\n      \"title\": \"KSamplerSelect\"\n    }\n  },\n  \"320:292\": {\n    \"inputs\": {\n      \"expression\": \"a/2\",\n      \"values.a\": [\n        \"320:312\",\n        0\n      ]\n    },\n    \"class_type\": \"ComfyMathExpression\",\n    \"_meta\": {\n      \"title\": \"Math Expression\"\n    }\n  },\n  \"320:294\": {\n    \"inputs\": {\n      \"expression\": \"a/2\",\n      \"values.a\": [\n        \"320:299\",\n        0\n      ]\n    },\n    \"class_type\": \"ComfyMathExpression\",\n    \"_meta\": {\n      \"title\": \"Math Expression\"\n    }\n  },\n  \"320:295\": {\n    \"inputs\": {\n      \"width\": [\n        \"320:292\",\n        1\n      ],\n      \"height\": [\n        \"320:294\",\n        1\n      ],\n      \"length\": [\n        \"320:323\",\n        1\n      ],\n      \"batch_size\": 1\n    },\n    \"class_type\": \"EmptyLTXVLatentVideo\",\n    \"_meta\": {\n      \"title\": \"EmptyLTXVLatentVideo\"\n    }\n  },\n  \"320:296\": {\n    \"inputs\": {\n      \"strength\": 0.7,\n      \"bypass\": [\n        \"320:302\",\n        0\n      ],\n      \"vae\": [\n        \"320:316\",\n        2\n      ],\n      \"image\": [\n        \"320:289\",\n        0\n      ],\n      \"latent\": [\n        \"320:295\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVImgToVideoInplace\",\n    \"_meta\": {\n      \"title\": \"LTXVImgToVideoInplace\"\n    }\n  },\n  \"320:297\": {\n    \"inputs\": {\n      \"samples\": [\n        \"320:309\",\n        1\n      ],\n      \"audio_vae\": [\n        \"320:279\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVAudioVAEDecode\",\n    \"_meta\": {\n      \"title\": \"LTXV Audio VAE Decode\"\n    }\n  },\n  \"320:298\": {\n    \"inputs\": {\n      \"expression\": \"a\",\n      \"values.a\": [\n        \"320:300\",\n        0\n      ]\n    },\n    \"class_type\": \"ComfyMathExpression\",\n    \"_meta\": {\n      \"title\": \"Math Expression\"\n    }\n  },\n  \"320:299\": {\n    \"inputs\": {\n      \"value\": 1280\n    },\n    \"class_type\": \"PrimitiveInt\",\n    \"_meta\": {\n      \"title\": \"Height\"\n    }\n  },\n  \"320:300\": {\n    \"inputs\": {\n      \"value\": 30\n    },\n    \"class_type\": \"PrimitiveInt\",\n    \"_meta\": {\n      \"title\": \"Frame Rate\"\n    }\n  },\n  \"320:301\": {\n    \"inputs\": {\n      \"value\": 7\n    },\n    \"class_type\": \"PrimitiveInt\",\n    \"_meta\": {\n      \"title\": \"Duration\"\n    }\n  },\n  \"320:302\": {\n    \"inputs\": {\n      \"value\": false\n    },\n    \"class_type\": \"PrimitiveBoolean\",\n    \"_meta\": {\n      \"title\": \"Switch to Text to Video?\"\n    }\n  },\n  \"320:303\": {\n    \"inputs\": {\n      \"text\": [\n        \"320:319\",\n        0\n      ],\n      \"clip\": [\n        \"320:317\",\n        0\n      ]\n    },\n    \"class_type\": \"CLIPTextEncode\",\n    \"_meta\": {\n      \"title\": \"CLIP Text Encode (Prompt)\"\n    }\n  },\n  \"320:304\": {\n    \"inputs\": {\n      \"frame_rate\": [\n        \"320:298\",\n        0\n      ],\n      \"positive\": [\n        \"320:303\",\n        0\n      ],\n      \"negative\": [\n        \"320:313\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVConditioning\",\n    \"_meta\": {\n      \"title\": \"LTXVConditioning\"\n    }\n  },\n  \"320:305\": {\n    \"inputs\": {\n      \"frames_number\": [\n        \"320:323\",\n        1\n      ],\n      \"frame_rate\": [\n        \"320:298\",\n        1\n      ],\n      \"batch_size\": 1,\n      \"audio_vae\": [\n        \"320:279\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVEmptyLatentAudio\",\n    \"_meta\": {\n      \"title\": \"LTXV Empty Latent Audio\"\n    }\n  },\n  \"320:306\": {\n    \"inputs\": {\n      \"sigmas\": \"1.0, 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.0\"\n    },\n    \"class_type\": \"ManualSigmas\",\n    \"_meta\": {\n      \"title\": \"ManualSigmas\"\n    }\n  },\n  \"320:307\": {\n    \"inputs\": {\n      \"av_latent\": [\n        \"320:283\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVSeparateAVLatent\",\n    \"_meta\": {\n      \"title\": \"LTXVSeparateAVLatent\"\n    }\n  },\n  \"320:308\": {\n    \"inputs\": {\n      \"noise\": [\n        \"320:276\",\n        0\n      ],\n      \"guider\": [\n        \"320:282\",\n        0\n      ],\n      \"sampler\": [\n        \"320:280\",\n        0\n      ],\n      \"sigmas\": [\n        \"320:281\",\n        0\n      ],\n      \"latent_image\": [\n        \"320:278\",\n        0\n      ]\n    },\n    \"class_type\": \"SamplerCustomAdvanced\",\n    \"_meta\": {\n      \"title\": \"SamplerCustomAdvanced\"\n    }\n  },\n  \"320:309\": {\n    \"inputs\": {\n      \"av_latent\": [\n        \"320:308\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVSeparateAVLatent\",\n    \"_meta\": {\n      \"title\": \"LTXVSeparateAVLatent\"\n    }\n  },\n  \"320:310\": {\n    \"inputs\": {\n      \"fps\": [\n        \"320:298\",\n        0\n      ],\n      \"images\": [\n        \"320:315\",\n        0\n      ],\n      \"audio\": [\n        \"320:297\",\n        0\n      ]\n    },\n    \"class_type\": \"CreateVideo\",\n    \"_meta\": {\n      \"title\": \"Create Video\"\n    }\n  },\n  \"320:311\": {\n    \"inputs\": {\n      \"model_name\": \"ltx-2.3-spatial-upscaler-x2-1.1.safetensors\"\n    },\n    \"class_type\": \"LatentUpscaleModelLoader\",\n    \"_meta\": {\n      \"title\": \"Load Latent Upscale Model\"\n    }\n  },\n  \"320:312\": {\n    \"inputs\": {\n      \"value\": 720\n    },\n    \"class_type\": \"PrimitiveInt\",\n    \"_meta\": {\n      \"title\": \"Width\"\n    }\n  },\n  \"320:313\": {\n    \"inputs\": {\n      \"text\": \"pc game, console game, video game, cartoon, childish, ugly\",\n      \"clip\": [\n        \"320:317\",\n        0\n      ]\n    },\n    \"class_type\": \"CLIPTextEncode\",\n    \"_meta\": {\n      \"title\": \"CLIP Text Encode (Prompt)\"\n    }\n  },\n  \"320:314\": {\n    \"inputs\": {\n      \"cfg\": 1,\n      \"model\": [\n        \"320:285\",\n        0\n      ],\n      \"positive\": [\n        \"320:304\",\n        0\n      ],\n      \"negative\": [\n        \"320:304\",\n        1\n      ]\n    },\n    \"class_type\": \"CFGGuider\",\n    \"_meta\": {\n      \"title\": \"CFGGuider\"\n    }\n  },\n  \"320:315\": {\n    \"inputs\": {\n      \"tile_size\": 768,\n      \"overlap\": 64,\n      \"temporal_size\": 4096,\n      \"temporal_overlap\": 4,\n      \"samples\": [\n        \"320:309\",\n        0\n      ],\n      \"vae\": [\n        \"320:316\",\n        2\n      ]\n    },\n    \"class_type\": \"VAEDecodeTiled\",\n    \"_meta\": {\n      \"title\": \"VAE Decode (Tiled)\"\n    }\n  },\n  \"320:316\": {\n    \"inputs\": {\n      \"ckpt_name\": \"ltx-2.3-22b-dev-fp8.safetensors\"\n    },\n    \"class_type\": \"CheckpointLoaderSimple\",\n    \"_meta\": {\n      \"title\": \"Load Checkpoint\"\n    }\n  },\n  \"320:317\": {\n    \"inputs\": {\n      \"text_encoder\": \"gemma_3_12B_it_fp4_mixed.safetensors\",\n      \"ckpt_name\": \"ltx-2.3-22b-dev-fp8.safetensors\",\n      \"device\": \"default\"\n    },\n    \"class_type\": \"LTXAVTextEncoderLoader\",\n    \"_meta\": {\n      \"title\": \"LTXV Audio Text Encoder Loader\"\n    }\n  },\n  \"320:318\": {\n    \"inputs\": {\n      \"video_latent\": [\n        \"320:296\",\n        0\n      ],\n      \"audio_latent\": [\n        \"320:305\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVConcatAVLatent\",\n    \"_meta\": {\n      \"title\": \"LTXVConcatAVLatent\"\n    }\n  },\n  \"320:319\": {\n    \"inputs\": {\n      \"value\": {{ $json.video_prompt }}\n    },\n    \"class_type\": \"PrimitiveStringMultiline\",\n    \"_meta\": {\n      \"title\": \"Prompt\"\n    }\n  },\n  \"320:323\": {\n    \"inputs\": {\n      \"expression\": \"a * b + 1\",\n      \"values.a\": [\n        \"320:301\",\n        0\n      ],\n      \"values.b\": [\n        \"320:300\",\n        0\n      ]\n    },\n    \"class_type\": \"ComfyMathExpression\",\n    \"_meta\": {\n      \"title\": \"Math Expression (length)\"\n    }\n  }\n}",
+          "outputFormat": "raw",
+          "timeout": 120
+        },
+        "issues": {},
+        "credentials": {
+          "comfyUIApi": {
+            "id": "03shGwFYK9rTfVc1",
+            "name": "ComfyUI - Kevin"
+          }
+        }
+      },
+      {
+        "id": "0395695a-ee86-4219-9734-51f75bb0089f",
+        "typeVersion": 1.1,
+        "name": "Start",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "position": [
+          1136,
+          544
+        ],
+        "parameters": {
+          "workflowInputs": {
+            "values": [
+              {
+                "name": "video_prompt",
+                "type": "any"
+              },
+              {
+                "name": "beat",
+                "type": "any"
+              },
+              {
+                "name": "id",
+                "type": "any"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Start": {
+        "main": [
+          [
+            {
+              "node": "ComfyUI - Video Generation on Kevin",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jim Campbell",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "6f0961fc-d39c-4d9e-b387-1160511f587f",
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "ComfyUI - Video Generation on Kevin",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-04-20T18:57:11.578Z",
+  "id": "3yqhQJa7EFVuMSty",
+  "isArchived": false,
+  "meta": null,
+  "name": "comfyUiLtxI2vKevin",
+  "nodes": [
+    {
+      "type": "n8n-nodes-comfyui.comfyui",
+      "typeVersion": 1,
+      "position": [
+        1344,
+        544
+      ],
+      "id": "9975fa0a-67b0-4d18-ba68-c08443952967",
+      "name": "ComfyUI - Video Generation on Kevin",
+      "disabled": false,
+      "parameters": {
+        "workflow": "={\n  \"75\": {\n    \"inputs\": {\n      \"filename_prefix\": \"{{$json.id}}\",\n      \"format\": \"auto\",\n      \"codec\": \"auto\",\n      \"video\": [\n        \"320:310\",\n        0\n      ]\n    },\n    \"class_type\": \"SaveVideo\",\n    \"_meta\": {\n      \"title\": \"Save Video\"\n    }\n  },\n  \"324\": {\n    \"inputs\": {\n      \"image\": \"{{ $json.id }}_0000{{ $json.beat }}_.png [output]\",\n      \"refresh\": \"refresh\"\n    },\n    \"class_type\": \"LoadImageOutput\",\n    \"_meta\": {\n      \"title\": \"Load Image (from Outputs)\"\n    }\n  },\n  \"320:276\": {\n    \"inputs\": {\n      \"noise_seed\": 42\n    },\n    \"class_type\": \"RandomNoise\",\n    \"_meta\": {\n      \"title\": \"RandomNoise\"\n    }\n  },\n  \"320:277\": {\n    \"inputs\": {\n      \"noise_seed\": {{(Math.floor(Math.random() * (Math.floor(100) - Math.ceil(1) + 1)) + Math.ceil(1))}}\n    },\n    \"class_type\": \"RandomNoise\",\n    \"_meta\": {\n      \"title\": \"RandomNoise\"\n    }\n  },\n  \"320:278\": {\n    \"inputs\": {\n      \"video_latent\": [\n        \"320:288\",\n        0\n      ],\n      \"audio_latent\": [\n        \"320:307\",\n        1\n      ]\n    },\n    \"class_type\": \"LTXVConcatAVLatent\",\n    \"_meta\": {\n      \"title\": \"LTXVConcatAVLatent\"\n    }\n  },\n  \"320:279\": {\n    \"inputs\": {\n      \"ckpt_name\": \"ltx-2.3-22b-dev-fp8.safetensors\"\n    },\n    \"class_type\": \"LTXVAudioVAELoader\",\n    \"_meta\": {\n      \"title\": \"LTXV Audio VAE Loader\"\n    }\n  },\n  \"320:280\": {\n    \"inputs\": {\n      \"sampler_name\": \"euler_cfg_pp\"\n    },\n    \"class_type\": \"KSamplerSelect\",\n    \"_meta\": {\n      \"title\": \"KSamplerSelect\"\n    }\n  },\n  \"320:281\": {\n    \"inputs\": {\n      \"sigmas\": \"0.85, 0.7250, 0.4219, 0.0\"\n    },\n    \"class_type\": \"ManualSigmas\",\n    \"_meta\": {\n      \"title\": \"ManualSigmas\"\n    }\n  },\n  \"320:282\": {\n    \"inputs\": {\n      \"cfg\": 1,\n      \"model\": [\n        \"320:285\",\n        0\n      ],\n      \"positive\": [\n        \"320:284\",\n        0\n      ],\n      \"negative\": [\n        \"320:284\",\n        1\n      ]\n    },\n    \"class_type\": \"CFGGuider\",\n    \"_meta\": {\n      \"title\": \"CFGGuider\"\n    }\n  },\n  \"320:283\": {\n    \"inputs\": {\n      \"noise\": [\n        \"320:277\",\n        0\n      ],\n      \"guider\": [\n        \"320:314\",\n        0\n      ],\n      \"sampler\": [\n        \"320:291\",\n        0\n      ],\n      \"sigmas\": [\n        \"320:306\",\n        0\n      ],\n      \"latent_image\": [\n        \"320:318\",\n        0\n      ]\n    },\n    \"class_type\": \"SamplerCustomAdvanced\",\n    \"_meta\": {\n      \"title\": \"SamplerCustomAdvanced\"\n    }\n  },\n  \"320:284\": {\n    \"inputs\": {\n      \"positive\": [\n        \"320:304\",\n        0\n      ],\n      \"negative\": [\n        \"320:304\",\n        1\n      ],\n      \"latent\": [\n        \"320:307\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVCropGuides\",\n    \"_meta\": {\n      \"title\": \"LTXVCropGuides\"\n    }\n  },\n  \"320:285\": {\n    \"inputs\": {\n      \"lora_name\": \"ltx-2.3-22b-distilled-lora-384.safetensors\",\n      \"strength_model\": 0.5,\n      \"model\": [\n        \"320:316\",\n        0\n      ]\n    },\n    \"class_type\": \"LoraLoaderModelOnly\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"320:286\": {\n    \"inputs\": {\n      \"longer_edge\": 1536,\n      \"images\": [\n        \"320:290\",\n        0\n      ]\n    },\n    \"class_type\": \"ResizeImagesByLongerEdge\",\n    \"_meta\": {\n      \"title\": \"Resize Images by Longer Edge\"\n    }\n  },\n  \"320:287\": {\n    \"inputs\": {\n      \"samples\": [\n        \"320:307\",\n        0\n      ],\n      \"upscale_model\": [\n        \"320:311\",\n        0\n      ],\n      \"vae\": [\n        \"320:316\",\n        2\n      ]\n    },\n    \"class_type\": \"LTXVLatentUpsampler\",\n    \"_meta\": {\n      \"title\": \"LTXVLatentUpsampler\"\n    }\n  },\n  \"320:288\": {\n    \"inputs\": {\n      \"strength\": 1,\n      \"bypass\": [\n        \"320:302\",\n        0\n      ],\n      \"vae\": [\n        \"320:316\",\n        2\n      ],\n      \"image\": [\n        \"320:289\",\n        0\n      ],\n      \"latent\": [\n        \"320:287\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVImgToVideoInplace\",\n    \"_meta\": {\n      \"title\": \"LTXVImgToVideoInplace\"\n    }\n  },\n  \"320:289\": {\n    \"inputs\": {\n      \"img_compression\": 18,\n      \"image\": [\n        \"320:286\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVPreprocess\",\n    \"_meta\": {\n      \"title\": \"LTXVPreprocess\"\n    }\n  },\n  \"320:290\": {\n    \"inputs\": {\n      \"resize_type\": \"scale dimensions\",\n      \"resize_type.width\": [\n        \"320:312\",\n        0\n      ],\n      \"resize_type.height\": [\n        \"320:299\",\n        0\n      ],\n      \"resize_type.crop\": \"center\",\n      \"scale_method\": \"lanczos\",\n      \"input\": [\n        \"324\",\n        0\n      ]\n    },\n    \"class_type\": \"ResizeImageMaskNode\",\n    \"_meta\": {\n      \"title\": \"Resize Image/Mask\"\n    }\n  },\n  \"320:291\": {\n    \"inputs\": {\n      \"sampler_name\": \"euler_ancestral_cfg_pp\"\n    },\n    \"class_type\": \"KSamplerSelect\",\n    \"_meta\": {\n      \"title\": \"KSamplerSelect\"\n    }\n  },\n  \"320:292\": {\n    \"inputs\": {\n      \"expression\": \"a/2\",\n      \"values.a\": [\n        \"320:312\",\n        0\n      ]\n    },\n    \"class_type\": \"ComfyMathExpression\",\n    \"_meta\": {\n      \"title\": \"Math Expression\"\n    }\n  },\n  \"320:294\": {\n    \"inputs\": {\n      \"expression\": \"a/2\",\n      \"values.a\": [\n        \"320:299\",\n        0\n      ]\n    },\n    \"class_type\": \"ComfyMathExpression\",\n    \"_meta\": {\n      \"title\": \"Math Expression\"\n    }\n  },\n  \"320:295\": {\n    \"inputs\": {\n      \"width\": [\n        \"320:292\",\n        1\n      ],\n      \"height\": [\n        \"320:294\",\n        1\n      ],\n      \"length\": [\n        \"320:323\",\n        1\n      ],\n      \"batch_size\": 1\n    },\n    \"class_type\": \"EmptyLTXVLatentVideo\",\n    \"_meta\": {\n      \"title\": \"EmptyLTXVLatentVideo\"\n    }\n  },\n  \"320:296\": {\n    \"inputs\": {\n      \"strength\": 0.7,\n      \"bypass\": [\n        \"320:302\",\n        0\n      ],\n      \"vae\": [\n        \"320:316\",\n        2\n      ],\n      \"image\": [\n        \"320:289\",\n        0\n      ],\n      \"latent\": [\n        \"320:295\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVImgToVideoInplace\",\n    \"_meta\": {\n      \"title\": \"LTXVImgToVideoInplace\"\n    }\n  },\n  \"320:297\": {\n    \"inputs\": {\n      \"samples\": [\n        \"320:309\",\n        1\n      ],\n      \"audio_vae\": [\n        \"320:279\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVAudioVAEDecode\",\n    \"_meta\": {\n      \"title\": \"LTXV Audio VAE Decode\"\n    }\n  },\n  \"320:298\": {\n    \"inputs\": {\n      \"expression\": \"a\",\n      \"values.a\": [\n        \"320:300\",\n        0\n      ]\n    },\n    \"class_type\": \"ComfyMathExpression\",\n    \"_meta\": {\n      \"title\": \"Math Expression\"\n    }\n  },\n  \"320:299\": {\n    \"inputs\": {\n      \"value\": 1280\n    },\n    \"class_type\": \"PrimitiveInt\",\n    \"_meta\": {\n      \"title\": \"Height\"\n    }\n  },\n  \"320:300\": {\n    \"inputs\": {\n      \"value\": 30\n    },\n    \"class_type\": \"PrimitiveInt\",\n    \"_meta\": {\n      \"title\": \"Frame Rate\"\n    }\n  },\n  \"320:301\": {\n    \"inputs\": {\n      \"value\": 7\n    },\n    \"class_type\": \"PrimitiveInt\",\n    \"_meta\": {\n      \"title\": \"Duration\"\n    }\n  },\n  \"320:302\": {\n    \"inputs\": {\n      \"value\": false\n    },\n    \"class_type\": \"PrimitiveBoolean\",\n    \"_meta\": {\n      \"title\": \"Switch to Text to Video?\"\n    }\n  },\n  \"320:303\": {\n    \"inputs\": {\n      \"text\": [\n        \"320:319\",\n        0\n      ],\n      \"clip\": [\n        \"320:317\",\n        0\n      ]\n    },\n    \"class_type\": \"CLIPTextEncode\",\n    \"_meta\": {\n      \"title\": \"CLIP Text Encode (Prompt)\"\n    }\n  },\n  \"320:304\": {\n    \"inputs\": {\n      \"frame_rate\": [\n        \"320:298\",\n        0\n      ],\n      \"positive\": [\n        \"320:303\",\n        0\n      ],\n      \"negative\": [\n        \"320:313\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVConditioning\",\n    \"_meta\": {\n      \"title\": \"LTXVConditioning\"\n    }\n  },\n  \"320:305\": {\n    \"inputs\": {\n      \"frames_number\": [\n        \"320:323\",\n        1\n      ],\n      \"frame_rate\": [\n        \"320:298\",\n        1\n      ],\n      \"batch_size\": 1,\n      \"audio_vae\": [\n        \"320:279\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVEmptyLatentAudio\",\n    \"_meta\": {\n      \"title\": \"LTXV Empty Latent Audio\"\n    }\n  },\n  \"320:306\": {\n    \"inputs\": {\n      \"sigmas\": \"1.0, 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.0\"\n    },\n    \"class_type\": \"ManualSigmas\",\n    \"_meta\": {\n      \"title\": \"ManualSigmas\"\n    }\n  },\n  \"320:307\": {\n    \"inputs\": {\n      \"av_latent\": [\n        \"320:283\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVSeparateAVLatent\",\n    \"_meta\": {\n      \"title\": \"LTXVSeparateAVLatent\"\n    }\n  },\n  \"320:308\": {\n    \"inputs\": {\n      \"noise\": [\n        \"320:276\",\n        0\n      ],\n      \"guider\": [\n        \"320:282\",\n        0\n      ],\n      \"sampler\": [\n        \"320:280\",\n        0\n      ],\n      \"sigmas\": [\n        \"320:281\",\n        0\n      ],\n      \"latent_image\": [\n        \"320:278\",\n        0\n      ]\n    },\n    \"class_type\": \"SamplerCustomAdvanced\",\n    \"_meta\": {\n      \"title\": \"SamplerCustomAdvanced\"\n    }\n  },\n  \"320:309\": {\n    \"inputs\": {\n      \"av_latent\": [\n        \"320:308\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVSeparateAVLatent\",\n    \"_meta\": {\n      \"title\": \"LTXVSeparateAVLatent\"\n    }\n  },\n  \"320:310\": {\n    \"inputs\": {\n      \"fps\": [\n        \"320:298\",\n        0\n      ],\n      \"images\": [\n        \"320:315\",\n        0\n      ],\n      \"audio\": [\n        \"320:297\",\n        0\n      ]\n    },\n    \"class_type\": \"CreateVideo\",\n    \"_meta\": {\n      \"title\": \"Create Video\"\n    }\n  },\n  \"320:311\": {\n    \"inputs\": {\n      \"model_name\": \"ltx-2.3-spatial-upscaler-x2-1.1.safetensors\"\n    },\n    \"class_type\": \"LatentUpscaleModelLoader\",\n    \"_meta\": {\n      \"title\": \"Load Latent Upscale Model\"\n    }\n  },\n  \"320:312\": {\n    \"inputs\": {\n      \"value\": 720\n    },\n    \"class_type\": \"PrimitiveInt\",\n    \"_meta\": {\n      \"title\": \"Width\"\n    }\n  },\n  \"320:313\": {\n    \"inputs\": {\n      \"text\": \"pc game, console game, video game, cartoon, childish, ugly\",\n      \"clip\": [\n        \"320:317\",\n        0\n      ]\n    },\n    \"class_type\": \"CLIPTextEncode\",\n    \"_meta\": {\n      \"title\": \"CLIP Text Encode (Prompt)\"\n    }\n  },\n  \"320:314\": {\n    \"inputs\": {\n      \"cfg\": 1,\n      \"model\": [\n        \"320:285\",\n        0\n      ],\n      \"positive\": [\n        \"320:304\",\n        0\n      ],\n      \"negative\": [\n        \"320:304\",\n        1\n      ]\n    },\n    \"class_type\": \"CFGGuider\",\n    \"_meta\": {\n      \"title\": \"CFGGuider\"\n    }\n  },\n  \"320:315\": {\n    \"inputs\": {\n      \"tile_size\": 768,\n      \"overlap\": 64,\n      \"temporal_size\": 4096,\n      \"temporal_overlap\": 4,\n      \"samples\": [\n        \"320:309\",\n        0\n      ],\n      \"vae\": [\n        \"320:316\",\n        2\n      ]\n    },\n    \"class_type\": \"VAEDecodeTiled\",\n    \"_meta\": {\n      \"title\": \"VAE Decode (Tiled)\"\n    }\n  },\n  \"320:316\": {\n    \"inputs\": {\n      \"ckpt_name\": \"ltx-2.3-22b-dev-fp8.safetensors\"\n    },\n    \"class_type\": \"CheckpointLoaderSimple\",\n    \"_meta\": {\n      \"title\": \"Load Checkpoint\"\n    }\n  },\n  \"320:317\": {\n    \"inputs\": {\n      \"text_encoder\": \"gemma_3_12B_it_fp4_mixed.safetensors\",\n      \"ckpt_name\": \"ltx-2.3-22b-dev-fp8.safetensors\",\n      \"device\": \"default\"\n    },\n    \"class_type\": \"LTXAVTextEncoderLoader\",\n    \"_meta\": {\n      \"title\": \"LTXV Audio Text Encoder Loader\"\n    }\n  },\n  \"320:318\": {\n    \"inputs\": {\n      \"video_latent\": [\n        \"320:296\",\n        0\n      ],\n      \"audio_latent\": [\n        \"320:305\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVConcatAVLatent\",\n    \"_meta\": {\n      \"title\": \"LTXVConcatAVLatent\"\n    }\n  },\n  \"320:319\": {\n    \"inputs\": {\n      \"value\": {{ $json.video_prompt }}\n    },\n    \"class_type\": \"PrimitiveStringMultiline\",\n    \"_meta\": {\n      \"title\": \"Prompt\"\n    }\n  },\n  \"320:323\": {\n    \"inputs\": {\n      \"expression\": \"a * b + 1\",\n      \"values.a\": [\n        \"320:301\",\n        0\n      ],\n      \"values.b\": [\n        \"320:300\",\n        0\n      ]\n    },\n    \"class_type\": \"ComfyMathExpression\",\n    \"_meta\": {\n      \"title\": \"Math Expression (length)\"\n    }\n  }\n}",
+        "outputFormat": "raw",
+        "timeout": 120
+      },
+      "issues": {},
+      "credentials": {
+        "comfyUIApi": {
+          "id": "03shGwFYK9rTfVc1",
+          "name": "ComfyUI - Kevin"
+        }
+      }
+    },
+    {
+      "id": "0395695a-ee86-4219-9734-51f75bb0089f",
+      "typeVersion": 1.1,
+      "name": "Start",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        1136,
+        544
+      ],
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "video_prompt",
+              "type": "any"
+            },
+            {
+              "name": "beat",
+              "type": "any"
+            },
+            {
+              "name": "id",
+              "type": "any"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-04-20T18:57:11.583Z",
+      "createdAt": "2026-04-20T18:57:11.583Z",
+      "role": "workflow:owner",
+      "workflowId": "3yqhQJa7EFVuMSty",
+      "projectId": "t74UsjIgT3c9HuwP"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-04-20T18:57:11.578Z",
+  "versionId": "6f0961fc-d39c-4d9e-b387-1160511f587f"
+}
