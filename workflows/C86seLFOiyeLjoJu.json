@@ -1,0 +1,167 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-04-20T17:57:33.000Z",
+    "createdAt": "2026-04-20T17:54:10.141Z",
+    "versionId": "4e520830-97a5-4ba3-93e0-d3a5cd28f32e",
+    "workflowId": "C86seLFOiyeLjoJu",
+    "nodes": [
+      {
+        "parameters": {
+          "workflow": "={\n  \"75\": {\n    \"inputs\": {\n      \"filename_prefix\": \"{{ $json.id }}\",\n      \"format\": \"auto\",\n      \"codec\": \"auto\",\n      \"video\": [\n        \"92:97\",\n        0\n      ]\n    },\n    \"class_type\": \"SaveVideo\",\n    \"_meta\": {\n      \"title\": \"Save Video\"\n    }\n  },\n  \"102\": {\n    \"inputs\": {\n      \"resize_type\": \"scale dimensions\",\n      \"resize_type.width\": 720,\n      \"resize_type.height\": 1280,\n      \"resize_type.crop\": \"center\",\n      \"scale_method\": \"lanczos\",\n      \"input\": [\n        \"116\",\n        0\n      ]\n    },\n    \"class_type\": \"ResizeImageMaskNode\",\n    \"_meta\": {\n      \"title\": \"Resize Image/Mask\"\n    }\n  },\n  \"116\": {\n    \"inputs\": {\n      \"image\": \"{{ $json.id }}_0000{{ $json.beat }}_.png [output]\",\n      \"refresh\": \"refresh\"\n    },\n    \"class_type\": \"LoadImageOutput\",\n    \"_meta\": {\n      \"title\": \"Load Image (from Outputs)\"\n    }\n  },\n  \"92:8\": {\n    \"inputs\": {\n      \"sampler_name\": \"euler\"\n    },\n    \"class_type\": \"KSamplerSelect\",\n    \"_meta\": {\n      \"title\": \"KSamplerSelect\"\n    }\n  },\n  \"92:66\": {\n    \"inputs\": {\n      \"sampler_name\": \"gradient_estimation\"\n    },\n    \"class_type\": \"KSamplerSelect\",\n    \"_meta\": {\n      \"title\": \"KSamplerSelect\"\n    }\n  },\n  \"92:73\": {\n    \"inputs\": {\n      \"sigmas\": \"0.909375, 0.725, 0.421875, 0.0\"\n    },\n    \"class_type\": \"ManualSigmas\",\n    \"_meta\": {\n      \"title\": \"ManualSigmas\"\n    }\n  },\n  \"92:81\": {\n    \"inputs\": {\n      \"positive\": [\n        \"92:22\",\n        0\n      ],\n      \"negative\": [\n        \"92:22\",\n        1\n      ],\n      \"latent\": [\n        \"92:80\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVCropGuides\",\n    \"_meta\": {\n      \"title\": \"LTXVCropGuides\"\n    }\n  },\n  \"92:82\": {\n    \"inputs\": {\n      \"cfg\": 1,\n      \"model\": [\n        \"92:110\",\n        0\n      ],\n      \"positive\": [\n        \"92:81\",\n        0\n      ],\n      \"negative\": [\n        \"92:81\",\n        1\n      ]\n    },\n    \"class_type\": \"CFGGuider\",\n    \"_meta\": {\n      \"title\": \"CFGGuider\"\n    }\n  },\n  \"92:51\": {\n    \"inputs\": {\n      \"frames_number\": [\n        \"92:62\",\n        0\n      ],\n      \"frame_rate\": 30,\n      \"batch_size\": 1,\n      \"audio_vae\": [\n        \"92:48\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVEmptyLatentAudio\",\n    \"_meta\": {\n      \"title\": \"LTXV Empty Latent Audio\"\n    }\n  },\n  \"92:22\": {\n    \"inputs\": {\n      \"frame_rate\": 30,\n      \"positive\": [\n        \"92:3\",\n        0\n      ],\n      \"negative\": [\n        \"92:112\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVConditioning\",\n    \"_meta\": {\n      \"title\": \"LTXVConditioning\"\n    }\n  },\n  \"92:89\": {\n    \"inputs\": {\n      \"width\": [\n        \"92:106\",\n        0\n      ],\n      \"height\": [\n        \"92:106\",\n        1\n      ],\n      \"batch_size\": 1,\n      \"color\": 0\n    },\n    \"class_type\": \"EmptyImage\",\n    \"_meta\": {\n      \"title\": \"EmptyImage\"\n    }\n  },\n  \"92:41\": {\n    \"inputs\": {\n      \"noise\": [\n        \"92:11\",\n        0\n      ],\n      \"guider\": [\n        \"92:47\",\n        0\n      ],\n      \"sampler\": [\n        \"92:8\",\n        0\n      ],\n      \"sigmas\": [\n        \"92:113\",\n        0\n      ],\n      \"latent_image\": [\n        \"92:56\",\n        0\n      ]\n    },\n    \"class_type\": \"SamplerCustomAdvanced\",\n    \"_meta\": {\n      \"title\": \"SamplerCustomAdvanced\"\n    }\n  },\n  \"92:67\": {\n    \"inputs\": {\n      \"noise_seed\": 0\n    },\n    \"class_type\": \"RandomNoise\",\n    \"_meta\": {\n      \"title\": \"RandomNoise\"\n    }\n  },\n  \"92:97\": {\n    \"inputs\": {\n      \"fps\": 30,\n      \"images\": [\n        \"92:95\",\n        0\n      ],\n      \"audio\": [\n        \"92:96\",\n        0\n      ]\n    },\n    \"class_type\": \"CreateVideo\",\n    \"_meta\": {\n      \"title\": \"Create Video\"\n    }\n  },\n  \"92:80\": {\n    \"inputs\": {\n      \"av_latent\": [\n        \"92:41\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVSeparateAVLatent\",\n    \"_meta\": {\n      \"title\": \"LTXVSeparateAVLatent\"\n    }\n  },\n  \"92:95\": {\n    \"inputs\": {\n      \"samples\": [\n        \"92:105\",\n        0\n      ],\n      \"vae\": [\n        \"92:1\",\n        2\n      ]\n    },\n    \"class_type\": \"VAEDecode\",\n    \"_meta\": {\n      \"title\": \"VAE Decode\"\n    }\n  },\n  \"92:105\": {\n    \"inputs\": {\n      \"av_latent\": [\n        \"92:70\",\n        1\n      ]\n    },\n    \"class_type\": \"LTXVSeparateAVLatent\",\n    \"_meta\": {\n      \"title\": \"LTXVSeparateAVLatent\"\n    }\n  },\n  \"92:70\": {\n    \"inputs\": {\n      \"noise\": [\n        \"92:67\",\n        0\n      ],\n      \"guider\": [\n        \"92:82\",\n        0\n      ],\n      \"sampler\": [\n        \"92:66\",\n        0\n      ],\n      \"sigmas\": [\n        \"92:73\",\n        0\n      ],\n      \"latent_image\": [\n        \"92:83\",\n        0\n      ]\n    },\n    \"class_type\": \"SamplerCustomAdvanced\",\n    \"_meta\": {\n      \"title\": \"SamplerCustomAdvanced\"\n    }\n  },\n  \"92:96\": {\n    \"inputs\": {\n      \"samples\": [\n        \"92:105\",\n        1\n      ],\n      \"audio_vae\": [\n        \"92:48\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVAudioVAEDecode\",\n    \"_meta\": {\n      \"title\": \"LTXV Audio VAE Decode\"\n    }\n  },\n  \"92:48\": {\n    \"inputs\": {\n      \"ckpt_name\": \"ltx-2-19b-distilled.safetensors\"\n    },\n    \"class_type\": \"LTXVAudioVAELoader\",\n    \"_meta\": {\n      \"title\": \"LTXV Audio VAE Loader\"\n    }\n  },\n  \"92:56\": {\n    \"inputs\": {\n      \"video_latent\": [\n        \"92:107\",\n        0\n      ],\n      \"audio_latent\": [\n        \"92:51\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVConcatAVLatent\",\n    \"_meta\": {\n      \"title\": \"LTXVConcatAVLatent\"\n    }\n  },\n  \"92:84\": {\n    \"inputs\": {\n      \"samples\": [\n        \"92:81\",\n        2\n      ],\n      \"upscale_model\": [\n        \"92:76\",\n        0\n      ],\n      \"vae\": [\n        \"92:1\",\n        2\n      ]\n    },\n    \"class_type\": \"LTXVLatentUpsampler\",\n    \"_meta\": {\n      \"title\": \"spatial\"\n    }\n  },\n  \"92:90\": {\n    \"inputs\": {\n      \"upscale_method\": \"lanczos\",\n      \"scale_by\": 0.5,\n      \"image\": [\n        \"92:89\",\n        0\n      ]\n    },\n    \"class_type\": \"ImageScaleBy\",\n    \"_meta\": {\n      \"title\": \"Upscale Image By\"\n    }\n  },\n  \"92:62\": {\n    \"inputs\": {\n      \"value\": 211\n    },\n    \"class_type\": \"PrimitiveInt\",\n    \"_meta\": {\n      \"title\": \"Length\"\n    }\n  },\n  \"92:91\": {\n    \"inputs\": {\n      \"image\": [\n        \"92:90\",\n        0\n      ]\n    },\n    \"class_type\": \"GetImageSize\",\n    \"_meta\": {\n      \"title\": \"Get Image Size\"\n    }\n  },\n  \"92:106\": {\n    \"inputs\": {\n      \"image\": [\n        \"102\",\n        0\n      ]\n    },\n    \"class_type\": \"GetImageSize\",\n    \"_meta\": {\n      \"title\": \"Get Image Size\"\n    }\n  },\n  \"92:99\": {\n    \"inputs\": {\n      \"img_compression\": 33,\n      \"image\": [\n        \"92:114\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVPreprocess\",\n    \"_meta\": {\n      \"title\": \"LTXVPreprocess\"\n    }\n  },\n  \"92:43\": {\n    \"inputs\": {\n      \"width\": [\n        \"92:91\",\n        0\n      ],\n      \"height\": [\n        \"92:91\",\n        1\n      ],\n      \"length\": [\n        \"92:62\",\n        0\n      ],\n      \"batch_size\": 1\n    },\n    \"class_type\": \"EmptyLTXVLatentVideo\",\n    \"_meta\": {\n      \"title\": \"EmptyLTXVLatentVideo\"\n    }\n  },\n  \"92:107\": {\n    \"inputs\": {\n      \"strength\": 1,\n      \"bypass\": false,\n      \"vae\": [\n        \"92:1\",\n        2\n      ],\n      \"image\": [\n        \"92:99\",\n        0\n      ],\n      \"latent\": [\n        \"92:43\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVImgToVideoInplace\",\n    \"_meta\": {\n      \"title\": \"LTXVImgToVideoInplace\"\n    }\n  },\n  \"92:83\": {\n    \"inputs\": {\n      \"video_latent\": [\n        \"92:108\",\n        0\n      ],\n      \"audio_latent\": [\n        \"92:80\",\n        1\n      ]\n    },\n    \"class_type\": \"LTXVConcatAVLatent\",\n    \"_meta\": {\n      \"title\": \"LTXVConcatAVLatent\"\n    }\n  },\n  \"92:108\": {\n    \"inputs\": {\n      \"strength\": 1,\n      \"bypass\": false,\n      \"vae\": [\n        \"92:1\",\n        2\n      ],\n      \"image\": [\n        \"92:99\",\n        0\n      ],\n      \"latent\": [\n        \"92:84\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVImgToVideoInplace\",\n    \"_meta\": {\n      \"title\": \"LTXVImgToVideoInplace\"\n    }\n  },\n  \"92:3\": {\n    \"inputs\": {\n      \"text\": {{ $json.video_prompt }},\n      \"clip\": [\n        \"92:60\",\n        0\n      ]\n    },\n    \"class_type\": \"CLIPTextEncode\",\n    \"_meta\": {\n      \"title\": \"CLIP Text Encode (Prompt)\"\n    }\n  },\n  \"92:112\": {\n    \"inputs\": {\n      \"conditioning\": [\n        \"92:3\",\n        0\n      ]\n    },\n    \"class_type\": \"ConditioningZeroOut\",\n    \"_meta\": {\n      \"title\": \"ConditioningZeroOut\"\n    }\n  },\n  \"92:11\": {\n    \"inputs\": {\n      \"noise_seed\": {{(Math.floor(Math.random() * (Math.floor(100) - Math.ceil(1) + 1)) + Math.ceil(1))}}\n    },\n    \"class_type\": \"RandomNoise\",\n    \"_meta\": {\n      \"title\": \"RandomNoise\"\n    }\n  },\n  \"92:113\": {\n    \"inputs\": {\n      \"sigmas\": \"1., 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.0\"\n    },\n    \"class_type\": \"ManualSigmas\",\n    \"_meta\": {\n      \"title\": \"ManualSigmas\"\n    }\n  },\n  \"92:47\": {\n    \"inputs\": {\n      \"cfg\": 1,\n      \"model\": [\n        \"92:110\",\n        0\n      ],\n      \"positive\": [\n        \"92:22\",\n        0\n      ],\n      \"negative\": [\n        \"92:22\",\n        1\n      ]\n    },\n    \"class_type\": \"CFGGuider\",\n    \"_meta\": {\n      \"title\": \"CFGGuider\"\n    }\n  },\n  \"92:114\": {\n    \"inputs\": {\n      \"longer_edge\": 1536,\n      \"images\": [\n        \"102\",\n        0\n      ]\n    },\n    \"class_type\": \"ResizeImagesByLongerEdge\",\n    \"_meta\": {\n      \"title\": \"Resize Images by Longer Edge\"\n    }\n  },\n  \"92:110\": {\n    \"inputs\": {\n      \"lora_name\": \"ltx-2-19b-lora-camera-control-dolly-left.safetensors\",\n      \"strength_model\": 1,\n      \"model\": [\n        \"92:1\",\n        0\n      ]\n    },\n    \"class_type\": \"LoraLoaderModelOnly\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"92:1\": {\n    \"inputs\": {\n      \"ckpt_name\": \"ltx-2-19b-distilled.safetensors\"\n    },\n    \"class_type\": \"CheckpointLoaderSimple\",\n    \"_meta\": {\n      \"title\": \"Load Checkpoint\"\n    }\n  },\n  \"92:60\": {\n    \"inputs\": {\n      \"text_encoder\": \"gemma_3_12B_it_fp4_mixed.safetensors\",\n      \"ckpt_name\": \"ltx-2-19b-distilled.safetensors\",\n      \"device\": \"default\"\n    },\n    \"class_type\": \"LTXAVTextEncoderLoader\",\n    \"_meta\": {\n      \"title\": \"LTXV Audio Text Encoder Loader\"\n    }\n  },\n  \"92:76\": {\n    \"inputs\": {\n      \"model_name\": \"ltx-2-spatial-upscaler-x2-1.0.safetensors\"\n    },\n    \"class_type\": \"LatentUpscaleModelLoader\",\n    \"_meta\": {\n      \"title\": \"Load Latent Upscale Model\"\n    }\n  }\n}",
+          "outputFormat": "raw",
+          "timeout": 180
+        },
+        "type": "n8n-nodes-comfyui.comfyui",
+        "typeVersion": 1,
+        "position": [
+          1296,
+          544
+        ],
+        "id": "15a03479-fc37-4af6-ac2b-86338dc3bc4d",
+        "name": "ComfyUI",
+        "executeOnce": false,
+        "credentials": {
+          "comfyUIApi": {
+            "id": "5naacU4Pps7MtoAO",
+            "name": "ComfyUI - Laptop"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "workflowInputs": {
+            "values": [
+              {
+                "name": "id",
+                "type": "number"
+              },
+              {
+                "name": "beat",
+                "type": "number"
+              },
+              {
+                "name": "video_prompt"
+              }
+            ]
+          }
+        },
+        "id": "78d4f273-fff7-4034-ba66-54d640e9efcf",
+        "typeVersion": 1.1,
+        "name": "Start",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "position": [
+          1120,
+          544
+        ]
+      }
+    ],
+    "connections": {
+      "Start": {
+        "main": [
+          [
+            {
+              "node": "ComfyUI",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jim Campbell",
+    "name": "Version 4e520830",
+    "description": "",
+    "autosaved": true
+  },
+  "activeVersionId": "4e520830-97a5-4ba3-93e0-d3a5cd28f32e",
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "ComfyUI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-04-20T17:00:23.105Z",
+  "id": "C86seLFOiyeLjoJu",
+  "isArchived": false,
+  "meta": null,
+  "name": "comfyUiLtxI2vLaptop",
+  "nodes": [
+    {
+      "parameters": {
+        "workflow": "={\n  \"75\": {\n    \"inputs\": {\n      \"filename_prefix\": \"{{ $json.id }}\",\n      \"format\": \"auto\",\n      \"codec\": \"auto\",\n      \"video\": [\n        \"92:97\",\n        0\n      ]\n    },\n    \"class_type\": \"SaveVideo\",\n    \"_meta\": {\n      \"title\": \"Save Video\"\n    }\n  },\n  \"102\": {\n    \"inputs\": {\n      \"resize_type\": \"scale dimensions\",\n      \"resize_type.width\": 720,\n      \"resize_type.height\": 1280,\n      \"resize_type.crop\": \"center\",\n      \"scale_method\": \"lanczos\",\n      \"input\": [\n        \"116\",\n        0\n      ]\n    },\n    \"class_type\": \"ResizeImageMaskNode\",\n    \"_meta\": {\n      \"title\": \"Resize Image/Mask\"\n    }\n  },\n  \"116\": {\n    \"inputs\": {\n      \"image\": \"{{ $json.id }}_0000{{ $json.beat }}_.png [output]\",\n      \"refresh\": \"refresh\"\n    },\n    \"class_type\": \"LoadImageOutput\",\n    \"_meta\": {\n      \"title\": \"Load Image (from Outputs)\"\n    }\n  },\n  \"92:8\": {\n    \"inputs\": {\n      \"sampler_name\": \"euler\"\n    },\n    \"class_type\": \"KSamplerSelect\",\n    \"_meta\": {\n      \"title\": \"KSamplerSelect\"\n    }\n  },\n  \"92:66\": {\n    \"inputs\": {\n      \"sampler_name\": \"gradient_estimation\"\n    },\n    \"class_type\": \"KSamplerSelect\",\n    \"_meta\": {\n      \"title\": \"KSamplerSelect\"\n    }\n  },\n  \"92:73\": {\n    \"inputs\": {\n      \"sigmas\": \"0.909375, 0.725, 0.421875, 0.0\"\n    },\n    \"class_type\": \"ManualSigmas\",\n    \"_meta\": {\n      \"title\": \"ManualSigmas\"\n    }\n  },\n  \"92:81\": {\n    \"inputs\": {\n      \"positive\": [\n        \"92:22\",\n        0\n      ],\n      \"negative\": [\n        \"92:22\",\n        1\n      ],\n      \"latent\": [\n        \"92:80\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVCropGuides\",\n    \"_meta\": {\n      \"title\": \"LTXVCropGuides\"\n    }\n  },\n  \"92:82\": {\n    \"inputs\": {\n      \"cfg\": 1,\n      \"model\": [\n        \"92:110\",\n        0\n      ],\n      \"positive\": [\n        \"92:81\",\n        0\n      ],\n      \"negative\": [\n        \"92:81\",\n        1\n      ]\n    },\n    \"class_type\": \"CFGGuider\",\n    \"_meta\": {\n      \"title\": \"CFGGuider\"\n    }\n  },\n  \"92:51\": {\n    \"inputs\": {\n      \"frames_number\": [\n        \"92:62\",\n        0\n      ],\n      \"frame_rate\": 30,\n      \"batch_size\": 1,\n      \"audio_vae\": [\n        \"92:48\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVEmptyLatentAudio\",\n    \"_meta\": {\n      \"title\": \"LTXV Empty Latent Audio\"\n    }\n  },\n  \"92:22\": {\n    \"inputs\": {\n      \"frame_rate\": 30,\n      \"positive\": [\n        \"92:3\",\n        0\n      ],\n      \"negative\": [\n        \"92:112\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVConditioning\",\n    \"_meta\": {\n      \"title\": \"LTXVConditioning\"\n    }\n  },\n  \"92:89\": {\n    \"inputs\": {\n      \"width\": [\n        \"92:106\",\n        0\n      ],\n      \"height\": [\n        \"92:106\",\n        1\n      ],\n      \"batch_size\": 1,\n      \"color\": 0\n    },\n    \"class_type\": \"EmptyImage\",\n    \"_meta\": {\n      \"title\": \"EmptyImage\"\n    }\n  },\n  \"92:41\": {\n    \"inputs\": {\n      \"noise\": [\n        \"92:11\",\n        0\n      ],\n      \"guider\": [\n        \"92:47\",\n        0\n      ],\n      \"sampler\": [\n        \"92:8\",\n        0\n      ],\n      \"sigmas\": [\n        \"92:113\",\n        0\n      ],\n      \"latent_image\": [\n        \"92:56\",\n        0\n      ]\n    },\n    \"class_type\": \"SamplerCustomAdvanced\",\n    \"_meta\": {\n      \"title\": \"SamplerCustomAdvanced\"\n    }\n  },\n  \"92:67\": {\n    \"inputs\": {\n      \"noise_seed\": 0\n    },\n    \"class_type\": \"RandomNoise\",\n    \"_meta\": {\n      \"title\": \"RandomNoise\"\n    }\n  },\n  \"92:97\": {\n    \"inputs\": {\n      \"fps\": 30,\n      \"images\": [\n        \"92:95\",\n        0\n      ],\n      \"audio\": [\n        \"92:96\",\n        0\n      ]\n    },\n    \"class_type\": \"CreateVideo\",\n    \"_meta\": {\n      \"title\": \"Create Video\"\n    }\n  },\n  \"92:80\": {\n    \"inputs\": {\n      \"av_latent\": [\n        \"92:41\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVSeparateAVLatent\",\n    \"_meta\": {\n      \"title\": \"LTXVSeparateAVLatent\"\n    }\n  },\n  \"92:95\": {\n    \"inputs\": {\n      \"samples\": [\n        \"92:105\",\n        0\n      ],\n      \"vae\": [\n        \"92:1\",\n        2\n      ]\n    },\n    \"class_type\": \"VAEDecode\",\n    \"_meta\": {\n      \"title\": \"VAE Decode\"\n    }\n  },\n  \"92:105\": {\n    \"inputs\": {\n      \"av_latent\": [\n        \"92:70\",\n        1\n      ]\n    },\n    \"class_type\": \"LTXVSeparateAVLatent\",\n    \"_meta\": {\n      \"title\": \"LTXVSeparateAVLatent\"\n    }\n  },\n  \"92:70\": {\n    \"inputs\": {\n      \"noise\": [\n        \"92:67\",\n        0\n      ],\n      \"guider\": [\n        \"92:82\",\n        0\n      ],\n      \"sampler\": [\n        \"92:66\",\n        0\n      ],\n      \"sigmas\": [\n        \"92:73\",\n        0\n      ],\n      \"latent_image\": [\n        \"92:83\",\n        0\n      ]\n    },\n    \"class_type\": \"SamplerCustomAdvanced\",\n    \"_meta\": {\n      \"title\": \"SamplerCustomAdvanced\"\n    }\n  },\n  \"92:96\": {\n    \"inputs\": {\n      \"samples\": [\n        \"92:105\",\n        1\n      ],\n      \"audio_vae\": [\n        \"92:48\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVAudioVAEDecode\",\n    \"_meta\": {\n      \"title\": \"LTXV Audio VAE Decode\"\n    }\n  },\n  \"92:48\": {\n    \"inputs\": {\n      \"ckpt_name\": \"ltx-2-19b-distilled.safetensors\"\n    },\n    \"class_type\": \"LTXVAudioVAELoader\",\n    \"_meta\": {\n      \"title\": \"LTXV Audio VAE Loader\"\n    }\n  },\n  \"92:56\": {\n    \"inputs\": {\n      \"video_latent\": [\n        \"92:107\",\n        0\n      ],\n      \"audio_latent\": [\n        \"92:51\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVConcatAVLatent\",\n    \"_meta\": {\n      \"title\": \"LTXVConcatAVLatent\"\n    }\n  },\n  \"92:84\": {\n    \"inputs\": {\n      \"samples\": [\n        \"92:81\",\n        2\n      ],\n      \"upscale_model\": [\n        \"92:76\",\n        0\n      ],\n      \"vae\": [\n        \"92:1\",\n        2\n      ]\n    },\n    \"class_type\": \"LTXVLatentUpsampler\",\n    \"_meta\": {\n      \"title\": \"spatial\"\n    }\n  },\n  \"92:90\": {\n    \"inputs\": {\n      \"upscale_method\": \"lanczos\",\n      \"scale_by\": 0.5,\n      \"image\": [\n        \"92:89\",\n        0\n      ]\n    },\n    \"class_type\": \"ImageScaleBy\",\n    \"_meta\": {\n      \"title\": \"Upscale Image By\"\n    }\n  },\n  \"92:62\": {\n    \"inputs\": {\n      \"value\": 211\n    },\n    \"class_type\": \"PrimitiveInt\",\n    \"_meta\": {\n      \"title\": \"Length\"\n    }\n  },\n  \"92:91\": {\n    \"inputs\": {\n      \"image\": [\n        \"92:90\",\n        0\n      ]\n    },\n    \"class_type\": \"GetImageSize\",\n    \"_meta\": {\n      \"title\": \"Get Image Size\"\n    }\n  },\n  \"92:106\": {\n    \"inputs\": {\n      \"image\": [\n        \"102\",\n        0\n      ]\n    },\n    \"class_type\": \"GetImageSize\",\n    \"_meta\": {\n      \"title\": \"Get Image Size\"\n    }\n  },\n  \"92:99\": {\n    \"inputs\": {\n      \"img_compression\": 33,\n      \"image\": [\n        \"92:114\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVPreprocess\",\n    \"_meta\": {\n      \"title\": \"LTXVPreprocess\"\n    }\n  },\n  \"92:43\": {\n    \"inputs\": {\n      \"width\": [\n        \"92:91\",\n        0\n      ],\n      \"height\": [\n        \"92:91\",\n        1\n      ],\n      \"length\": [\n        \"92:62\",\n        0\n      ],\n      \"batch_size\": 1\n    },\n    \"class_type\": \"EmptyLTXVLatentVideo\",\n    \"_meta\": {\n      \"title\": \"EmptyLTXVLatentVideo\"\n    }\n  },\n  \"92:107\": {\n    \"inputs\": {\n      \"strength\": 1,\n      \"bypass\": false,\n      \"vae\": [\n        \"92:1\",\n        2\n      ],\n      \"image\": [\n        \"92:99\",\n        0\n      ],\n      \"latent\": [\n        \"92:43\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVImgToVideoInplace\",\n    \"_meta\": {\n      \"title\": \"LTXVImgToVideoInplace\"\n    }\n  },\n  \"92:83\": {\n    \"inputs\": {\n      \"video_latent\": [\n        \"92:108\",\n        0\n      ],\n      \"audio_latent\": [\n        \"92:80\",\n        1\n      ]\n    },\n    \"class_type\": \"LTXVConcatAVLatent\",\n    \"_meta\": {\n      \"title\": \"LTXVConcatAVLatent\"\n    }\n  },\n  \"92:108\": {\n    \"inputs\": {\n      \"strength\": 1,\n      \"bypass\": false,\n      \"vae\": [\n        \"92:1\",\n        2\n      ],\n      \"image\": [\n        \"92:99\",\n        0\n      ],\n      \"latent\": [\n        \"92:84\",\n        0\n      ]\n    },\n    \"class_type\": \"LTXVImgToVideoInplace\",\n    \"_meta\": {\n      \"title\": \"LTXVImgToVideoInplace\"\n    }\n  },\n  \"92:3\": {\n    \"inputs\": {\n      \"text\": {{ $json.video_prompt }},\n      \"clip\": [\n        \"92:60\",\n        0\n      ]\n    },\n    \"class_type\": \"CLIPTextEncode\",\n    \"_meta\": {\n      \"title\": \"CLIP Text Encode (Prompt)\"\n    }\n  },\n  \"92:112\": {\n    \"inputs\": {\n      \"conditioning\": [\n        \"92:3\",\n        0\n      ]\n    },\n    \"class_type\": \"ConditioningZeroOut\",\n    \"_meta\": {\n      \"title\": \"ConditioningZeroOut\"\n    }\n  },\n  \"92:11\": {\n    \"inputs\": {\n      \"noise_seed\": {{(Math.floor(Math.random() * (Math.floor(100) - Math.ceil(1) + 1)) + Math.ceil(1))}}\n    },\n    \"class_type\": \"RandomNoise\",\n    \"_meta\": {\n      \"title\": \"RandomNoise\"\n    }\n  },\n  \"92:113\": {\n    \"inputs\": {\n      \"sigmas\": \"1., 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.0\"\n    },\n    \"class_type\": \"ManualSigmas\",\n    \"_meta\": {\n      \"title\": \"ManualSigmas\"\n    }\n  },\n  \"92:47\": {\n    \"inputs\": {\n      \"cfg\": 1,\n      \"model\": [\n        \"92:110\",\n        0\n      ],\n      \"positive\": [\n        \"92:22\",\n        0\n      ],\n      \"negative\": [\n        \"92:22\",\n        1\n      ]\n    },\n    \"class_type\": \"CFGGuider\",\n    \"_meta\": {\n      \"title\": \"CFGGuider\"\n    }\n  },\n  \"92:114\": {\n    \"inputs\": {\n      \"longer_edge\": 1536,\n      \"images\": [\n        \"102\",\n        0\n      ]\n    },\n    \"class_type\": \"ResizeImagesByLongerEdge\",\n    \"_meta\": {\n      \"title\": \"Resize Images by Longer Edge\"\n    }\n  },\n  \"92:110\": {\n    \"inputs\": {\n      \"lora_name\": \"ltx-2-19b-lora-camera-control-dolly-left.safetensors\",\n      \"strength_model\": 1,\n      \"model\": [\n        \"92:1\",\n        0\n      ]\n    },\n    \"class_type\": \"LoraLoaderModelOnly\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"92:1\": {\n    \"inputs\": {\n      \"ckpt_name\": \"ltx-2-19b-distilled.safetensors\"\n    },\n    \"class_type\": \"CheckpointLoaderSimple\",\n    \"_meta\": {\n      \"title\": \"Load Checkpoint\"\n    }\n  },\n  \"92:60\": {\n    \"inputs\": {\n      \"text_encoder\": \"gemma_3_12B_it_fp4_mixed.safetensors\",\n      \"ckpt_name\": \"ltx-2-19b-distilled.safetensors\",\n      \"device\": \"default\"\n    },\n    \"class_type\": \"LTXAVTextEncoderLoader\",\n    \"_meta\": {\n      \"title\": \"LTXV Audio Text Encoder Loader\"\n    }\n  },\n  \"92:76\": {\n    \"inputs\": {\n      \"model_name\": \"ltx-2-spatial-upscaler-x2-1.0.safetensors\"\n    },\n    \"class_type\": \"LatentUpscaleModelLoader\",\n    \"_meta\": {\n      \"title\": \"Load Latent Upscale Model\"\n    }\n  }\n}",
+        "outputFormat": "raw",
+        "timeout": 180
+      },
+      "type": "n8n-nodes-comfyui.comfyui",
+      "typeVersion": 1,
+      "position": [
+        1296,
+        544
+      ],
+      "id": "15a03479-fc37-4af6-ac2b-86338dc3bc4d",
+      "name": "ComfyUI",
+      "executeOnce": false,
+      "credentials": {
+        "comfyUIApi": {
+          "id": "5naacU4Pps7MtoAO",
+          "name": "ComfyUI - Laptop"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "id",
+              "type": "number"
+            },
+            {
+              "name": "beat",
+              "type": "number"
+            },
+            {
+              "name": "video_prompt"
+            }
+          ]
+        }
+      },
+      "id": "78d4f273-fff7-4034-ba66-54d640e9efcf",
+      "typeVersion": 1.1,
+      "name": "Start",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        1120,
+        544
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "binaryMode": "separate"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-04-20T17:00:23.108Z",
+      "createdAt": "2026-04-20T17:00:23.108Z",
+      "role": "workflow:owner",
+      "workflowId": "C86seLFOiyeLjoJu",
+      "projectId": "t74UsjIgT3c9HuwP"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-04-20T17:54:10.139Z",
+  "versionId": "4e520830-97a5-4ba3-93e0-d3a5cd28f32e"
+}
