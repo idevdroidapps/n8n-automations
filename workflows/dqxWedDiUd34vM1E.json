@@ -89,24 +89,13 @@
       "ai_tool": [
         [
           {
-            "node": "Highlights Extractor Agent",
+            "node": "Script Writing Agent",
             "type": "ai_tool",
             "index": 0
           },
           {
-            "node": "Script Writing Agent",
+            "node": "Highlights Extractor Agent",
             "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Highlights Extractor Agent": {
-      "main": [
-        [
-          {
-            "node": "Get Descriptions",
-            "type": "main",
             "index": 0
           }
         ]
@@ -180,7 +169,13 @@
     },
     "Video Prompt Generator": {
       "main": [
-        []
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
       ]
     },
     "Remove newlines": {
@@ -205,24 +200,23 @@
         ]
       ]
     },
-    "Generate Images": {
-      "main": [
-        [
-          {
-            "node": "Upload Image",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Image ID": {
       "main": [
         [
           {
+            "node": "comfyUiZimageTurboLaptop",
+            "type": "main",
+            "index": 0
+          },
+          {
             "node": "Video Prompt Generator",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
           }
         ]
       ]
@@ -249,11 +243,6 @@
         ]
       ]
     },
-    "Upload Image": {
-      "main": [
-        []
-      ]
-    },
     "Prompt Parser": {
       "ai_outputParser": [
         [
@@ -276,7 +265,12 @@
         ]
       ]
     },
-    "Call 'getLtxVideoPromptGuide'": {
+    "Merge": {
+      "main": [
+        []
+      ]
+    },
+    "getLtxVideoPromptGuide": {
       "ai_tool": [
         [
           {
@@ -287,9 +281,26 @@
         ]
       ]
     },
-    "Merge": {
+    "Highlights Extractor Agent": {
       "main": [
-        []
+        [
+          {
+            "node": "Get Descriptions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "comfyUiZimageTurboLaptop": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     }
   },
@@ -356,8 +367,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        384,
-        48
+        80,
+        16
       ],
       "name": "getYouTubeTranscripts",
       "id": "cf63bd88-7c80-4250-a4e2-c02630e5d79f"
@@ -369,8 +380,8 @@
       "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
       "typeVersion": 1.1,
       "position": [
-        272,
-        480
+        336,
+        208
       ],
       "id": "7e92325f-6d23-488a-b1dc-54bfa27f6d89",
       "name": "Transcripts Loader"
@@ -384,8 +395,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1712,
-        896
+        1552,
+        528
       ],
       "id": "faa80163-528e-4614-9e0c-1ac5d42ce183",
       "name": "Truncate Ai Agent Tables",
@@ -404,8 +415,8 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
       "typeVersion": 1,
       "position": [
-        192,
-        752
+        256,
+        352
       ],
       "id": "53fd5a4a-f978-44b0-80c6-5a1306e37bc2",
       "name": "Vector Model",
@@ -424,8 +435,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
       "typeVersion": 1,
       "position": [
-        496,
-        448
+        576,
+        192
       ],
       "id": "177dfb87-d217-4ecc-8247-d0408bb592ca",
       "name": "Highlights Extractor Model",
@@ -435,27 +446,6 @@
           "name": "Ollama - local"
         }
       }
-    },
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "=You are a Senior Content Analyst specializing in technical report writing. You have access to a Vector Store Tool containing transcripts from multiple related videos. Your objective is to perform a cross-video synthesis to create a single, unified technical manual of specific, actionable tactics.\n\n### Task Instructions:\n1. Retrieval: Query the Vector Store for all relevant content related to {{$('Subject Entry').item.json.Subject}}. Focus specifically on actionable maneuvers, procedures, and techniques.\n2. Synthesis: Identify individual tactics. Do not provide high-level summaries or general concepts. If multiple videos describe the same maneuver, synthesize those details into a single, highly detailed technical paragraph for that specific tactic.\n3. Content Depth: Each tactic must be accompanied by a comprehensive paragraph (4-6 sentences) explaining the \"how\" and \"why,\" merging all technical nuances found across the transcripts.\n\n### Constraints:\n1. If specific data (names, dates, or technical specs) conflicts between transcripts, highlight the discrepancy within the 'tactic_description' field.\n2. Output any Metric measurements or units as converted Imperial Units.\n3. Never mention the source transcripts or videos in the output.\n4. Ensure every entry in 'tactical_analysis' represents a distinct action or procedure rather than a general theme.\n5. Do not output any conversational text, introductions, or markdown formatting outside of the JSON block.\n\nBegin your analysis now.",
-        "hasOutputParser": true,
-        "options": {
-          "maxIterations": 50
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 3.1,
-      "position": [
-        528,
-        240
-      ],
-      "id": "e3b315f3-4f03-44f4-af1e-90ab64ff0ef6",
-      "name": "Highlights Extractor Agent",
-      "executeOnce": true,
-      "retryOnFail": true,
-      "maxTries": 5
     },
     {
       "parameters": {
@@ -473,8 +463,8 @@
       "type": "n8n-nodes-base.formTrigger",
       "typeVersion": 2.5,
       "position": [
-        32,
-        48
+        -272,
+        16
       ],
       "id": "a5db8bd1-2df4-4956-8e52-dabfe540e00f",
       "name": "Subject Entry",
@@ -495,8 +485,8 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 2.5,
       "position": [
-        208,
-        48
+        -96,
+        16
       ],
       "id": "8b367649-9309-41b3-9daf-6baaf1a6c5ec",
       "name": "Video IDs",
@@ -511,8 +501,8 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
       "typeVersion": 1.3,
       "position": [
-        192,
-        240
+        256,
+        16
       ],
       "id": "92de81cc-9a81-486d-a2b4-e2cb469e1d0b",
       "name": "Transcript Vector Insert",
@@ -536,8 +526,8 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
       "typeVersion": 1.3,
       "position": [
-        544,
-        656
+        608,
+        320
       ],
       "id": "d30d53b4-3dd5-46b2-a68b-e933de117ec1",
       "name": "Transcript Vector Retrieval",
@@ -555,8 +545,8 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        704,
-        464
+        768,
+        192
       ],
       "id": "2d232bb6-100d-482c-b5e3-a922d73aa396",
       "name": "Highlights Parser",
@@ -570,8 +560,8 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        1200,
-        512
+        1264,
+        240
       ],
       "id": "0a13e287-cd3b-4a52-8b40-b6cdcbfafec8",
       "name": "Tactics Parser",
@@ -589,8 +579,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
       "typeVersion": 1,
       "position": [
-        1056,
-        512
+        1120,
+        240
       ],
       "id": "929d823f-e809-4d8b-9af1-18c75d9c7ae7",
       "name": "Tactics Extractor Model",
@@ -613,8 +603,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        1056,
-        240
+        1120,
+        16
       ],
       "id": "f0d0923a-0521-4e7f-a9d1-58851d54c102",
       "name": "Script Writing Agent",
@@ -631,8 +621,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        848,
-        240
+        912,
+        16
       ],
       "id": "b57ce9af-70c6-4ebc-930c-5390aa3f2686",
       "name": "Get Descriptions"
@@ -644,8 +634,8 @@
       "type": "@n8n/n8n-nodes-langchain.rerankerCohere",
       "typeVersion": 1,
       "position": [
-        592,
-        784
+        656,
+        448
       ],
       "id": "a945def5-cd77-459b-a641-40fbb53111ae",
       "name": "Reranker Cohere",
@@ -667,7 +657,7 @@
         "messages": {
           "values": [
             {
-              "content": "=AI Video & Audio-Visual Prompt Engineer\nTask: Analyze the provided input and generate a singular, high-fidelity cinematic video prompt. This prompt must harmonize the narration_snippet voiceover narration with complex, professional visual directing. The input data also contains the image_prompt that was used to generate an initial frame image. You also have access to a video prompt writing guide through a tool. You must use the tool when crafting an output prompt.\n\nnarration_snippet: {{ $json.narration_snippet }}\nimage_prompt: {{ $json.image_prompt }}"
+              "content": "=AI Video & Audio-Visual Prompt Engineer\nTask: Analyze the provided input and generate a singular, high-fidelity cinematic video prompt. This prompt must harmonize the narration_snippet voiceover narration with complex, professional visual directing. The input data also contains the image_prompt that was used to generate an initial frame image. You also have access to a video prompt writing guide through a tool. You must use the tool when crafting an output prompt.\n\nExample Prompt:\nA warm sunny backyard. The camera starts in a tight cinematic close-up of a woman and a man in their 30s, facing each other with serious expressions. The woman, emotional and dramatic, says softly, “That’s it... Dad’s lost it. And we’ve lost Dad.”\nThe man exhales, slightly annoyed: “Stop being so dramatic, Jess.”\nA beat. He glances aside, then mutters defensively, “He’s just having fun.”\nThe camera slowly pans right, revealing the grandfather in the garden wearing enormous butterfly wings, waving his arms in the air like he’s trying to take off.\nHe shouts, “Wheeeew!” as he flaps his wings with full commitment.\nThe woman covers her face, on the verge of tears. The tone is deadpan, absurd, and quietly tragic.\n\nExample Prompt:\nStatic camera from inside the oven, looking outward through the slightly fogged glass door. Warm golden light glows around freshly baked cookies. The baker’s face fills the frame, eyes wide with focus, his breath fogging the glass as he leans in. Subtle reflections move across the glass as steam rises.\nBaker (whispering dramatically): “Today… I achieve perfection.”\nHe leans even closer, nose nearly touching the glass.\n“Golden edges. Soft center. The gods themselves will smell these cookies and weep.”\nBaker: “Wait—”\n(beat)\n“Did I… forget the chocolate chips?”\nCut to side view — coworker pops into frame, chewing casually.\nCoworker (mouth full): “Nope. You forgot the sugar.”\nQuick zoom back to the baker’s horrified face, pressed against the oven door, as cookies deflate behind the glass. Steam drifts upward in slow motion.\npixar style acting and timing.\n\nExample Prompt:\nDAYTIME TALK SHOW SET – AFTERNOON\nSoft studio lighting glows across a warm-toned set. The audience murmurs faintly as the camera pans to reveal three guests seated on a couch — a middle-aged couple and the show’s host sitting across from them.\nThe host leans forward, voice steady but probing:\nHost: “When did you first notice that your daughter, Missy, started to spiral?”\nThe woman’s face crumples; she takes a shaky breath and begins to cry. Her husband places a comforting hand on her shoulder, looking down before turning back toward the host.\nFather (quietly, with guilt): “We… we don’t know what we did wrong.”\nThe studio falls silent for a moment. The camera cuts to the host, who looks gravely into the lens.\nHost (to camera): “Let’s take a look at a short piece our team prepared — chronicling Missy’s downward path.”\nThe lights dim slightly as the camera pushes in on the mother’s tear-streaked face. The studio monitors flicker to life, beginning to play the segment as the audience holds its breath.\n\nExample Prompt:\nThe young african american woman wearing a futuristic transparent visor and a bodysuit with a tube attached to her neck. she is soldering a robotic arm. she stops and looks to her right as she hears a suspicious strong hit sound from a distance. she gets up slowly from her chair and says with an angry african american accent: \"Rick I told you to close that goddamn door after you!\". then, a futuristic blue alien explorer with dreadlocks wearing a rugged outfit walks into the scene excitedly holding a futuristic device and says with a low robotic voice: \"Fuck the door look what I found!\". the alien hands the woman the device, she looks down at it excitedly as the camera zooms in on her intrigued illuminated face. she then says: \"is this what I think it is?\" she smiles excitedly. sci-fi style cinematic scene.\n\nExample prompt:\nThe camera opens in a calm, sunlit frog yoga studio. Warm morning light washes over the wooden floor as incense smoke drifts lazily in the air. The senior frog instructor sits cross-legged at the center, eyes closed, voice deep and calm. “We are one with the pond.” All the frogs answer softly: “Ommm...” “We are one with the mud.” “Ommm...” He smiles faintly. “We are one with the flies.” A quiet pause.\nThe camera slowly pans to the side — one frog twitches, eyes darting. Suddenly — *thwip!* — its tongue snaps out, catching a fly mid-air and pulling it into its mouth. The master exhales slowly, still serene.\n“But we do not chase the flies…”\nBeat. “…not during class.” The guilty frog freezes, then lowers its head in visible shame, folding its hands back into the meditative pose. The other frogs resume their chant: “Ommm...” Camera holds for a moment on the embarrassed frog, eyes closed too tightly, pretending nothing happened.\n\nExample Prompt:\nSMALL TOWN STREET – MORNING – LIVE NEWS BROADCAST\nThe shot opens on a news reporter standing in front of a row of cordoned-off cars, yellow caution tape fluttering behind him. The light is warm, early sun reflecting off the camera lens. The faint hum of chatter and distant drilling fills the air.\nThe reporter, composed but visibly excited, looks directly into the camera, microphone in hand.\nReporter (live):\n“Thank you, Sylvia. And yes — this is a sentence I never thought I’d say on live television — but this morning, here in the quiet town of New Castle, Vermont… black gold has been found!”\nHe gestures slightly toward the field behind him.\nReporter (grinning):\n“If my cameraman can pan over, you’ll see what all the excitement’s about.”\nThe camera pans right, slowly revealing a construction site surrounded by workers in hard hats. A beat of silence — then, with a sudden roar, a geyser of oil erupts from the ground, blasting upward in a violent plume.\nWorkers cheer and scramble, the black stream glistening in the morning light. The camera shakes slightly, trying to stay focused through the chaos.\nReporter (off-screen, shouting over the noise):\n“There it is, folks — the moment New Castle will never forget!”\nThe camera catches the sunlight gleaming off the oil mist before pulling back, revealing the entire scene — the small-town skyline silhouetted against the wild fountain of oil.\n\nnarration_snippet: {{ $('Image ID').item.json.narration_snippet }}\nimage_prompt: {{ $('Image ID').item.json.image_prompt }}"
             }
           ]
         },
@@ -679,8 +669,8 @@
       "type": "@n8n/n8n-nodes-langchain.ollama",
       "typeVersion": 1,
       "position": [
-        832,
-        832
+        704,
+        624
       ],
       "id": "7cb63d3a-ea8b-43ce-a663-d00c38987cb1",
       "name": "Video Prompt Generator",
@@ -702,8 +692,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1376,
-        240
+        1440,
+        16
       ],
       "id": "534c8757-0188-4cd1-87ff-ca35ba534d23",
       "name": "Remove newlines"
@@ -720,58 +710,16 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        1568,
-        240
+        1632,
+        16
       ],
       "id": "127ccf2c-b853-45b1-be2f-bc8e64aa2a4c",
       "name": "Image Prompt Writer",
       "retryOnFail": true,
       "maxTries": 3,
       "alwaysOutputData": true,
+      "executeOnce": false,
       "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "operation": "upload",
-        "bucketName": "generated-images",
-        "fileName": "={{ $binary.data.fileName }}",
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.s3",
-      "typeVersion": 1,
-      "position": [
-        976,
-        656
-      ],
-      "id": "8f5def16-9ce5-471a-9461-420311b32ff5",
-      "name": "Upload Image",
-      "credentials": {
-        "s3": {
-          "id": "3JFdG3iBGX3kSpMU",
-          "name": "Supabase S3"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "workflow": "={\n  \"9\": {\n    \"inputs\": {\n      \"filename_prefix\": \"{{ $json.id }}\",\n      \"images\": [\n        \"57:8\",\n        0\n      ]\n    },\n    \"class_type\": \"SaveImage\",\n    \"_meta\": {\n      \"title\": \"Save Image\"\n    }\n  },\n  \"57:30\": {\n    \"inputs\": {\n      \"clip_name\": \"qwen_3_4b.safetensors\",\n      \"type\": \"lumina2\",\n      \"device\": \"default\"\n    },\n    \"class_type\": \"CLIPLoader\",\n    \"_meta\": {\n      \"title\": \"Load CLIP\"\n    }\n  },\n  \"57:29\": {\n    \"inputs\": {\n      \"vae_name\": \"ae.safetensors\"\n    },\n    \"class_type\": \"VAELoader\",\n    \"_meta\": {\n      \"title\": \"Load VAE\"\n    }\n  },\n  \"57:33\": {\n    \"inputs\": {\n      \"conditioning\": [\n        \"57:27\",\n        0\n      ]\n    },\n    \"class_type\": \"ConditioningZeroOut\",\n    \"_meta\": {\n      \"title\": \"ConditioningZeroOut\"\n    }\n  },\n  \"57:8\": {\n    \"inputs\": {\n      \"samples\": [\n        \"57:3\",\n        0\n      ],\n      \"vae\": [\n        \"57:29\",\n        0\n      ]\n    },\n    \"class_type\": \"VAEDecode\",\n    \"_meta\": {\n      \"title\": \"VAE Decode\"\n    }\n  },\n  \"57:28\": {\n    \"inputs\": {\n      \"unet_name\": \"z_image_turbo_bf16.safetensors\",\n      \"weight_dtype\": \"default\"\n    },\n    \"class_type\": \"UNETLoader\",\n    \"_meta\": {\n      \"title\": \"Load Diffusion Model\"\n    }\n  },\n  \"57:27\": {\n    \"inputs\": {\n      \"text\": \"{{ $json.image_prompt }}\",\n      \"clip\": [\n        \"57:30\",\n        0\n      ]\n    },\n    \"class_type\": \"CLIPTextEncode\",\n    \"_meta\": {\n      \"title\": \"CLIP Text Encode (Prompt)\"\n    }\n  },\n  \"57:13\": {\n    \"inputs\": {\n      \"width\": 720,\n      \"height\": 1088,\n      \"batch_size\": 1\n    },\n    \"class_type\": \"EmptySD3LatentImage\",\n    \"_meta\": {\n      \"title\": \"EmptySD3LatentImage\"\n    }\n  },\n  \"57:11\": {\n    \"inputs\": {\n      \"shift\": 3,\n      \"model\": [\n        \"57:28\",\n        0\n      ]\n    },\n    \"class_type\": \"ModelSamplingAuraFlow\",\n    \"_meta\": {\n      \"title\": \"ModelSamplingAuraFlow\"\n    }\n  },\n  \"57:3\": {\n    \"inputs\": {\n      \"seed\": {{($now.toMillis()) * (Math.floor(Math.random() * (Math.floor(100) - Math.ceil(1) + 1)) + Math.ceil(1))}},\n      \"steps\": 8,\n      \"cfg\": 1,\n      \"sampler_name\": \"res_multistep\",\n      \"scheduler\": \"simple\",\n      \"denoise\": 1,\n      \"model\": [\n        \"57:11\",\n        0\n      ],\n      \"positive\": [\n        \"57:27\",\n        0\n      ],\n      \"negative\": [\n        \"57:33\",\n        0\n      ],\n      \"latent_image\": [\n        \"57:13\",\n        0\n      ]\n    },\n    \"class_type\": \"KSampler\",\n    \"_meta\": {\n      \"title\": \"KSampler\"\n    }\n  }\n}",
-        "jpegQuality": 99,
-        "timeout": 180
-      },
-      "type": "n8n-nodes-comfyui.comfyui",
-      "typeVersion": 1,
-      "position": [
-        832,
-        656
-      ],
-      "id": "af5e8ddf-add1-40a7-829a-95cf14976381",
-      "name": "Generate Images",
-      "credentials": {
-        "comfyUIApi": {
-          "id": "5naacU4Pps7MtoAO",
-          "name": "ComfyUI - Laptop"
-        }
-      }
     },
     {
       "parameters": {
@@ -814,8 +762,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        624,
-        912
+        384,
+        528
       ],
       "id": "c7850dbe-eeb5-4417-be36-53c02f612a9c",
       "name": "Image ID"
@@ -830,8 +778,8 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        416,
-        912
+        144,
+        528
       ],
       "id": "5209147e-76a8-4ed7-ba8e-0114efcd96d5",
       "name": "Split Storyboards"
@@ -864,8 +812,8 @@
       "type": "n8n-nodes-base.filter",
       "typeVersion": 2.3,
       "position": [
-        176,
-        912
+        -64,
+        528
       ],
       "id": "37884455-c33b-472a-852c-e8b6f4504e84",
       "name": "Filter Out Errors"
@@ -877,8 +825,8 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        1712,
-        512
+        1776,
+        240
       ],
       "id": "f2a13b6c-3da7-45d5-bcf4-21972d74b3ce",
       "name": "Prompt Parser"
@@ -894,8 +842,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
       "typeVersion": 1,
       "position": [
-        1568,
-        512
+        1632,
+        240
       ],
       "id": "323f92f9-03f0-4e9a-bddb-8c7ded736069",
       "name": "Promt Model",
@@ -905,6 +853,23 @@
           "name": "Ollama - local"
         }
       }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "numberInputs": 3,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1136,
+        512
+      ],
+      "id": "f779d6e0-797a-4d8a-b8b3-1bb5f8d68199",
+      "name": "Merge",
+      "executeOnce": false
     },
     {
       "parameters": {
@@ -928,872 +893,157 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        976,
-        1024
+        928,
+        736
       ],
       "id": "956b3ac4-f8b7-4f6b-82a7-b2e1082f8722",
-      "name": "Call 'getLtxVideoPromptGuide'"
+      "name": "getLtxVideoPromptGuide"
     },
     {
       "parameters": {
-        "mode": "combine",
-        "combineBy": "combineByPosition",
+        "promptType": "define",
+        "text": "=You are a Senior Content Analyst specializing in technical report writing. You have access to a Vector Store Tool containing transcripts from multiple related videos. Your objective is to perform a cross-video synthesis to create a single, unified technical manual of specific, actionable tactics.\n\n### Task Instructions:\n1. Retrieval: Query the Vector Store for all relevant content related to {{$('Subject Entry').item.json.Subject}}. Focus specifically on actionable maneuvers, procedures, and techniques.\n2. Synthesis: Identify individual tactics. Do not provide high-level summaries or general concepts. If multiple videos describe the same maneuver, synthesize those details into a single, highly detailed technical paragraph for that specific tactic.\n3. Content Depth: Each tactic must be accompanied by a comprehensive paragraph (4-6 sentences) explaining the \"how\" and \"why,\" merging all technical nuances found across the transcripts.\n\n### Constraints:\n1. If specific data (names, dates, or technical specs) conflicts between transcripts, highlight the discrepancy within the 'tactic_description' field.\n2. Output any Metric measurements or units as converted Imperial Units.\n3. Never mention the source transcripts or videos in the output.\n4. Ensure every entry in 'tactical_analysis' represents a distinct action or procedure rather than a general theme.\n5. Do not output any conversational text, introductions, or markdown formatting outside of the JSON block.\n\nBegin your analysis now.",
+        "hasOutputParser": true,
+        "options": {
+          "maxIterations": 50
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        592,
+        16
+      ],
+      "id": "e3b315f3-4f03-44f4-af1e-90ab64ff0ef6",
+      "name": "Highlights Extractor Agent",
+      "executeOnce": true,
+      "retryOnFail": true,
+      "maxTries": 5
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "pUAQvs5uVUbK8y8t",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/pUAQvs5uVUbK8y8t",
+          "cachedResultName": "comfyUiZimageTurboLaptop"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "image_prompt": "={{ $json.image_prompt }}",
+            "id": "={{ $json.id }}"
+          },
+          "matchingColumns": [
+            "image_prompt",
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "image_prompt",
+              "displayName": "image_prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {
+          "waitForSubWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        864,
+        400
+      ],
+      "name": "comfyUiZimageTurboLaptop",
+      "id": "523269de-7418-4dd8-90c0-301a636e82bd"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "C86seLFOiyeLjoJu",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/C86seLFOiyeLjoJu",
+          "cachedResultName": "comfyUiLtxI2vLaptop"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "beat": "={{ $json.beat }}",
+            "id": "={{ $json.id }}",
+            "video_prompt": "={{ $json.content.toJsonString() }}"
+          },
+          "matchingColumns": [
+            "content_toJsonString",
+            "beat",
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "beat",
+              "displayName": "beat",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "video_prompt",
+              "displayName": "video_prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
         "options": {}
       },
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3.2,
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
       "position": [
-        1168,
-        896
+        1344,
+        528
       ],
-      "id": "f779d6e0-797a-4d8a-b8b3-1bb5f8d68199",
-      "name": "Merge"
+      "name": "comfyUiLtxI2vLaptop",
+      "id": "a1c5084b-5642-4f9d-aff9-1cb4f83d5f75"
     }
   ],
-  "pinData": {
-    "Merge": [
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** A vast, desolate, open field under the unforgiving glare of harsh daylight. The landscape is stark and empty, emphasizing the isolation and exposure.\n\n**Visuals:** A wide, sweeping cinematic shot of a group of Caucasian soldiers, completely frozen in place. Their posture conveys extreme tension and immobility, suggesting a moment of absolute, agonizing stillness. The composition must utilize a deep depth of field, drawing the viewer into the oppressive environment. The visual aesthetic should mimic high-end film stock, rich in texture and contrast, emphasizing the gritty realism of the scene. Subtle, slow camera movement (a very slow, almost imperceptible push-in) should be used to heighten the sense of dread.\n\n**Audio/Narration Synchronization:** As the visual holds this tense, static frame, the voiceover narration, *\"Staying stationary in an open field is a death sentence,\"* is delivered with a low, gravelly, and deliberate tone, allowing the silence and the visual tension to amplify the weight of the words. The sound design should feature only the ambient, oppressive silence of the open field, punctuated only by the subtle, heavy breathing of the soldiers.\n\n**Style Directives:** Hyper-realistic cinematography, high contrast, desaturated color grading, epic scale, extreme tension, static composition. **(Aspect Ratio: 2.39:1 Cinematic Widescreen)**",
-          "narration_title": "The Freeze Tactic Is Dead",
-          "beat": 1,
-          "narration_snippet": "Staying stationary in an open field is a death sentence.",
-          "image_prompt": "A wide shot of a group of Caucasian soldiers frozen in a desolate, open field under harsh daylight. The atmosphere is tense and static. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 69743
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 0
-          },
-          {
-            "item": 0,
-            "input": 1
-          },
-          {
-            "item": 0,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** An expansive, desolate open field bathed in the harsh, diffused light of late afternoon.\n\n**Visual Directing:** A breathtaking, ultra-wide long shot establishes the scene. A sleek, modern FPV drone, equipped with advanced thermal imaging, hovers with absolute, unnerving silence above the terrain. The camera slowly pushes in, emphasizing the drone's presence against the vastness of the landscape. In the mid-ground, a small contingent of soldiers is visible, frozen in a static, tense posture, their camouflage offering no concealment against the drone's advanced vision. The depth of field is extremely deep, rendering the foreground texture of the ground and the distant horizon with exquisite detail.\n\n**Cinematography & Style:** Hyper-realistic cinematography. Shot on high-end, grainy 35mm film stock, emphasizing deep shadows and rich, muted earth tones. Cinematic color grading with a cool, technological undertone. Slow, deliberate camera movement, conveying intense, silent tension.\n\n**Audio Synchronization (Narration):** As the drone dominates the frame, the voiceover delivers the line: *\"but modern FPV drones with thermal imaging see through your camouflage like it's nothing.\"* The sound design should feature absolute silence punctuated only by the faint, high-frequency hum of the drone's technology, amplifying the feeling of unseen, overwhelming surveillance.\n\n**Keywords:** Cinematic, Long Shot, Thermal Vision, FPV Drone, Thermal Imaging, Open Field, Static Soldiers, Deep Depth of Field, High-End Film Stock, Hyperrealism, Silent Tension, Technological Surveillance.",
-          "narration_title": "The Freeze Tactic Is Dead",
-          "beat": 2,
-          "narration_snippet": "but modern FPV drones with thermal imaging see through your camouflage like it's nothing.",
-          "image_prompt": "A long shot showing a modern FPV drone with thermal imaging hovering silently over the same open field. The soldiers are visible but static. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 715712
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 1
-          },
-          {
-            "item": 1,
-            "input": 1
-          },
-          {
-            "item": 1,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** An open, vast field under dramatic, diffused lighting, emphasizing the tension and isolation of the moment.\n\n**Action & Motion:** A full-body shot of a Caucasian soldier is captured in a moment of sudden, urgent reaction. The soldier immediately begins to scatter and move erratically across the open field, their movements conveying immediate assessment and high-stakes tension. The motion must be dynamic, fluid, and visceral, emphasizing the panic and calculated assessment.\n\n**Cinematography & Style:** Realistic Cinematography, shot with high-end film stock (e.g., Kodak Vision3 500T), utilizing a very deep depth of field to keep the soldier sharp while allowing the expansive environment to provide context. Employ dynamic camera movement—perhaps a slow, sweeping tracking shot that follows the soldier's erratic path, or a subtle handheld effect to enhance the immediacy of the action.\n\n**Mood:** Intense, urgent, tense, and realistic. The visual language must perfectly underscore the narration: \"Your next move is to scatter immediately. Don't panic—assess the situation first.\"",
-          "narration_title": "The Freeze Tactic Is Dead",
-          "beat": 3,
-          "narration_snippet": "Your next move is to scatter immediately. Don't panic—assess the situation first.",
-          "image_prompt": "A full body shot of a Caucasian soldier immediately beginning to scatter and move erratically across the open field, assessing the environment. Dynamic motion. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 685267
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 2
-          },
-          {
-            "item": 2,
-            "input": 1
-          },
-          {
-            "item": 2,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** Intense, high-stakes tactical evasion in a rugged, natural environment.\n\n**Visual Description:** A wide, sweeping cinematic shot capturing a small squad of Caucasian soldiers actively maneuvering and seeking immediate cover behind a massive, jagged rock formation or dense, shadowed brush. The atmosphere is tense and urgent, illuminated by dramatic, directional sunlight filtering through the foliage, creating deep shadows and high contrast.\n\n**Action & Pacing (Driven by Narration):** The camera follows the squad's dynamic movement as they execute a coordinated maneuver. The focus is on the necessity of immediate cover and mutual protection. The movement should feel fluid yet desperate, emphasizing the tactical necessity of covering each other while evading an unseen aerial threat (the drone).\n\n**Cinematography & Style:** Full Body Shot. Ultra-realistic cinematography, shot on high-end film stock (e.g., Kodak Vision3 500T). Employ a deep depth of field to keep the foreground cover and the background environment equally detailed. Use dynamic camera movement—a slow, deliberate push-in or a subtle, low-angle tracking shot that mirrors the soldiers' evasive maneuvers. Cinematic grading with deep, rich color tones and high contrast. **Mood:** Tense, gritty, and highly professional.",
-          "narration_title": "The Freeze Tactic Is Dead",
-          "beat": 4,
-          "narration_snippet": "Once you've identified the drone's position, look for cover or an obstacle between you and the aircraft. Your squad must cover each other while you maneuver.",
-          "image_prompt": "A wide shot showing a small squad of Caucasian soldiers actively maneuvering and seeking cover behind a large rock formation or dense brush while evading a drone threat. Full Body Shot. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 673775
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 3
-          },
-          {
-            "item": 3,
-            "input": 1
-          },
-          {
-            "item": 3,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** A dramatic, high-stakes sequence depicting a squad engaged in dynamic evasion across a rugged, atmospheric landscape.\n\n**Visual Directing:** A medium wide shot, utilizing a low-angle perspective to emphasize the scale of the environment and the urgency of the movement. The camera should track the squad's erratic, fluid motion, emphasizing their desperate evasion. The scene is dominated by the encroaching, ominous presence of a gathering thunderstorm—dense, torrential rain streaks across the frame, or thick, swirling fog obscures the distant horizon, perfectly masking any thermal signatures.\n\n**Cinematography & Style:** Hyper-realistic cinematography. Employ high-end film stock emulation (e.g., Kodak Vision3 500T). Utilize deep depth of field to keep both the foreground action and the dramatic, turbulent background in sharp focus. Lighting should be moody and high-contrast, utilizing the dramatic interplay of lightning flashes or diffused, heavy storm light to enhance the tension.\n\n**Action & Mood:** The movement must be erratic and unpredictable, reflecting a desperate need to conceal themselves. The atmosphere should be heavy, cold, and intensely dramatic, perfectly aligning with the narration's theme of using the elements to mask presence.\n\n**Keywords:** Dynamic evasion, thermal masking, thunderstorm, dense rain, atmospheric landscape, high-end film stock, deep depth of field, cinematic action, high contrast, moody lighting.",
-          "narration_title": "The Freeze Tactic Is Dead",
-          "beat": 5,
-          "narration_snippet": "Instead of freezing, move erratically. Use weather to your advantage—thunderstorms, dense rain, or fog mask your thermal signature.",
-          "image_prompt": "A medium wide shot focusing on the dynamic evasion of the squad as they move erratically through a landscape, perhaps with distant storm clouds gathering. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 745779
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 4
-          },
-          {
-            "item": 4,
-            "input": 1
-          },
-          {
-            "item": 4,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** A tense, atmospheric sequence set in a dense, cold environment at night.\n\n**Visual Description:** A sweeping, slow-motion long shot follows a squad of Caucasian soldiers moving through extremely dense, heavy fog and light, persistent rain. The scene is dominated by deep, oppressive shadows and a cold, blue-tinged ambient light. The visual focus is on the obscured movement of the soldiers, where their thermal signatures are subtly visualized as faint, shifting heat distortions cutting through the mist, emphasizing the concept of unseen presence. The environment is intensely atmospheric and claustrophobic.\n\n**Cinematography & Style:** Realistic Cinematography, shot on high-end, gritty film stock (e.g., Kodak Vision3 500T). Extreme deep depth of field to emphasize the vastness of the fog and the isolation of the figures. Cinematic color grading with deep blacks and cool, desaturated tones. Subtle, slow camera drift or a very slow, creeping dolly shot to enhance the sense of stealth and danger.\n\n**Lighting & Mood:** Low-key lighting. The primary light source is diffused, cold moonlight struggling through the heavy moisture. The mood is lethal, silent, and intensely paranoid.\n\n**Audio Synchronization (Narration Integration):** As the visual pans slowly across the obscured figures, the narration is delivered with a low, gravelly, and intensely serious tone, perfectly timed to the visual reveal of the thermal signatures.\n\n**Narration Snippet Overlay:** \"Nighttime is usually the most lethal time to be walking around because of the thermal signature you radiate.\"",
-          "narration_title": "The Freeze Tactic Is Dead",
-          "beat": 6,
-          "narration_snippet": "Nighttime is usually the most lethal time to be walking around because of the thermal signature you radiate.",
-          "image_prompt": "A long shot of a group of Caucasian soldiers moving through dense, heavy fog or light rain, their thermal signatures obscured. The environment is atmospheric. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 74192
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 5
-          },
-          {
-            "item": 5,
-            "input": 1
-          },
-          {
-            "item": 5,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** A hyper-realistic, ultra-wide cinematic shot set in a desolate, moonlit night. A squad of highly trained Caucasian soldiers is hunkered down behind rocky cover, their faces grim with tension. The only illumination comes from faint moonlight and the faint, cold glow of tactical night vision optics. In the deep background, the stark, ominous silhouette of a surveillance drone is visible against the dark sky.\n\n**Action & Pacing:** The scene begins in a state of absolute, frozen tension. As the narration begins, the camera executes a slow, deliberate push-in (dolly zoom effect) towards the soldiers' faces, emphasizing their strained focus. The moment the command is spoken, the tension breaks: the soldiers simultaneously snap their heads up, their rifles rising in a synchronized, explosive motion, aiming directly towards the unseen threat. The drone silhouette remains fixed in the distance, acting as the focal point of the impending conflict.\n\n**Visual Style & Cinematography:** Shot on high-end 70mm film stock. Extreme deep depth of field to keep both the foreground soldiers and the distant drone sharp. Cinematic color grading with deep, cool blues and high-contrast shadows (chiaroscuro lighting). Slow-motion emphasis during the moment the rifles are raised, capturing the raw, visceral reaction. Anamorphic lens flare subtly catches the moonlight.\n\n**Audio Synchronization:** The visual action must be perfectly synchronized with the narration: *\"Your final command: Get everybody's rifles up. Try and shoot that thing down.\"* The sound design should feature heavy, suppressed breathing, the metallic click of weapons being raised, and a low, ominous ambient drone that swells just before the implied action.",
-          "narration_title": "The Freeze Tactic Is Dead",
-          "beat": 7,
-          "narration_snippet": "Your final command: Get everybody's rifles up. Try and shoot that thing down.",
-          "image_prompt": "A dramatic wide shot at night. A group of Caucasian soldiers are taking cover, aiming rifles, with the silhouette of a drone visible in the distance. The scene is tense and illuminated by minimal light. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 202762
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 6
-          },
-          {
-            "item": 6,
-            "input": 1
-          },
-          {
-            "item": 6,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** Intense, high-stakes tactical engagement in an open, desolate environment (e.g., arid landscape or ruined urban setting).\n\n**Visual Description:** A sweeping, dynamic wide-angle shot transitioning into a tight, visceral medium shot. A squad of highly trained soldiers is actively engaging an unseen threat. The focus is on the overwhelming display of coordinated firepower: multiple rifles are aimed skyward, creating a visual symphony of converging lines of fire. Emphasize the coordinated, synchronized action of the squad, showcasing tactical superiority. Dust kicks up subtly from the ground, catching the harsh, dramatic lighting.\n\n**Narration Synchronization:** As the visual focuses on the coordinated aiming and the sheer volume of weaponry, the voiceover delivers the line: *\"Even if it's not a shotgun, it's better to have twenty guns in that thing instead of just one or two drone guards.\"* The visual pacing should match the weight and tactical implication of the words, building tension through the visual display of overwhelming force.\n\n**Cinematography & Style:** Ultra-realistic cinematography. Shot on high-end film stock (e.g., Kodak Vision3 500T). Extreme deep depth of field to keep the foreground soldiers sharp while allowing the background threat and environment to provide context. Cinematic color grading with high contrast and deep shadows. Slow-motion emphasis during the peak moment of coordinated aiming. **Aspect Ratio:** 2.39:1 (Cinemascope). **Lighting:** Harsh, dramatic, high-contrast lighting emphasizing the grit and intensity of the moment.",
-          "narration_title": "The Freeze Tactic Is Dead",
-          "beat": 8,
-          "narration_snippet": "Even if it's not a shotgun, it's better to have twenty guns in that thing instead of just one or two drone guards.",
-          "image_prompt": "A full body shot of the soldiers actively engaging the threat, aiming multiple rifles towards the sky. Focus on the coordinated action of the squad. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 403378
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 7
-          },
-          {
-            "item": 7,
-            "input": 1
-          },
-          {
-            "item": 7,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** An epic, wide-angle cinematic shot capturing a small squad of determined Caucasian soldiers standing at the edge of a vast, desolate landscape, gazing intently towards a distant, evolving horizon. The scene is bathed in the stark, dramatic light of either dawn or twilight, emphasizing the theme of isolation and necessary adaptation.\n\n**Visual Directing:** A final, sweeping wide shot. The composition must powerfully symbolize the obsolescence of old tactics against the backdrop of evolving technology. Utilize deep depth of field to keep the foreground soldiers sharp while the background horizon suggests an infinite, challenging future. Employ high-end film stock emulation (e.g., Kodak Vision3 500T), rich, deep shadows, and cinematic color grading to enhance the mood of urgency and stoic resolve. Subtle, slow camera movement (a very slow, almost imperceptible push-in) to build tension.\n\n**Audio/Narration Synchronization:**\n**(Voiceover begins with a low, gravelly, authoritative tone):** \"The freeze tactic is obsolete. Supplement it with active evasion procedures.\"\n**(Visuals shift slightly, focusing on the soldiers' determined expressions):** \"Technology has evolved, and you must adapt or become a statistic.\"\n**(The final shot holds on the group, silhouetted against the vastness, emphasizing their unified resolve.)**\n\n**Style Modifiers:** Hyper-realistic, Cinematic Grading, Wide Shot, Deep Depth of Field, High Contrast, Epic Scale, Film Grain Detail.",
-          "narration_title": "The Freeze Tactic Is Dead",
-          "beat": 9,
-          "narration_snippet": "The freeze tactic is obsolete. Supplement it with active evasion procedures. Technology has evolved, and you must adapt or become a statistic.",
-          "image_prompt": "A final, wide shot emphasizing the theme of adaptation. A small group of Caucasian soldiers standing ready, looking towards the horizon, symbolizing the obsolescence of the old tactic against evolving technology. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 499050
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 8
-          },
-          {
-            "item": 8,
-            "input": 1
-          },
-          {
-            "item": 8,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** An intense, high-stakes moment in an urban environment.\n\n**Visual Description:** A wide, sweeping shot capturing a group of Caucasian soldiers frozen in a moment of extreme, instantaneous reaction. The scene is dominated by the oppressive atmosphere of an impending threat. The camera focuses on their faces, which are taut with tension, eyes sharply directed upward toward an unseen source of danger. The visual style must be hyper-realistic, utilizing high-end film stock textures (e.g., Kodak Vision3 500T), deep, rich shadows, and an extremely deep depth of field to emphasize the environment and the characters' palpable fear. Dust motes catch the light in the tense, urban air.\n\n**Action & Pacing:** The sequence begins with an abrupt, high-pitched, almost subliminal sound (the drone buzz) that immediately triggers a visceral, split-second reaction across the entire group. The movement must be sharp, immediate, and desperate—a collective, instinctual shift from stillness to frantic motion. The pacing is extremely fast, emphasizing the ticking clock implied by the narration.\n\n**Cinematic Directives:** Cinematic grading, anamorphic lens flare, shallow depth of field focusing on the central figures, high contrast, gritty realism.\n\n**Audio Synchronization Note:** The visual action must be perfectly synchronized with the narration: \"The sound of a high-pitched buzz overhead means you have seconds to react. That drone is locking onto you, and staying stationary is a death sentence. You need to move before it locks in.\" The visual tension must escalate precisely with the urgency of the voiceover.",
-          "narration_title": "Drone Defense: The Scatter Protocol",
-          "beat": 1,
-          "narration_snippet": "The sound of a high-pitched buzz overhead means you have seconds to react. That drone is locking onto you, and staying stationary is a death sentence. You need to move before it locks in.",
-          "image_prompt": "Wide Shot of a group of Caucasian soldiers reacting instantly to a high-pitched buzz overhead. They are in an urban environment, tense and looking up. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 598547
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 9
-          },
-          {
-            "item": 9,
-            "input": 1
-          },
-          {
-            "item": 9,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** A high-altitude, dynamic sequence capturing a tactical maneuver on an open rooftop or industrial expanse at dawn.\n\n**Visual Directing:** A sweeping, wide-angle shot transitions into a series of tightly framed, high-action medium shots. The camera should emphasize the vastness of the sky above, juxtaposed with the focused, controlled movement of the soldiers. Use slow-motion for the initial scattering, then accelerate the pace to match the command. Focus on the interplay between the soldiers and the environment—the wind, the shadows, and the expansive sky they are attempting to control.\n\n**Subject & Action:** Several Caucasian soldiers are seen scattering from a central point, deliberately breaking into small, dispersed groups. The action must convey a sense of coordinated, deliberate movement, emphasizing the command to \"spread out and control the sky.\" The focus should remain on their coordinated dispersal and their interaction with the open air.\n\n**Aesthetic & Style:** Realistic Cinematography. Shot on high-end, gritty film stock (e.g., Kodak Vision3 500T). Extreme deep depth of field to keep both the foreground action and the vast, dramatic sky in sharp focus. Cinematic color grading with deep shadows and high contrast.\n\n**Audio Synchronization (Narration Overlay):** The visual pacing must strictly follow the narration: \"Your first move is to scatter in small groups. Don't try to intercept the drone alone. Instead, spread out and control the sky over your comrades.\" The visual movement should mirror the tactical instruction, building tension as the soldiers disperse to command the airspace.\n\n**Keywords:** Cinematic, Tactical, Aerial Control, Scattering, Rooftop, High Contrast, Deep Depth of Field, High-End Film Stock, Dynamic Movement, Command.",
-          "narration_title": "Drone Defense: The Scatter Protocol",
-          "beat": 2,
-          "narration_snippet": "Your first move is to scatter in small groups. Don't try to intercept the drone alone. Instead, spread out and control the sky over your comrades.",
-          "image_prompt": "Full Body Shot of several Caucasian soldiers scattering into small, dispersed groups across a rooftop or open industrial area, actively controlling the sky. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 751911
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 10
-          },
-          {
-            "item": 10,
-            "input": 1
-          },
-          {
-            "item": 10,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** A tense, high-stakes tactical engagement in a realistic, gritty environment (e.g., an urban ruin or dense woodland).\n\n**Shot Type & Composition:** Begin with a slow, deliberate **Long Shot** establishing the tactical environment. The camera slowly pushes in or tracks to reveal a Caucasian soldier positioned at a precise **side angle**, perfectly aligned to intercept an aggressively approaching FPV drone. Emphasize the geometry of the positioning—the favorable lateral interception angle is the focal point.\n\n**Action & Pacing:** The sequence should build tension. Start with the drone rapidly closing in, emphasizing the initial difficulty of interception from a direct line of sight. As the soldier executes the shift to the side angle, the visual pacing should accelerate slightly, highlighting the dramatic shift in tactical advantage. Focus on the subtle, calculated movement of the soldier, contrasting the chaotic speed of the drone against the soldier's controlled positioning.\n\n**Visual Style & Cinematography:** **Hyper-realistic Cinematography.** Utilize **high-end film stock** (e.g., Kodak Vision3 500T simulation) with rich, deep shadows and sharp highlights. Employ **deep depth of field** to keep both the soldier's focused expression and the rapidly moving drone in sharp, critical focus. Lighting should be dramatic and tactical—utilizing natural light or harsh, directional shadows to enhance the sense of immediate danger and tactical awareness.\n\n**Mood:** Intense, calculated, and ultimately, strategically superior. The visual language must convey the shift from vulnerability to mastery through precise positioning.\n\n**Audio Synchronization (Narration Integration):** The visual action must perfectly sync with the narration:\n*   *(Narration: \"When one soldier attempts to intercept an approaching FPV drone from their own position, they're likely to miss due to limited line-of-sight and exposure.\")* $\\rightarrow$ Visuals show the initial, slightly compromised attempt.\n*   *(Narration: \"But when you position yourself at a side angle, the odds shift dramatically.\")* $\\rightarrow$ Visuals emphasize the precise, calculated shift to the lateral angle.\n*   *(Narration: \"Lateral interception creates more favorable angles for small arms engagement with flying drones.\")* $\\rightarrow$ Final shot holds on the stable, advantageous side angle, emphasizing the tactical advantage and readiness for engagement.",
-          "narration_title": "Drone Defense: The Scatter Protocol",
-          "beat": 3,
-          "narration_snippet": "When one soldier attempts to intercept an approaching FPV drone from their own position, they're likely to miss due to limited line-of-sight and exposure. But when you position yourself at a side angle, the odds shift dramatically. Lateral interception creates more favorable angles for small arms engagement with flying drones.",
-          "image_prompt": "Long Shot showing a Caucasian soldier positioning themselves at a side angle to intercept an approaching FPV drone, creating a favorable lateral interception angle. The environment suggests tactical positioning. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 367566
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 11
-          },
-          {
-            "item": 11,
-            "input": 1
-          },
-          {
-            "item": 11,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** A high-stakes tactical maneuver in a desolate, industrial environment.\n\n**Visual Description:** A sweeping, wide-angle shot establishing a dispersed group of soldiers utilizing dense, realistic cover—cracked concrete walls and massive, rusted engine blocks. The composition must powerfully emphasize the concept of group survivability against unseen aerial threats. The lighting should be dramatic, utilizing harsh shadows and diffused daylight to enhance the gritty, realistic texture of the scene.\n\n**Cinematography & Style:** Ultra-realistic cinematography. Shot on high-end film stock (e.g., Kodak Vision3 500T). Employ a deep depth of field to keep the foreground cover and the distant threat palpable. Slow, deliberate camera movement, perhaps a slow, subtle dolly or a high-angle crane shot that reveals the scale of the dispersed formation. The mood is tense, tactical, and focused on survival.\n\n**Narration Synchronization:** The visuals must perfectly synchronize with the narration: *\"By doing this, you reduce your individual target signature. The group must disperse to increase overall survivability against aerial threats. Drones prioritize vehicles over scattered personnel, so you're less likely to be the primary target.\"* The visual pacing should reflect the strategic necessity and the increasing sense of calculated risk inherent in the dialogue.",
-          "narration_title": "Drone Defense: The Scatter Protocol",
-          "beat": 4,
-          "narration_snippet": "By doing this, you reduce your individual target signature. The group must disperse to increase overall survivability against aerial threats. Drones prioritize vehicles over scattered personnel, so you're less likely to be the primary target.",
-          "image_prompt": "Wide Shot of a dispersed group of Caucasian soldiers utilizing cover behind concrete walls or large engine blocks, emphasizing group survivability against aerial threats. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 713382
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 12
-          },
-          {
-            "item": 12,
-            "input": 1
-          },
-          {
-            "item": 12,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** Intense, tactical engagement in an urban or industrial environment.\n\n**Visual Directing & Action:** A full-body shot of a Caucasian soldier is positioned low, utilizing the cover of rough concrete walls or large engine blocks. The camera should follow the soldier's movement dynamically, emphasizing controlled, lateral shifting rather than a straight run. The action must convey calculated evasion and tactical positioning. The soldier is actively engaging a small drone with small arms, making themselves a difficult and unpredictable target.\n\n**Cinematography & Style:** Ultra-realistic, high-end film stock aesthetic (e.g., Kodak Vision3 500T). Employ deep depth of field to keep both the foreground action and the background environment sharp. Use dramatic, low-key lighting with strong shadows to enhance the tension and gritty realism. Slow-motion emphasis during the moment of engagement to highlight the tension.\n\n**Audio Synchronization (Narration Guide):** The visual pacing must strictly follow the narration:\n*   **(Start):** Establish the soldier taking cover.\n*   **(Mid-Action):** As the narration instructs, show the deliberate, lateral movement (\"Move laterally if you can—don't run in a straight line\").\n*   **(Climax):** The moment of engagement with the drone, emphasizing the soldier's calculated positioning to become a \"harder target.\"\n\n**Keywords:** Cinematic, Tactical, High-Fidelity, Realistic, Deep Depth of Field, Low-Key Lighting, Dynamic Camera Movement, Action Sequence, Gritty Realism.",
-          "narration_title": "Drone Defense: The Scatter Protocol",
-          "beat": 5,
-          "narration_snippet": "Once you've secured cover behind concrete walls or engine blocks, engage the drone with small arms. Move laterally if you can—don't run in a straight line. Make yourself a harder target.",
-          "image_prompt": "Full Body Shot of a Caucasian soldier engaging a drone with small arms while taking cover behind a concrete wall. The soldier is moving laterally, not in a straight line, making themselves a harder target. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 695955
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 13
-          },
-          {
-            "item": 13,
-            "input": 1
-          },
-          {
-            "item": 13,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** Intense, high-stakes tactical evasion in an open, realistic environment (e.g., desolate urban landscape or dense wilderness).\n\n**Visual Directing:** A sweeping, dynamic **Long Shot** captures a squad of Caucasian soldiers in continuous, fluid motion, executing complex evasive maneuvers. The camera must maintain relentless, smooth tracking, mirroring the subjects' movement, emphasizing the difficulty of locking onto them. The composition must highlight the tension between the moving subjects and the unseen threat.\n\n**Action & Focus:** The soldiers are actively moving and evading, their movements deliberately designed to disrupt and frustrate a high-speed tracking drone. Focus on the kinetic energy and the synchronized, desperate motion of the group.\n\n**Cinematography & Style:** Ultra-realistic cinematography. Utilize high-end film stock emulation (e.g., Kodak Vision3 500T). Employ a very deep depth of field to keep the foreground action sharp while subtly implying the presence of the tracking drone in the background. Lighting should be dramatic, utilizing harsh shadows and high contrast to enhance the sense of urgency and stealth.\n\n**Pacing & Tone:** Fast-paced, relentless, and tense. The visual rhythm must accelerate to match the urgency of the narration.\n\n**Voiceover Integration (Implied Timing):** As the visual action peaks in evasion, the narration should be delivered with a low, urgent, and determined tone: *\"Your next move is to keep moving. The drone is tracking you. Make it harder for them to lock on.\"*",
-          "narration_title": "Drone Defense: The Scatter Protocol",
-          "beat": 6,
-          "narration_snippet": "Your next move is to keep moving. The drone is tracking you. Make it harder for them to lock on.",
-          "image_prompt": "Long Shot of a group of Caucasian soldiers continuously moving and evading, maintaining motion to make it harder for the tracking drone to lock on. Dynamic action shot. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 245623
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 14
-          },
-          {
-            "item": 14,
-            "input": 1
-          },
-          {
-            "item": 14,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** Vast, sunlit open field at golden hour.\n\n**Visual Description:** A breathtaking, ultra-wide cinematic shot. A lone Caucasian figure stands perfectly still in the center of the immense, sun-drenched field. Dominating the frame, a sleek, high-tech surveillance drone hovers silently and menacingly directly above, its optical sensors intensely focused on the stationary figure. The lighting is warm and dramatic, emphasizing the stark contrast between the peaceful landscape and the impending threat.\n\n**Cinematography & Style:** Shot in the style of high-end feature film cinematography. Utilize an extremely deep depth of field to keep both the figure and the drone razor-sharp. Employ a slow, almost imperceptible dolly-in towards the figure, emphasizing the tension. Use anamorphic lens flares subtly catching the sunlight. High-end film stock aesthetic (e.g., Kodak Vision3).\n\n**Action & Mood:** The scene is characterized by profound, suffocating stillness. The mood is one of intense, creeping paranoia and inescapable surveillance. The drone's optical sensors should subtly glow, highlighting the feeling of being watched.\n\n**Audio Synchronization (Narration Overlay):**\n**(0:00-0:03) Narration:** \"Staying stationary in an open field is a death sentence.\" *(Visual: Slow, steady wide shot establishing the isolation.)*\n**(0:03-0:06) Narration:** \"The drone above you has locked onto your position.\" *(Visual: Subtle, slow pan up to focus on the drone's menacing presence.)*\n**(0:06-0:09) Narration:** \"Its optical sensors are scanning every inch of your surroundings.\" *(Visual: Extreme close-up on the drone's sensor lights, then a slow rack focus to the figure's unmoving face, emphasizing the scrutiny.)*",
-          "narration_title": "Break Their Line of Sight",
-          "beat": 1,
-          "narration_snippet": "Staying stationary in an open field is a death sentence. The drone above you has locked onto your position. Its optical sensors are scanning every inch of your surroundings.",
-          "image_prompt": "A wide shot of a Caucasian figure standing still in a vast, open, sunlit field. A high-tech surveillance drone is visible hovering menacingly above, its optical sensors clearly focused on the figure. Realistic Cinematography, high-end film stock, deep depth of field. Long Shot.",
-          "id": 255769
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 15
-          },
-          {
-            "item": 15,
-            "input": 1
-          },
-          {
-            "item": 15,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** An expansive, high-altitude aerial view of a complex, rugged landscape.\n\n**Action & Camera:** A slow, deliberate, sweeping drone shot begins high above, revealing a vast expanse of terrain. The camera smoothly descends and pans across the scene, focusing on the immediate foreground where dense trees, jagged rocks, and the skeletal remains of an overpass create natural obstructions. A human figure, viewed from a slight distance, is visible in the frame, rapidly scanning the environment with intense focus, their gaze deliberately tracing the lines of the terrain and the obstacles. The drone remains subtly visible in the upper third of the frame, emphasizing the perspective and the necessity of identifying these blocking elements.\n\n**Style & Cinematography:** Ultra-realistic, high-end film stock aesthetic. Deep depth of field to keep both the foreground details and the distant terrain sharp. Cinematic color grading with rich, deep shadows and bright highlights. Shot with a wide-angle lens to capture the scale of the environment. Dynamic motion, emphasizing the rapid, analytical movement of the scan.\n\n**Mood:** Tense, analytical, and immersive. The feeling of methodical discovery and the awareness of environmental constraints.\n\n**Voiceover Synchronization Note:** The visual pacing must align with the narration: the initial wide shot establishes the environment, followed by a focused, rapid scan that highlights the specific terrain features mentioned (trees, rocks, overpasses) as the voiceover instructs the viewer to \"identify terrain features immediately.\"",
-          "narration_title": "Break Their Line of Sight",
-          "beat": 2,
-          "narration_snippet": "Here's your procedure. First, identify terrain features immediately. Trees, rocks, overpasses, parking structures—anything that can block the drone's view.",
-          "image_prompt": "A long shot of a Caucasian figure rapidly scanning the environment, identifying distant terrain features like a line of trees and a distant overpass. The drone is visible in the upper frame, emphasizing the need for obstruction. Realistic Cinematography, high-end film stock, deep depth of field. Wide Shot.",
-          "id": 707407
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 16
-          },
-          {
-            "item": 16,
-            "input": 1
-          },
-          {
-            "item": 16,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** High-stakes, precise positioning in an outdoor, rugged environment.\n\n**Visual Style:** Ultra-realistic cinematography, shot on high-end film stock (e.g., Kodak Vision3), featuring deep depth of field and rich, cinematic color grading. The lighting should be dramatic, emphasizing the textures of the rock and the tension of the positioning.\n\n**Shot Composition:** A dynamic, full-body shot. A Caucasian figure is strategically positioned in the frame, acting as the central obstacle. They are situated directly between a massive, imposing rock formation and a hovering drone. The composition must clearly emphasize how the figure's body and the rock effectively block the drone's optical sensors.\n\n**Action & Pacing:** The scene opens with a slow, deliberate camera movement that focuses on the figure's precise placement. As the narration begins, the camera holds steady on this critical blocking position, emphasizing the strategic placement. The movement should feel tense and calculated, reflecting the instruction being given.\n\n**Narration Synchronization:** As the voiceover states, *\"Second, position yourself so the obstacle sits directly between you and the drone's optical systems,\"* the visual focus should lock onto the exact moment of this strategic placement, highlighting the physical relationship between the figure, the rock, and the drone.\n\n**Keywords:** Cinematic, High-Fidelity, Deep Depth of Field, Strategic Positioning, Drone Obstruction, Rock Formation, Tension, Realistic, High-End Film Stock.",
-          "narration_title": "Break Their Line of Sight",
-          "beat": 3,
-          "narration_snippet": "Second, position yourself so the obstacle sits directly between you and the drone's optical systems.",
-          "image_prompt": "A full body shot of a Caucasian figure strategically positioning themselves between a large rock formation and the hovering drone. The obstacle is clearly positioned to block the drone's view. Realistic Cinematography, high-end film stock, deep depth of field. Full Body Shot.",
-          "id": 459206
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 17
-          },
-          {
-            "item": 17,
-            "input": 1
-          },
-          {
-            "item": 17,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n\"A dynamic, high-end cinematic wide shot captured from a fixed drone perspective. A Caucasian figure moves unpredictably across an open field, deliberately varying their pace and changing direction to navigate and use natural obstacles, effectively disrupting the drone's view. The movement should convey a sense of deliberate, unpredictable motion. Utilize realistic cinematography with high-end film stock and deep depth of field to emphasize the interaction between the subject and the environment. The scene must perfectly synchronize with the narration: 'Third, move unpredictably. Don't walk in a straight line. Vary your pace. Change direction. Make the operator's job harder.'\"",
-          "narration_title": "Break Their Line of Sight",
-          "beat": 4,
-          "narration_snippet": "Third, move unpredictably. Don't walk in a straight line. Vary your pace. Change direction. Make the operator's job harder.",
-          "image_prompt": "A dynamic wide shot showing the Caucasian figure moving unpredictably across the field, changing direction and pace, using natural obstacles to disrupt the drone's view. The drone remains fixed above. Realistic Cinematography, high-end film stock, deep depth of field. Wide Shot.",
-          "id": 996740
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 18
-          },
-          {
-            "item": 18,
-            "input": 1
-          },
-          {
-            "item": 18,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** A tense, high-stakes surveillance scenario set in a rugged, natural environment.\n\n**Visual Description:** A medium long shot captures a sophisticated drone attempting to lock onto a target. The drone's view is severely obstructed by dense physical barriers—jagged rocks and thick, encroaching trees—which effectively block the drone's line of sight to the intended target, a Caucasian figure partially visible through the interference. The lighting is dramatic, utilizing deep shadows and high contrast to emphasize the palpable tension and the drone's struggle.\n\n**Action & Mood:** The drone visibly struggles, its targeting systems failing to resolve the target due to the physical obstruction. The atmosphere is thick with suspense and the palpable sense of disruption.\n\n**Cinematography & Style:** Realistic Cinematography. Shot with high-end film stock, emphasizing deep depth of field to keep both the drone and the environmental obstruction sharp. Slow, deliberate camera movement to enhance the feeling of struggle. Cinematic grading, high dynamic range.\n\n**Voiceover Synchronization (Implied Pacing):** As the drone attempts to scan the area, the narration emphasizes the difficulty: \"By doing this, you're disrupting the drone's targeting platform. Physical obstruction significantly reduces detection probability. The drone struggles to identify targets through physical barriers.\"",
-          "narration_title": "Break Their Line of Sight",
-          "beat": 5,
-          "narration_snippet": "By doing this, you're disrupting the drone's targeting platform. Physical obstruction significantly reduces detection probability. The drone struggles to identify targets through physical barriers.",
-          "image_prompt": "A medium long shot focusing on the drone struggling to identify the target due to physical obstruction (rocks/trees) blocking its view of the Caucasian figure. The atmosphere suggests tension. Realistic Cinematography, high-end film stock, deep depth of field. Long Shot.",
-          "id": 193110
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 19
-          },
-          {
-            "item": 19,
-            "input": 1
-          },
-          {
-            "item": 19,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** A vast, desolate landscape shrouded in intense, heavy rain and thick, rolling fog. The atmosphere is deeply dark, emphasizing a sense of isolation and concealment.\n\n**Action & Focus:** The camera executes a slow, sweeping wide shot across the environment. The visual focus is on the oppressive environmental interference—the relentless rain and fog—which visually implies the difficulty and danger of operating small drones in these conditions. A solitary, dark silhouette of a figure (Caucasian) is partially obscured within the mist, adding a layer of mystery and vulnerability. The scene should evoke the feeling of environmental forces actively hindering visibility and operation.\n\n**Cinematography & Style:** Realistic Cinematography. Shot on high-end, moody film stock (e.g., Kodak Vision3). Utilize deep depth of field to emphasize the texture of the rain and fog. Lighting should be low-key and dramatic, utilizing the darkness to enhance the mood. Slow, deliberate camera movement.\n\n**Audio Synchronization (Narration Cue):** As the visual sweeps across the scene, the narration should align with the visual progression: \"Heavy rain, fog, or high winds can ground many small drones. Darkness helps too.\" The visual transition should emphasize the theme of environmental interference leading to concealment.\n\n**Keywords:** Cinematic, Dramatic Lighting, Heavy Rain, Dense Fog, Silhouette, Landscape, Environmental Interference, Concealment, High-End Film Stock, Deep Depth of Field, Wide Shot, Moody, Atmospheric.",
-          "narration_title": "Break Their Line of Sight",
-          "beat": 6,
-          "narration_snippet": "Heavy rain, fog, or high winds can ground many small drones. Darkness helps too.",
-          "image_prompt": "A dramatic shot of the landscape under heavy, dark rain and fog. The focus is on the sense of concealment and the implication of environmental interference (rain/fog) affecting drone visibility. A silhouette of a Caucasian figure is partially obscured. Realistic Cinematography, high-end film stock, deep depth of field. Wide Shot.",
-          "id": 337972
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 20
-          },
-          {
-            "item": 20,
-            "input": 1
-          },
-          {
-            "item": 20,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** A hyper-realistic, wide-angle cinematic shot capturing a moment of absolute stealth and vanishing.\n\n**Visual Directing:** A lone Caucasian figure is captured in a final, tense wide shot, slowly and deliberately melting into the deep, complex shadows and dense cover of a rugged, atmospheric landscape. The composition emphasizes the act of disappearing—the figure is swallowed by the environment. In the far distance, a subtle, almost imperceptible drone is visible, adding a layer of unseen tension. The lighting should be dramatic, utilizing deep shadows and high contrast to enhance the mood of suspense.\n\n**Cinematography & Style:** Realistic Cinematography, shot on high-end, grainy film stock (e.g., Kodak Vision3), featuring an extremely deep depth of field to keep the foreground and background equally weighted. The camera movement should be slow, almost imperceptible, emphasizing the figure's slow retreat.\n\n**Audio Synchronization (Narration Overlay):** The visual pacing must perfectly synchronize with the narration: *\"Your next move is to stay hidden until they pass. If they're relentless, the odds of survival decrease significantly. But you've got time. You've got cover. Now disappear.\"* The audio should be delivered with a low, breathy, and intensely suspenseful tone, with pauses strategically placed to allow the visual action of the figure dissolving into the shadows to register fully.\n\n**Keywords:** Cinematic, High-Fidelity, Stealth, Suspense, Wide Shot, Deep Shadows, Landscape, Drone, Melding, Realistic Film Grain, Deep Depth of Field, Slow Motion, Tense Atmosphere.",
-          "narration_title": "Break Their Line of Sight",
-          "beat": 7,
-          "narration_snippet": "Your next move is to stay hidden until they pass. If they're relentless, the odds of survival decrease significantly. But you've got time. You've got cover. Now disappear.",
-          "image_prompt": "A final, tense wide shot of the Caucasian figure melting into the shadows and cover of the landscape as the drone is just visible in the distance, emphasizing the act of disappearing. Realistic Cinematography, high-end film stock, deep depth of field. Long Shot.",
-          "id": 752348
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 21
-          },
-          {
-            "item": 21,
-            "input": 1
-          },
-          {
-            "item": 21,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** Intense tactical cover under duress.\n\n**Visual Description:** A wide, sweeping cinematic shot capturing a small, highly coordinated tactical team of Caucasian soldiers taking immediate cover behind jagged rubble. The composition emphasizes the tension and vulnerability of the moment. The camera slowly pushes in, focusing on the intense, focused expressions of the soldiers as they look upward, their bodies coiled with readiness. Dust motes catch the harsh, dramatic lighting.\n\n**Audio/Narration Synchronization:** As the visual tension peaks, the sound design must feature a sharp, high-pitched, almost subliminal *buzz* that cuts through the silence, immediately followed by the narration: \"The sound of a high-pitched buzz overhead means you have seconds to react. That's when your team's coordinated coverage becomes your only line of defense.\"\n\n**Cinematic Style & Technical Directives:** Hyper-realistic cinematography. Shot on high-end 35mm film stock (e.g., Kodak Vision3). Extreme deep depth of field to keep the foreground team sharp while the background suggests an unseen threat. Dramatic, high-contrast lighting with deep shadows and sharp highlights. Slow-motion emphasis during the moment of reaction. Gritty, gritty texture.\n\n**Mood:** Extreme tension, urgency, coordinated defense, high-stakes realism.",
-          "narration_title": "Drone Defense: The Team Cover Protocol",
-          "beat": 1,
-          "narration_snippet": "The sound of a high-pitched buzz overhead means you have seconds to react. That's when your team's coordinated coverage becomes your only line of defense.",
-          "image_prompt": "Wide Shot of a small tactical team of Caucasian soldiers taking cover behind rubble, looking up with intense focus. A high-pitched buzz is implied by the tension in their posture. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 604210
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 22
-          },
-          {
-            "item": 22,
-            "input": 1
-          },
-          {
-            "item": 22,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** Intense, high-stakes tactical maneuver in a desolate, dusty, open environment.\n\n**Visual Description:** A dynamic, wide-angle, full-body shot capturing a squad of Caucasian soldiers executing a rapid, coordinated scatter. The movement is urgent and fluid, emphasizing immediate, instinctual survival. The environment is characterized by dry, ochre-colored dust swirling around their boots, illuminated by harsh, directional sunlight casting long, dramatic shadows. The composition utilizes a deep depth of field, keeping the foreground soldiers sharp while the distant, unseen threat (implied by the narration) looms in the background haze.\n\n**Action & Pacing:** The sequence begins with a sudden, sharp visual indication of an approaching threat (implied FPV drone presence). The soldiers react instantly, breaking formation and scattering in a controlled, desperate maneuver to establish defensive positions. The pacing is rapid, visceral, and tense, mirroring the urgency of the dialogue.\n\n**Cinematography & Style:** Hyper-realistic, high-end film stock aesthetic (e.g., Kodak Vision3 500T). Cinematic grading with high contrast and deep shadows. Shot with a wide-angle lens to emphasize the vastness of the environment and the vulnerability of the team. Slow-motion emphasis on the initial scattering to highlight the tension, followed by sharp, immediate action.\n\n**Voiceover Synchronization:** *(Synchronize the visual chaos with the narration)* \"When an FPV drone approaches, don't freeze. Freeze means death. Instead, your team scatters to cover each other.\"",
-          "narration_title": "Drone Defense: The Team Cover Protocol",
-          "beat": 2,
-          "narration_snippet": "When an FPV drone approaches, don't freeze. Freeze means death. Instead, your team scatters to cover each other.",
-          "image_prompt": "Full Body Shot of a group of Caucasian soldiers rapidly scattering and taking defensive positions in a dusty, open environment. They are moving away from a perceived threat. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 358711
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 23
-          },
-          {
-            "item": 23,
-            "input": 1
-          },
-          {
-            "item": 23,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** Intense, high-stakes tactical engagement in a dense, atmospheric environment.\n\n**Visual Directing:** A dynamic, cinematic side-angle shot capturing two highly trained soldiers in a moment of coordinated tactical maneuver. One soldier is actively providing cover while maintaining a stable line of sight, while the other is executing a precise, dynamic interception maneuver. Emphasize the tension, the coordinated movement, and the immediate threat. The composition must utilize a deep depth of field to keep both figures sharp while allowing the background to suggest the chaos of the firefight.\n\n**Aesthetic & Style:** Realistic Cinematography. Shot on high-end, gritty film stock (e.g., Kodak Vision3 500T). Dramatic, low-key lighting with strong rim lighting to accentuate the action. Extreme dynamic motion blur on peripheral elements to enhance the sense of speed and urgency.\n\n**Audio Synchronization (Narration Overlay):** As the visual action peaks, synchronize the following voiceover precisely: *\"You position yourself to maintain line-of-sight while your comrades provide suppressive fire. Side-angle interception is your best chance to neutralize the threat.\"* The sound design should feature the sharp crack of gunfire, the heavy breathing of the soldiers, and the tense, focused tone of the narration.\n\n**Keywords:** Tactical action, side-angle view, coordinated movement, suppressive fire, interception, high-end film grain, deep depth of field, cinematic realism, dynamic tension, gritty, high-fidelity.",
-          "narration_title": "Drone Defense: The Team Cover Protocol",
-          "beat": 3,
-          "narration_snippet": "You position yourself to maintain line-of-sight while your comrades provide suppressive fire. Side-angle interception is your best chance to neutralize the threat.",
-          "image_prompt": "Side-angle shot of two Caucasian soldiers actively engaging in suppressive fire, one providing cover while the other positions for interception. Dynamic action, emphasizing coordinated movement. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 779704
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 24
-          },
-          {
-            "item": 24,
-            "input": 1
-          },
-          {
-            "item": 24,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** A high-stakes, intense tactical engagement in a dense, realistic environment.\n\n**Shot Type & Composition:** A sweeping, cinematic Long Shot establishing a tactical formation. The composition must emphasize the interconnectedness of the team, showcasing a dynamic \"web of protection.\"\n\n**Action & Subject:** Focus on a squad of soldiers in a coordinated tactical position. One specific Caucasian soldier is clearly targeted by an unseen threat. Simultaneously, the surrounding teammates are actively and precisely providing direct fire support, their actions creating an undeniable, visible shield around the focal soldier. The scene must convey immediate, coordinated response.\n\n**Cinematography & Style:** Hyper-realistic cinematography. Utilize high-end, gritty film stock (e.g., Kodak Vision3 500T). Employ an extremely deep depth of field to keep both the targeted soldier and the supporting teammates sharp, emphasizing the spatial relationship and the interconnectedness of the action. Lighting should be dramatic, utilizing high contrast shadows and muzzle flashes to enhance the tension.\n\n**Mood:** Intense, professional, coordinated, and resilient.\n\n**Narration Synchronization Note:** The visual flow must perfectly synchronize with the narration: \"By doing this, you create a web of protection. If one soldier is targeted, teammates offer direct fire support.\" The visual should illustrate the *result* of this principle in real-time.",
-          "narration_title": "Drone Defense: The Team Cover Protocol",
-          "beat": 4,
-          "narration_snippet": "By doing this, you create a web of protection. If one soldier is targeted, teammates offer direct fire support.",
-          "image_prompt": "Long Shot showing a tactical formation where one Caucasian soldier is targeted, and surrounding teammates are actively providing direct fire support, creating a visible web of protection. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 833066
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 25
-          },
-          {
-            "item": 25,
-            "input": 1
-          },
-          {
-            "item": 25,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** Intense, high-stakes tactical maneuver in an open, semi-urban environment at dusk.\n\n**Visual Description:** A wide, sweeping cinematic shot capturing a diverse, highly trained team of operatives dynamically adjusting their positions in response to an unseen, immediate threat. The focus is on the synchronized, fluid shift in formation—a demonstration of immediate, coordinated tactical movement. Dust motes catch the fading, dramatic light. The camera executes a slow, sweeping dolly move that follows the team's synchronized shift, emphasizing the tension and precision of their combined effort.\n\n**Style & Cinematography:** Hyper-realistic, high-end film stock aesthetic (e.g., Kodak Vision3 500T). Deep depth of field to keep the entire team sharp while allowing the background to suggest the looming threat. Dramatic, low-key lighting with strong rim lighting to accentuate the silhouettes and the tension in the team's posture. Cinematic color grading with deep shadows and rich, desaturated tones. Slow-motion effect during the peak moment of coordinated adjustment.\n\n**Audio Synchronization (Narration Overlay):** As the team executes the synchronized shift, the voiceover narration plays: *\"Your next move is to adjust your position when you see your comrades under threat. This coordinated approach increases the probability of successful drone neutralization through combined team effort.\"* The sound design should feature subtle, tense ambient noise punctuated by sharp, tactical communication sounds, perfectly timed with the visual action.\n\n**Keywords:** Tactical Movement, Teamwork, Drone Neutralization, Coordinated Action, Cinematic, Wide Shot, Dynamic Formation Shift, High-End Film Stock, Deep Depth of Field, Dusk Lighting, Tension, Realism.",
-          "narration_title": "Drone Defense: The Team Cover Protocol",
-          "beat": 5,
-          "narration_snippet": "Your next move is to adjust your position when you see your comrades under threat. This coordinated approach increases the probability of successful drone neutralization through combined team effort.",
-          "image_prompt": "Wide Shot of a Caucasian team dynamically adjusting their positions in response to a new threat, demonstrating immediate, coordinated tactical movement. Focus on the synchronized shift in formation. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 920435
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 26
-          },
-          {
-            "item": 26,
-            "input": 1
-          },
-          {
-            "item": 26,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** High-stakes tactical training environment, transitioning from intense mental preparation to immediate, high-speed action.\n\n**Visual Style:** Hyper-realistic, cinematic, high-contrast, utilizing anamorphic lens flares and deep, rich color grading reminiscent of high-end action thrillers (e.g., *Sicario*, *Mission: Impossible*). Shot on high-end film stock (e.g., Kodak Vision3).\n\n**Shot Sequence:**\n\n**[0:00 - 0:03] Establishing Shot (Mental Rehearsal):** Begin with a **Medium Wide Shot** mirroring the input image: A Caucasian team is engaged in an intense, focused mental rehearsal or briefing. Emphasize the sharp focus on their eyes, the subtle tension in their posture, and the sterile, yet serious, environment suggesting intense preparation. Use a slow, deliberate push-in (dolly in) to heighten the concentration.\n\n**[0:03 - 0:06] Transition (The Weight of Hesitation):** A rapid, jarring cut or a subtle visual distortion (slight lens aberration) as the focus shifts. Introduce a tight close-up on a single operator's eye, reflecting a split-second of intense calculation or hesitation. The lighting should be stark, emphasizing shadows and the psychological pressure.\n\n**[0:06 - End] Action Implication (The Consequence):** Transition immediately into dynamic, high-speed footage. Show the FPV drone in motion—fast, erratic, and unforgiving. Use dynamic camera movements (e.g., handheld, fast whip pans, or POV shots from the drone's perspective) to convey the lack of time to think. The environment should feel kinetic and unforgiving, contrasting the initial calm preparation.\n\n**Audio Synchronization:** The visuals must be perfectly synchronized with the narration: \"Training, role clarity, and mental rehearsal prepare you for when FPV drones don't give you time to think. They punish hesitation.\" The music should be a low, pulsing, suspenseful score that builds to a sharp, high-frequency climax during the action sequence.\n\n**Keywords:** Cinematic, High-Fidelity, Cinematic Grading, Anamorphic Lens, Deep Depth of Field, Psychological Tension, FPV Drone Action, High Contrast Lighting, Intense Focus, Realism.",
-          "narration_title": "Drone Defense: The Team Cover Protocol",
-          "beat": 6,
-          "narration_snippet": "Training, role clarity, and mental rehearsal prepare you for when FPV drones don't give you time to think. They punish hesitation.",
-          "image_prompt": "Medium Wide Shot of a Caucasian team engaged in a focused mental rehearsal or briefing, emphasizing role clarity and intense concentration before action. The environment suggests preparation. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 568514
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 27
-          },
-          {
-            "item": 27,
-            "input": 1
-          },
-          {
-            "item": 27,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** An intense, wide-angle tracking shot following a diverse team moving across rugged, atmospheric terrain (e.g., a desolate landscape, dense forest, or open, challenging wilderness).\n\n**Visual Directing:** Full Body Shot. The entire team moves as a single, perfectly synchronized unit, demonstrating absolute coordination and unified resolve. The camera should maintain a dynamic, low-to-mid angle to emphasize the scale of the environment and the team's unified presence against it. Lighting should be dramatic, utilizing natural or carefully placed cinematic lighting to enhance the texture of the environment and the determination on the team's faces. Deep depth of field is crucial, keeping the team sharp while allowing the environment to provide rich context.\n\n**Style & Quality:** Realistic Cinematography, shot on high-end film stock (e.g., Kodak Vision3), cinematic color grading, high dynamic range (HDR). The mood is one of focused intensity, resilience, and unbreakable teamwork.\n\n**Audio Synchronization (Narration Overlay):** As the team moves in perfect unison, the voiceover should be delivered with a firm, urgent, and commanding tone, perfectly timed with the visual synchronization: *\"Now, your team moves as one unit. Stay coordinated. Stay alive.\"*",
-          "narration_title": "Drone Defense: The Team Cover Protocol",
-          "beat": 7,
-          "narration_snippet": "Now, your team moves as one unit. Stay coordinated. Stay alive.",
-          "image_prompt": "Full Body Shot of the entire Caucasian team moving as a single, highly coordinated unit across the terrain, unified and resolute against the backdrop of the environment. Strong sense of teamwork. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 121315
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 28
-          },
-          {
-            "item": 28,
-            "input": 1
-          },
-          {
-            "item": 28,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** Vast, open green field under a bright, unforgiving sky.\n\n**Shot Type & Action:** Begin with an extremely wide, slow-motion establishing shot (Drone/Aerial perspective) of a lone Caucasian male soldier standing perfectly motionless in the center of the immense field. The light is harsh and high-contrast, emphasizing the isolation.\n\n**Tension Build-up:** Slowly push in (dolly or slow zoom) towards the soldier's face, emphasizing his stillness and the overwhelming scale of the environment. The camera should subtly track the air, suggesting an unseen, oppressive presence.\n\n**Climax & Reaction:** As the narration hits the peak tension (\"Staying stationary in an open field is a death sentence\"), introduce a subtle, jarring visual element: a rapid, almost subliminal visual distortion or a subtle, high-frequency visual ripple effect across the frame, synchronized with the sound of the \"high-pitched buzz.\" The soldier's eyes should register the threat, a flicker of dawning realization or immediate, frozen tension.\n\n**Cinematography & Style:** Ultra-realistic, high-end film stock aesthetic (e.g., Kodak Vision3 500T). Deep depth of field to keep the vastness of the field and the soldier equally present. Cinematic color grading with deep shadows and bright highlights. Slow, deliberate camera movements.\n\n**Audio Synchronization:** The visual pacing must be dictated by the narration:\n*   **(0:00-0:02):** Ambient silence, then the sharp introduction of the high-pitched, unseen buzz.\n*   **(0:02-0:04):** The narration begins: \"The sound of a high-pitched buzz overhead means you have seconds to react.\" (Visuals emphasize the stillness and the sound's implication.)\n*   **(0:04-End):** The narration concludes: \"Staying stationary in an open field is a death sentence.\" (Visuals hold on the frozen, tense image, emphasizing the fatal consequence of inaction.)",
-          "narration_title": "The Invisible Shield: Mastering Drone Avoidance",
-          "beat": 1,
-          "narration_snippet": "The sound of a high-pitched buzz overhead means you have seconds to react. Staying stationary in an open field is a death sentence.",
-          "image_prompt": "Wide Shot of a Caucasian male soldier standing motionless in a vast, open green field under a bright sky. A high-pitched, unseen buzz suggests immediate danger overhead. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 67353
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 29
-          },
-          {
-            "item": 29,
-            "input": 1
-          },
-          {
-            "item": 29,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** A tense, slow-motion sequence focusing on a highly trained operative positioned within a dense, overgrown natural environment (e.g., a thick forest, dense brush, or rocky terrain).\n\n**Action & Focus:** The shot begins with a wide, establishing view, slowly pushing in (dolly or slow zoom) to reveal a Caucasian operative in a perfect tactical stance. The operative is not actively moving, but is perfectly integrated into the environment—using natural shadows, foliage, and texture to achieve near-perfect concealment. Emphasize the subtle, calculated tension of preparation and absolute stillness.\n\n**Visual Style & Cinematography:** Ultra-realistic, high-end cinematic quality. Shot with an anamorphic lens. Deep depth of field to keep both the operative and the surrounding environment sharp. Lighting should be moody and diffused, utilizing natural dappled sunlight filtering through the canopy to enhance the sense of shadow and concealment. Film stock emulation: High-end 70mm film grain, rich, deep color grading (teal and orange tones).\n\n**Narration Synchronization:** The visual pacing must perfectly align with the narration: \"But what if you never get seen at all? Your next move is to embrace Cover and Concealment. This isn't just theory—it's the foundational defense layer that must be implemented before any active engagement.\" The visual transition should emphasize the shift from theoretical concept to tangible, implemented reality.\n\n**Mood:** Calculated, stealthy, foundational, and intensely strategic.",
-          "narration_title": "The Invisible Shield: Mastering Drone Avoidance",
-          "beat": 2,
-          "narration_snippet": "But what if you never get seen at all? Your next move is to embrace Cover and Concealment. This isn't just theory—it's the foundational defense layer that must be implemented before any active engagement.",
-          "image_prompt": "Full Body Shot of a Caucasian operative taking a tactical stance in a dense, natural environment, subtly blending into the background. The mood is one of calculated strategy and preparation. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 198240
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 30
-          },
-          {
-            "item": 30,
-            "input": 1
-          },
-          {
-            "item": 30,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** A breathtaking, hyper-realistic long shot of a solitary Caucasian figure standing in a vast, open environment (e.g., a quiet field, an ancient ruin overlook, or a dense forest clearing). The composition is dominated by the figure's stillness and the subtle interplay of light and shadow.\n\n**Action & Directing:** The camera holds a slow, deliberate, almost imperceptible push-in, emphasizing the figure's absolute focus on the immediate foreground. The figure is positioned to deliberately avoid looking upward toward the sky, creating a palpable sense of caution and grounded awareness. Subtle, elongated shadows stretch across the ground, emphasizing the concept of movement and concealment. The visual focus is razor-sharp on the texture of the environment and the figure's composed posture, conveying deep stillness and careful observation.\n\n**Aesthetic & Cinematography:** Shot on high-end 70mm film stock. Cinematic grading with deep, rich blacks and nuanced mid-tones. Extreme depth of field to keep the foreground and background equally detailed. Lighting should be naturalistic, emphasizing the dramatic contrast between light and shadow. Slow, deliberate camera movement.\n\n**Audio Synchronization (Narration Overlay):**\n**(0:00-0:03) Visual:** Establishing shot of the figure in stillness.\n**(Narration):** \"First, don't look up at the drone.\"\n**(0:03-0:06) Visual:** Focus shifts subtly to the shadows lengthening.\n**(Narration):** \"Movement creates shadows, and shadows get you seen.\"",
-          "narration_title": "The Invisible Shield: Mastering Drone Avoidance",
-          "beat": 3,
-          "narration_snippet": "First, don't look up at the drone. Movement creates shadows, and shadows get you seen.",
-          "image_prompt": "Long Shot of a Caucasian figure carefully observing the environment, deliberately avoiding looking up towards the sky where a drone might be. The focus is on stillness and avoiding visual scanning. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 141075
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 31
-          },
-          {
-            "item": 31,
-            "input": 1
-          },
-          {
-            "item": 31,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** A breathtaking, hyper-realistic, full-body shot of a Caucasian operative moving through a dense, sun-dappled wooded area.\n\n**Action & Integration:** The operative is expertly and seamlessly integrating himself with the natural environment. Every shadow, texture, and color blends perfectly; the camouflage is absolute, making him indistinguishable from the surrounding foliage. The movement is fluid, silent, and highly deliberate, emphasizing advanced environmental integration techniques.\n\n**Cinematography & Style:** Shot with a wide-angle lens to capture the scale of the environment, utilizing a deep depth of field to keep both the operative and the dense background in sharp focus. Lighting is natural and atmospheric, filtering through the canopy, creating high-contrast, moody cinematic tones.\n\n**Visual Quality:** Realistic Cinematography, shot on high-end film stock (e.g., Kodak Vision3), rich texture, volumetric lighting, ultra-detailed, 8K resolution.\n\n**Narration Sync:** *(As the visual unfolds, the voiceover emphasizes the concept: \"Second, integrate yourself with the environment using camouflage and environmental integration techniques.\")*",
-          "narration_title": "The Invisible Shield: Mastering Drone Avoidance",
-          "beat": 4,
-          "narration_snippet": "Second, integrate yourself with the environment using camouflage and environmental integration techniques.",
-          "image_prompt": "Full Body Shot of a Caucasian operative expertly integrating himself with the surrounding environment using natural camouflage and environmental integration techniques in a wooded area. The integration is seamless. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 381641
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 32
-          },
-          {
-            "item": 32,
-            "input": 1
-          },
-          {
-            "item": 32,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** A tense, low-light tactical environment.\n\n**Visual Directing:** Medium Wide Shot. A Caucasian soldier is positioned within the deep shadows of rugged terrain, exhibiting absolute, profound stillness. The focus is on the deliberate minimization of physical signature; the soldier is perfectly motionless, weapon tucked securely against the body, seamlessly blending into the surrounding darkness and shadows. Utilize deep depth of field to emphasize the texture of the environment and the subject's stillness. Lighting should be dramatic and high-end film stock quality, emphasizing chiaroscuro and subtle, realistic textures. The camera movement should be almost imperceptible, enhancing the feeling of frozen tension.\n\n**Audio/Narration Synchronization:** As the visual emphasizes this absolute stillness, the voiceover delivers the following line with a measured, low tone: *\"Third, minimize your signature by tucking your weapon up and staying still. Instead of panicking and trying to cover yourself with foliage, remain motionless.\"* The visual must perfectly mirror the command for absolute, controlled immobility.\n\n**Style Modifiers:** Hyper-realistic cinematography, high-end film grain, deep shadows, cinematic color grading, extreme focus on stillness and stealth.",
-          "narration_title": "The Invisible Shield: Mastering Drone Avoidance",
-          "beat": 5,
-          "narration_snippet": "Third, minimize your signature by tucking your weapon up and staying still. Instead of panicking and trying to cover yourself with foliage, remain motionless.",
-          "image_prompt": "Medium Wide Shot of a Caucasian soldier remaining perfectly motionless, weapon tucked securely, blending into the shadows of the terrain. Emphasis on absolute stillness and minimizing physical signature. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 733056
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 33
-          },
-          {
-            "item": 33,
-            "input": 1
-          },
-          {
-            "item": 33,
-            "input": 1
-          }
-        ]
-      },
-      {
-        "json": {
-          "content": "**Cinematic Video Prompt:**\n\n**Scene:** A high-stakes, silent execution sequence emphasizing absolute stealth and psychological dominance.\n\n**Visual Description:** A breathtaking, ultra-wide long shot capturing a Caucasian operative moving through a complex, shadowed environment. The operative is rendered in near-perfect, absolute invisibility, embodying the pinnacle of stealth mastery. The visual focus is on the *negation* of threat—the complete absence of aerial surveillance, suggesting a mastery over the physical and digital space. The lighting should be dramatic and moody, utilizing deep shadows and subtle, high-contrast rim lighting to emphasize the operative's presence (or lack thereof). The atmosphere must convey a profound sense of quiet, assured victory and meticulous control.\n\n**Cinematography & Style:** Realistic Cinematography. Shot on high-end, fine-grain film stock (e.g., Kodak Vision3 500T). Extreme deep depth of field to emphasize the environment and the operative's seamless integration into it. Slow, deliberate camera movement, emphasizing the weight of the silence.\n\n**Audio Synchronization (Narration Overlay):**\n**(0:00-0:03) Visual:** Establishing shot of the operative in the environment.\n**(Narration):** \"If they can't find you, they can't hit you.\"\n**(0:03-0:06) Visual:** A subtle shift in focus or a slow, deliberate movement, emphasizing the execution.\n**(Narration):** \"That's the big thing. Now, go execute it.\"\n**(0:06-End) Visual:** A final, still frame of the operative, radiating calm and finality.\n**(Narration):** \"Stay invisible.\"\n\n**Mood:** Tense, controlled, silent, and overwhelmingly assured.",
-          "narration_title": "The Invisible Shield: Mastering Drone Avoidance",
-          "beat": 6,
-          "narration_snippet": "If they can't find you, they can't hit you. That's the big thing. Now, go execute it. Stay invisible.",
-          "image_prompt": "Long Shot of a Caucasian operative achieving complete invisibility within the environment, a master of stealth, as the threat of aerial surveillance is completely negated. A sense of quiet, assured victory. Realistic Cinematography, high-end film stock, deep depth of field.",
-          "id": 645202
-        },
-        "binary": {},
-        "pairedItem": [
-          {
-            "item": 34
-          },
-          {
-            "item": 34,
-            "input": 1
-          },
-          {
-            "item": 34,
-            "input": 1
-          }
-        ]
-      }
-    ]
-  },
+  "pinData": {},
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate"
@@ -1810,6 +1060,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-04-18T21:24:33.062Z",
-  "versionId": "86e14a8e-1339-471c-9d80-3060729639b2"
+  "updatedAt": "2026-04-20T22:23:16.536Z",
+  "versionId": "e59ca6bc-7bd8-43b2-8dc5-ef163ffe29a9"
 }
