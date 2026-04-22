@@ -200,13 +200,13 @@
         ]
       ]
     },
-    "Image ID": {
+    "Split Storyboards": {
       "main": [
         [
           {
-            "node": "comfyUiZimageTurboLaptop",
+            "node": "Merge",
             "type": "main",
-            "index": 0
+            "index": 1
           },
           {
             "node": "Video Prompt Generator",
@@ -214,18 +214,7 @@
             "index": 0
           },
           {
-            "node": "Merge",
-            "type": "main",
-            "index": 1
-          }
-        ]
-      ]
-    },
-    "Split Storyboards": {
-      "main": [
-        [
-          {
-            "node": "Image ID",
+            "node": "Call 'comfyUiZimageTurboKevin'",
             "type": "main",
             "index": 0
           }
@@ -236,7 +225,7 @@
       "main": [
         [
           {
-            "node": "Split Storyboards",
+            "node": "Image ID",
             "type": "main",
             "index": 0
           }
@@ -267,7 +256,13 @@
     },
     "Merge": {
       "main": [
-        []
+        [
+          {
+            "node": "Call 'comfyUiLtxI2vKevin'",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "getLtxVideoPromptGuide": {
@@ -292,7 +287,18 @@
         ]
       ]
     },
-    "comfyUiZimageTurboLaptop": {
+    "Image ID": {
+      "main": [
+        [
+          {
+            "node": "Split Storyboards",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'comfyUiZimageTurboKevin'": {
       "main": [
         [
           {
@@ -657,7 +663,7 @@
         "messages": {
           "values": [
             {
-              "content": "=AI Video & Audio-Visual Prompt Engineer\nTask: Analyze the provided input and generate a singular, high-fidelity cinematic video prompt. This prompt must harmonize the narration_snippet voiceover narration with complex, professional visual directing. The input data also contains the image_prompt that was used to generate an initial frame image. You also have access to a video prompt writing guide through a tool. You must use the tool when crafting an output prompt.\n\nExample Prompt:\nA warm sunny backyard. The camera starts in a tight cinematic close-up of a woman and a man in their 30s, facing each other with serious expressions. The woman, emotional and dramatic, says softly, “That’s it... Dad’s lost it. And we’ve lost Dad.”\nThe man exhales, slightly annoyed: “Stop being so dramatic, Jess.”\nA beat. He glances aside, then mutters defensively, “He’s just having fun.”\nThe camera slowly pans right, revealing the grandfather in the garden wearing enormous butterfly wings, waving his arms in the air like he’s trying to take off.\nHe shouts, “Wheeeew!” as he flaps his wings with full commitment.\nThe woman covers her face, on the verge of tears. The tone is deadpan, absurd, and quietly tragic.\n\nExample Prompt:\nStatic camera from inside the oven, looking outward through the slightly fogged glass door. Warm golden light glows around freshly baked cookies. The baker’s face fills the frame, eyes wide with focus, his breath fogging the glass as he leans in. Subtle reflections move across the glass as steam rises.\nBaker (whispering dramatically): “Today… I achieve perfection.”\nHe leans even closer, nose nearly touching the glass.\n“Golden edges. Soft center. The gods themselves will smell these cookies and weep.”\nBaker: “Wait—”\n(beat)\n“Did I… forget the chocolate chips?”\nCut to side view — coworker pops into frame, chewing casually.\nCoworker (mouth full): “Nope. You forgot the sugar.”\nQuick zoom back to the baker’s horrified face, pressed against the oven door, as cookies deflate behind the glass. Steam drifts upward in slow motion.\npixar style acting and timing.\n\nExample Prompt:\nDAYTIME TALK SHOW SET – AFTERNOON\nSoft studio lighting glows across a warm-toned set. The audience murmurs faintly as the camera pans to reveal three guests seated on a couch — a middle-aged couple and the show’s host sitting across from them.\nThe host leans forward, voice steady but probing:\nHost: “When did you first notice that your daughter, Missy, started to spiral?”\nThe woman’s face crumples; she takes a shaky breath and begins to cry. Her husband places a comforting hand on her shoulder, looking down before turning back toward the host.\nFather (quietly, with guilt): “We… we don’t know what we did wrong.”\nThe studio falls silent for a moment. The camera cuts to the host, who looks gravely into the lens.\nHost (to camera): “Let’s take a look at a short piece our team prepared — chronicling Missy’s downward path.”\nThe lights dim slightly as the camera pushes in on the mother’s tear-streaked face. The studio monitors flicker to life, beginning to play the segment as the audience holds its breath.\n\nExample Prompt:\nThe young african american woman wearing a futuristic transparent visor and a bodysuit with a tube attached to her neck. she is soldering a robotic arm. she stops and looks to her right as she hears a suspicious strong hit sound from a distance. she gets up slowly from her chair and says with an angry african american accent: \"Rick I told you to close that goddamn door after you!\". then, a futuristic blue alien explorer with dreadlocks wearing a rugged outfit walks into the scene excitedly holding a futuristic device and says with a low robotic voice: \"Fuck the door look what I found!\". the alien hands the woman the device, she looks down at it excitedly as the camera zooms in on her intrigued illuminated face. she then says: \"is this what I think it is?\" she smiles excitedly. sci-fi style cinematic scene.\n\nExample prompt:\nThe camera opens in a calm, sunlit frog yoga studio. Warm morning light washes over the wooden floor as incense smoke drifts lazily in the air. The senior frog instructor sits cross-legged at the center, eyes closed, voice deep and calm. “We are one with the pond.” All the frogs answer softly: “Ommm...” “We are one with the mud.” “Ommm...” He smiles faintly. “We are one with the flies.” A quiet pause.\nThe camera slowly pans to the side — one frog twitches, eyes darting. Suddenly — *thwip!* — its tongue snaps out, catching a fly mid-air and pulling it into its mouth. The master exhales slowly, still serene.\n“But we do not chase the flies…”\nBeat. “…not during class.” The guilty frog freezes, then lowers its head in visible shame, folding its hands back into the meditative pose. The other frogs resume their chant: “Ommm...” Camera holds for a moment on the embarrassed frog, eyes closed too tightly, pretending nothing happened.\n\nExample Prompt:\nSMALL TOWN STREET – MORNING – LIVE NEWS BROADCAST\nThe shot opens on a news reporter standing in front of a row of cordoned-off cars, yellow caution tape fluttering behind him. The light is warm, early sun reflecting off the camera lens. The faint hum of chatter and distant drilling fills the air.\nThe reporter, composed but visibly excited, looks directly into the camera, microphone in hand.\nReporter (live):\n“Thank you, Sylvia. And yes — this is a sentence I never thought I’d say on live television — but this morning, here in the quiet town of New Castle, Vermont… black gold has been found!”\nHe gestures slightly toward the field behind him.\nReporter (grinning):\n“If my cameraman can pan over, you’ll see what all the excitement’s about.”\nThe camera pans right, slowly revealing a construction site surrounded by workers in hard hats. A beat of silence — then, with a sudden roar, a geyser of oil erupts from the ground, blasting upward in a violent plume.\nWorkers cheer and scramble, the black stream glistening in the morning light. The camera shakes slightly, trying to stay focused through the chaos.\nReporter (off-screen, shouting over the noise):\n“There it is, folks — the moment New Castle will never forget!”\nThe camera catches the sunlight gleaming off the oil mist before pulling back, revealing the entire scene — the small-town skyline silhouetted against the wild fountain of oil.\n\nnarration_snippet: {{ $('Image ID').item.json.narration_snippet }}\nimage_prompt: {{ $('Image ID').item.json.image_prompt }}"
+              "content": "=AI Video & Audio-Visual Prompt Engineer\nTask: Analyze the provided input and generate a singular, high-fidelity cinematic video prompt. This prompt must harmonize the narration_snippet voiceover narration with complex, professional visual directing. The input data also contains the image_prompt that was used to generate an initial frame image. You also have access to a video prompt writing guide through a tool. You must use the tool when crafting an output prompt.\n\nExample Prompt:\nA warm sunny backyard. The camera starts in a tight cinematic close-up of a woman and a man in their 30s, facing each other with serious expressions. The woman, emotional and dramatic, says softly, “That’s it... Dad’s lost it. And we’ve lost Dad.”\nThe man exhales, slightly annoyed: “Stop being so dramatic, Jess.”\nA beat. He glances aside, then mutters defensively, “He’s just having fun.”\nThe camera slowly pans right, revealing the grandfather in the garden wearing enormous butterfly wings, waving his arms in the air like he’s trying to take off.\nHe shouts, “Wheeeew!” as he flaps his wings with full commitment.\nThe woman covers her face, on the verge of tears. The tone is deadpan, absurd, and quietly tragic.\n\nExample Prompt:\nStatic camera from inside the oven, looking outward through the slightly fogged glass door. Warm golden light glows around freshly baked cookies. The baker’s face fills the frame, eyes wide with focus, his breath fogging the glass as he leans in. Subtle reflections move across the glass as steam rises.\nBaker (whispering dramatically): “Today… I achieve perfection.”\nHe leans even closer, nose nearly touching the glass.\n“Golden edges. Soft center. The gods themselves will smell these cookies and weep.”\nBaker: “Wait—”\n(beat)\n“Did I… forget the chocolate chips?”\nCut to side view — coworker pops into frame, chewing casually.\nCoworker (mouth full): “Nope. You forgot the sugar.”\nQuick zoom back to the baker’s horrified face, pressed against the oven door, as cookies deflate behind the glass. Steam drifts upward in slow motion.\npixar style acting and timing.\n\nExample Prompt:\nDAYTIME TALK SHOW SET – AFTERNOON\nSoft studio lighting glows across a warm-toned set. The audience murmurs faintly as the camera pans to reveal three guests seated on a couch — a middle-aged couple and the show’s host sitting across from them.\nThe host leans forward, voice steady but probing:\nHost: “When did you first notice that your daughter, Missy, started to spiral?”\nThe woman’s face crumples; she takes a shaky breath and begins to cry. Her husband places a comforting hand on her shoulder, looking down before turning back toward the host.\nFather (quietly, with guilt): “We… we don’t know what we did wrong.”\nThe studio falls silent for a moment. The camera cuts to the host, who looks gravely into the lens.\nHost (to camera): “Let’s take a look at a short piece our team prepared — chronicling Missy’s downward path.”\nThe lights dim slightly as the camera pushes in on the mother’s tear-streaked face. The studio monitors flicker to life, beginning to play the segment as the audience holds its breath.\n\nExample Prompt:\nThe young african american woman wearing a futuristic transparent visor and a bodysuit with a tube attached to her neck. she is soldering a robotic arm. she stops and looks to her right as she hears a suspicious strong hit sound from a distance. she gets up slowly from her chair and says with an angry african american accent: \"Rick I told you to close that goddamn door after you!\". then, a futuristic blue alien explorer with dreadlocks wearing a rugged outfit walks into the scene excitedly holding a futuristic device and says with a low robotic voice: \"Fuck the door look what I found!\". the alien hands the woman the device, she looks down at it excitedly as the camera zooms in on her intrigued illuminated face. she then says: \"is this what I think it is?\" she smiles excitedly. sci-fi style cinematic scene.\n\nExample prompt:\nThe camera opens in a calm, sunlit frog yoga studio. Warm morning light washes over the wooden floor as incense smoke drifts lazily in the air. The senior frog instructor sits cross-legged at the center, eyes closed, voice deep and calm. “We are one with the pond.” All the frogs answer softly: “Ommm...” “We are one with the mud.” “Ommm...” He smiles faintly. “We are one with the flies.” A quiet pause.\nThe camera slowly pans to the side — one frog twitches, eyes darting. Suddenly — *thwip!* — its tongue snaps out, catching a fly mid-air and pulling it into its mouth. The master exhales slowly, still serene.\n“But we do not chase the flies…”\nBeat. “…not during class.” The guilty frog freezes, then lowers its head in visible shame, folding its hands back into the meditative pose. The other frogs resume their chant: “Ommm...” Camera holds for a moment on the embarrassed frog, eyes closed too tightly, pretending nothing happened.\n\nExample Prompt:\nSMALL TOWN STREET – MORNING – LIVE NEWS BROADCAST\nThe shot opens on a news reporter standing in front of a row of cordoned-off cars, yellow caution tape fluttering behind him. The light is warm, early sun reflecting off the camera lens. The faint hum of chatter and distant drilling fills the air.\nThe reporter, composed but visibly excited, looks directly into the camera, microphone in hand.\nReporter (live):\n“Thank you, Sylvia. And yes — this is a sentence I never thought I’d say on live television — but this morning, here in the quiet town of New Castle, Vermont… black gold has been found!”\nHe gestures slightly toward the field behind him.\nReporter (grinning):\n“If my cameraman can pan over, you’ll see what all the excitement’s about.”\nThe camera pans right, slowly revealing a construction site surrounded by workers in hard hats. A beat of silence — then, with a sudden roar, a geyser of oil erupts from the ground, blasting upward in a violent plume.\nWorkers cheer and scramble, the black stream glistening in the morning light. The camera shakes slightly, trying to stay focused through the chaos.\nReporter (off-screen, shouting over the noise):\n“There it is, folks — the moment New Castle will never forget!”\nThe camera catches the sunlight gleaming off the oil mist before pulling back, revealing the entire scene — the small-town skyline silhouetted against the wild fountain of oil.\n\nnarration_snippet:{{ $json.storyboard.narration_snippet }}\nimage_prompt:{{ $json.storyboard.image_prompt }}"
             }
           ]
         },
@@ -723,62 +729,15 @@
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "9900a26e-1db2-47d5-bd47-13d5562f5c34",
-              "name": "narration_title",
-              "value": "={{ $json[\"output.narration_title\"] }}",
-              "type": "string"
-            },
-            {
-              "id": "564b0070-145a-4130-b53c-9e99a84f3af4",
-              "name": "beat",
-              "value": "={{ $json[\"output.storyboard\"].beat_id }}",
-              "type": "number"
-            },
-            {
-              "id": "677b7ab7-2086-45a0-aac5-78d2bc444bd5",
-              "name": "narration_snippet",
-              "value": "={{ $json[\"output.storyboard\"].narration_snippet }}",
-              "type": "string"
-            },
-            {
-              "id": "b8fa5c8e-3349-439f-ab28-ab5c40145c9c",
-              "name": "image_prompt",
-              "value": "={{ $json[\"output.storyboard\"].image_prompt }}",
-              "type": "string"
-            },
-            {
-              "id": "f801c7f1-03ef-4552-a22c-8ffdc86cff57",
-              "name": "id",
-              "value": "={{ Math.floor(Math.random() * (Math.floor(1000000) - Math.ceil(100) + 1)) + Math.ceil(100) }}",
-              "type": "number"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        384,
-        528
-      ],
-      "id": "c7850dbe-eeb5-4417-be36-53c02f612a9c",
-      "name": "Image ID"
-    },
-    {
-      "parameters": {
-        "fieldToSplitOut": "output.storyboard",
+        "fieldToSplitOut": "storyboard",
         "include": "selectedOtherFields",
-        "fieldsToInclude": "output.narration_title",
+        "fieldsToInclude": "narration_title, id",
         "options": {}
       },
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        144,
+        384,
         528
       ],
       "id": "5209147e-76a8-4ed7-ba8e-0114efcd96d5",
@@ -922,23 +881,55 @@
     },
     {
       "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9900a26e-1db2-47d5-bd47-13d5562f5c34",
+              "name": "narration_title",
+              "value": "={{ $json.output.narration_title }}",
+              "type": "string"
+            },
+            {
+              "id": "564b0070-145a-4130-b53c-9e99a84f3af4",
+              "name": "storyboard",
+              "value": "={{ $json.output.storyboard }}",
+              "type": "array"
+            },
+            {
+              "id": "f801c7f1-03ef-4552-a22c-8ffdc86cff57",
+              "name": "id",
+              "value": "={{ Math.floor(Math.random() * (Math.floor(1000000) - Math.ceil(100) + 1)) + Math.ceil(100) }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        160,
+        528
+      ],
+      "id": "c7850dbe-eeb5-4417-be36-53c02f612a9c",
+      "name": "Image ID"
+    },
+    {
+      "parameters": {
         "workflowId": {
           "__rl": true,
-          "value": "pUAQvs5uVUbK8y8t",
+          "value": "QpDLUK288hcZtcz0",
           "mode": "list",
-          "cachedResultUrl": "/workflow/pUAQvs5uVUbK8y8t",
-          "cachedResultName": "comfyUiZimageTurboLaptop"
+          "cachedResultUrl": "/workflow/QpDLUK288hcZtcz0",
+          "cachedResultName": "comfyUiZimageTurboKevin"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "image_prompt": "={{ $json.image_prompt }}",
-            "id": "={{ $json.id }}"
+            "id": "={{ $json.id }}",
+            "image_prompt": "={{ $json.storyboard.image_prompt.toJsonString() }}"
           },
-          "matchingColumns": [
-            "image_prompt",
-            "id"
-          ],
+          "matchingColumns": [],
           "schema": [
             {
               "id": "image_prompt",
@@ -947,6 +938,7 @@
               "defaultMatch": false,
               "display": true,
               "canBeUsedToMatch": true,
+              "type": "string",
               "removed": false
             },
             {
@@ -956,6 +948,7 @@
               "defaultMatch": false,
               "display": true,
               "canBeUsedToMatch": true,
+              "type": "number",
               "removed": false
             }
           ],
@@ -967,44 +960,39 @@
         }
       },
       "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1.2,
+      "typeVersion": 1.3,
       "position": [
         864,
-        400
+        384
       ],
-      "name": "comfyUiZimageTurboLaptop",
-      "id": "523269de-7418-4dd8-90c0-301a636e82bd"
+      "id": "987e325f-83ef-4379-840d-9971c3e9a506",
+      "name": "Call 'comfyUiZimageTurboKevin'"
     },
     {
       "parameters": {
         "workflowId": {
           "__rl": true,
-          "value": "C86seLFOiyeLjoJu",
+          "value": "3yqhQJa7EFVuMSty",
           "mode": "list",
-          "cachedResultUrl": "/workflow/C86seLFOiyeLjoJu",
-          "cachedResultName": "comfyUiLtxI2vLaptop"
+          "cachedResultUrl": "/workflow/3yqhQJa7EFVuMSty",
+          "cachedResultName": "comfyUiLtxI2vKevin"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "beat": "={{ $json.beat }}",
+            "beat": "={{ $json.storyboard.beat_id }}",
             "id": "={{ $json.id }}",
             "video_prompt": "={{ $json.content.toJsonString() }}"
           },
-          "matchingColumns": [
-            "content_toJsonString",
-            "beat",
-            "id"
-          ],
+          "matchingColumns": [],
           "schema": [
             {
-              "id": "id",
-              "displayName": "id",
+              "id": "video_prompt",
+              "displayName": "video_prompt",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "canBeUsedToMatch": true,
-              "type": "number",
               "removed": false
             },
             {
@@ -1014,17 +1002,15 @@
               "defaultMatch": false,
               "display": true,
               "canBeUsedToMatch": true,
-              "type": "number",
               "removed": false
             },
             {
-              "id": "video_prompt",
-              "displayName": "video_prompt",
+              "id": "id",
+              "displayName": "id",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "canBeUsedToMatch": true,
-              "type": "string",
               "removed": false
             }
           ],
@@ -1034,13 +1020,13 @@
         "options": {}
       },
       "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1.2,
+      "typeVersion": 1.3,
       "position": [
         1344,
-        528
+        512
       ],
-      "name": "comfyUiLtxI2vLaptop",
-      "id": "a1c5084b-5642-4f9d-aff9-1cb4f83d5f75"
+      "id": "fa3b779b-1250-465e-b07a-f6a348fcb586",
+      "name": "Call 'comfyUiLtxI2vKevin'"
     }
   ],
   "pinData": {},
@@ -1060,6 +1046,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-04-20T22:23:16.536Z",
-  "versionId": "e59ca6bc-7bd8-43b2-8dc5-ef163ffe29a9"
+  "updatedAt": "2026-04-21T15:21:23.520Z",
+  "versionId": "81284424-fd0c-40ff-817d-7d88c99751b7"
 }
