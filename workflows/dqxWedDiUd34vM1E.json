@@ -173,7 +173,7 @@
           {
             "node": "Merge",
             "type": "main",
-            "index": 2
+            "index": 1
           }
         ]
       ]
@@ -204,17 +204,17 @@
       "main": [
         [
           {
-            "node": "Merge",
-            "type": "main",
-            "index": 1
-          },
-          {
             "node": "Video Prompt Generator",
             "type": "main",
             "index": 0
           },
           {
-            "node": "Call 'comfyUiZimageTurboKevin'",
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Call 'comfyUiZimageTurboLaptop'",
             "type": "main",
             "index": 0
           }
@@ -258,19 +258,8 @@
       "main": [
         [
           {
-            "node": "Call 'comfyUiLtxI2vKevin'",
+            "node": "Call 'comfyUiLtxI2vLaptop'",
             "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "getLtxVideoPromptGuide": {
-      "ai_tool": [
-        [
-          {
-            "node": "Video Prompt Generator",
-            "type": "ai_tool",
             "index": 0
           }
         ]
@@ -298,12 +287,12 @@
         ]
       ]
     },
-    "Call 'comfyUiZimageTurboKevin'": {
-      "main": [
+    "PROMPT GUIDE TOOL": {
+      "ai_tool": [
         [
           {
-            "node": "Merge",
-            "type": "main",
+            "node": "Video Prompt Generator",
+            "type": "ai_tool",
             "index": 0
           }
         ]
@@ -401,8 +390,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1552,
-        528
+        1520,
+        544
       ],
       "id": "faa80163-528e-4614-9e0c-1ac5d42ce183",
       "name": "Truncate Ai Agent Tables",
@@ -422,7 +411,7 @@
       "typeVersion": 1,
       "position": [
         256,
-        352
+        400
       ],
       "id": "53fd5a4a-f978-44b0-80c6-5a1306e37bc2",
       "name": "Vector Model",
@@ -640,8 +629,8 @@
       "type": "@n8n/n8n-nodes-langchain.rerankerCohere",
       "typeVersion": 1,
       "position": [
-        656,
-        448
+        432,
+        368
       ],
       "id": "a945def5-cd77-459b-a641-40fbb53111ae",
       "name": "Reranker Cohere",
@@ -656,14 +645,14 @@
       "parameters": {
         "modelId": {
           "__rl": true,
-          "value": "gemma4:e2b",
+          "value": "qwen3.5:4b",
           "mode": "list",
-          "cachedResultName": "gemma4:e2b"
+          "cachedResultName": "qwen3.5:4b"
         },
         "messages": {
           "values": [
             {
-              "content": "=AI Video & Audio-Visual Prompt Engineer\nTask: Analyze the provided input and generate a singular, high-fidelity cinematic video prompt. This prompt must harmonize the narration_snippet voiceover narration with complex, professional visual directing. The input data also contains the image_prompt that was used to generate an initial frame image. You also have access to a video prompt writing guide through a tool. You must use the tool when crafting an output prompt.\n\nExample Prompt:\nA warm sunny backyard. The camera starts in a tight cinematic close-up of a woman and a man in their 30s, facing each other with serious expressions. The woman, emotional and dramatic, says softly, “That’s it... Dad’s lost it. And we’ve lost Dad.”\nThe man exhales, slightly annoyed: “Stop being so dramatic, Jess.”\nA beat. He glances aside, then mutters defensively, “He’s just having fun.”\nThe camera slowly pans right, revealing the grandfather in the garden wearing enormous butterfly wings, waving his arms in the air like he’s trying to take off.\nHe shouts, “Wheeeew!” as he flaps his wings with full commitment.\nThe woman covers her face, on the verge of tears. The tone is deadpan, absurd, and quietly tragic.\n\nExample Prompt:\nStatic camera from inside the oven, looking outward through the slightly fogged glass door. Warm golden light glows around freshly baked cookies. The baker’s face fills the frame, eyes wide with focus, his breath fogging the glass as he leans in. Subtle reflections move across the glass as steam rises.\nBaker (whispering dramatically): “Today… I achieve perfection.”\nHe leans even closer, nose nearly touching the glass.\n“Golden edges. Soft center. The gods themselves will smell these cookies and weep.”\nBaker: “Wait—”\n(beat)\n“Did I… forget the chocolate chips?”\nCut to side view — coworker pops into frame, chewing casually.\nCoworker (mouth full): “Nope. You forgot the sugar.”\nQuick zoom back to the baker’s horrified face, pressed against the oven door, as cookies deflate behind the glass. Steam drifts upward in slow motion.\npixar style acting and timing.\n\nExample Prompt:\nDAYTIME TALK SHOW SET – AFTERNOON\nSoft studio lighting glows across a warm-toned set. The audience murmurs faintly as the camera pans to reveal three guests seated on a couch — a middle-aged couple and the show’s host sitting across from them.\nThe host leans forward, voice steady but probing:\nHost: “When did you first notice that your daughter, Missy, started to spiral?”\nThe woman’s face crumples; she takes a shaky breath and begins to cry. Her husband places a comforting hand on her shoulder, looking down before turning back toward the host.\nFather (quietly, with guilt): “We… we don’t know what we did wrong.”\nThe studio falls silent for a moment. The camera cuts to the host, who looks gravely into the lens.\nHost (to camera): “Let’s take a look at a short piece our team prepared — chronicling Missy’s downward path.”\nThe lights dim slightly as the camera pushes in on the mother’s tear-streaked face. The studio monitors flicker to life, beginning to play the segment as the audience holds its breath.\n\nExample Prompt:\nThe young african american woman wearing a futuristic transparent visor and a bodysuit with a tube attached to her neck. she is soldering a robotic arm. she stops and looks to her right as she hears a suspicious strong hit sound from a distance. she gets up slowly from her chair and says with an angry african american accent: \"Rick I told you to close that goddamn door after you!\". then, a futuristic blue alien explorer with dreadlocks wearing a rugged outfit walks into the scene excitedly holding a futuristic device and says with a low robotic voice: \"Fuck the door look what I found!\". the alien hands the woman the device, she looks down at it excitedly as the camera zooms in on her intrigued illuminated face. she then says: \"is this what I think it is?\" she smiles excitedly. sci-fi style cinematic scene.\n\nExample prompt:\nThe camera opens in a calm, sunlit frog yoga studio. Warm morning light washes over the wooden floor as incense smoke drifts lazily in the air. The senior frog instructor sits cross-legged at the center, eyes closed, voice deep and calm. “We are one with the pond.” All the frogs answer softly: “Ommm...” “We are one with the mud.” “Ommm...” He smiles faintly. “We are one with the flies.” A quiet pause.\nThe camera slowly pans to the side — one frog twitches, eyes darting. Suddenly — *thwip!* — its tongue snaps out, catching a fly mid-air and pulling it into its mouth. The master exhales slowly, still serene.\n“But we do not chase the flies…”\nBeat. “…not during class.” The guilty frog freezes, then lowers its head in visible shame, folding its hands back into the meditative pose. The other frogs resume their chant: “Ommm...” Camera holds for a moment on the embarrassed frog, eyes closed too tightly, pretending nothing happened.\n\nExample Prompt:\nSMALL TOWN STREET – MORNING – LIVE NEWS BROADCAST\nThe shot opens on a news reporter standing in front of a row of cordoned-off cars, yellow caution tape fluttering behind him. The light is warm, early sun reflecting off the camera lens. The faint hum of chatter and distant drilling fills the air.\nThe reporter, composed but visibly excited, looks directly into the camera, microphone in hand.\nReporter (live):\n“Thank you, Sylvia. And yes — this is a sentence I never thought I’d say on live television — but this morning, here in the quiet town of New Castle, Vermont… black gold has been found!”\nHe gestures slightly toward the field behind him.\nReporter (grinning):\n“If my cameraman can pan over, you’ll see what all the excitement’s about.”\nThe camera pans right, slowly revealing a construction site surrounded by workers in hard hats. A beat of silence — then, with a sudden roar, a geyser of oil erupts from the ground, blasting upward in a violent plume.\nWorkers cheer and scramble, the black stream glistening in the morning light. The camera shakes slightly, trying to stay focused through the chaos.\nReporter (off-screen, shouting over the noise):\n“There it is, folks — the moment New Castle will never forget!”\nThe camera catches the sunlight gleaming off the oil mist before pulling back, revealing the entire scene — the small-town skyline silhouetted against the wild fountain of oil.\n\nnarration_snippet:{{ $json.storyboard.narration_snippet }}\nimage_prompt:{{ $json.storyboard.image_prompt }}"
+              "content": "=Role: You are an expert Cinematic Director and AI Video Prompt Engineer specializing in highly controlled, realistic video generation. You have access to a PROMPT GUIDE TOOL which you are required to use each time you craft a prompt.\n\nTask: Analyze the provided input then consult the PROMPT GUIDE TOOL and generate a single, continuous, high-fidelity cinematic video prompt. The output must tightly synchronize the narration_snippet (voiceover/dialogue) with clear, structured visual direction.\n\nYou are also provided with an image_prompt, which represents the opening frame of the video. The generated video prompt MUST begin by faithfully recreating and extending this frame into motion.\n\nYou must internally apply best practices from professional video prompt writing (as if using a guide/tool), even if not explicitly shown.\n\nMANDATORY OUTPUT STRUCTURE (STRICT)\n\nYour output must be written as one continuous prompt paragraph with clearly ordered cinematic progression, following this exact structure:\n\nOpening Shot (REQUIRED FORMAT)\nMUST begin with:\n\"Very wide drone shot of\"\nMust visually match and expand the provided image_prompt\nEstablish environment, lighting, mood, and subject placement\nSubjects must appear small within a large environment\nCamera Movement & Progression\nClearly describe smooth, cinematic camera motion (drone movement, slow push, pan, orbit, or descent)\nMovement must feel physically realistic and continuous (no jump cuts unless explicitly motivated)\nCharacter & Action Direction\nAll humans must be described EXACTLY as:\n\"Caucasian civilian wearing plain, non-military clothing\"\nNo military, tactical, or combat elements allowed\nActions must be subtle, grounded, and realistic (no exaggerated or cartoon behavior unless specified by narration tone)\nDialogue & Voice Integration\nSeamlessly embed the provided narration_snippet as dialogue or voiceover\nDialogue must feel naturally timed with on-screen action\nUse minimal but effective character reactions\nCinematic Detail Layering\nInclude environmental motion (wind, light shifts, ambient movement)\nInclude realistic lighting behavior (natural light, shadows, reflections)\nInclude subtle atmospheric elements (dust, haze, fog, particles if appropriate)\nEnding Beat\nConclude with a visually or emotionally strong moment\nCamera should either:\nHold dramatically, OR\nContinue a slow cinematic movement (no abrupt ending)\nHARD CONSTRAINTS (NON-NEGOTIABLE)\nThe prompt MUST start with: \"Very wide drone shot of\"\nNO close-ups, medium shots, or full body shot terminology\nNO fast cuts or chaotic transitions unless explicitly justified\nNO military clothing, weapons, or combat themes\nMaintain realistic cinematography (NOT cartoon, NOT stylized animation unless explicitly stated)\nTone must match narration (serious, suspenseful, emotional, etc.)\nOutput must be a single cohesive paragraph (no bullet points, no formatting)\nSTYLE REQUIREMENTS\nRealistic cinematography\nHigh-end film look\nDeep depth of field\nNatural lighting\nSmooth, deliberate pacing\nEmotion driven through staging and camera—not exaggeration\nEXAMPLE PROMPT (SUSPENSEFUL, HIGH-COMPLIANCE)\n\nVery wide drone shot of a quiet suburban neighborhood at dusk, long shadows stretching across empty streets as warm fading sunlight reflects off rooftops and parked cars, the environment still and eerily calm, a single Caucasian civilian wearing plain, non-military clothing stands alone in a driveway, appearing small against the vast grid of identical homes as the drone slowly glides forward and slightly descends, maintaining distance while subtly tightening the composition, tree branches sway gently in the evening breeze and a loose mailbox creaks faintly, the ambient soundscape heavy with silence, as the camera continues its slow approach the civilian turns slightly, reacting to something unseen off-screen, tension building through stillness, the narration enters in a low, controlled voice, “Something felt wrong the moment I stepped outside… like the whole world had paused,” the camera drifts laterally, revealing more of the empty street with no movement anywhere, no cars, no people, just stillness, a flicker of light appears in a distant house window, subtle but unnatural, the civilian shifts uneasily, their posture tightening, the drone continues its slow, deliberate motion, never breaking the wide perspective, the light flickers again—stronger now—casting brief pulses across the neighborhood, the narration continues, quieter, “And then… it started,” the wind picks up slightly, leaves skitter across the pavement, the camera holds its slow glide as the entire street light system abruptly shuts off in sequence into darkness, leaving only dim ambient twilight and that distant flickering window, the shot lingers in sustained tension as the civilian remains frozen, small and isolated within the vast, darkening environment.\n\nINPUT DATA\n\nnarration_snippet:\n{{ $json.storyboard.narration_snippet }}\n\nimage_prompt:\n{{ $json.storyboard.image_prompt }}"
             }
           ]
         },
@@ -675,7 +664,7 @@
       "type": "@n8n/n8n-nodes-langchain.ollama",
       "typeVersion": 1,
       "position": [
-        704,
+        688,
         624
       ],
       "id": "7cb63d3a-ea8b-43ce-a663-d00c38987cb1",
@@ -707,7 +696,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Role: You are an expert Visual Storyboard Artist and AI Image Prompt Engineer.\n\nTask: Analyze the provided narration text and break it into a sequential series of visual \"beats.\" For each beat, generate a detailed image generation prompt that maintains character and stylistic consistency.\n\nMandatory Prompt Requirements:\n\nDemographic Consistency: In every generated image prompt, you must explicitly describe any person, character, or human mentioned as \"Caucasian.\" This is a strict requirement for visual continuity.\n\nCamera Distance: Prioritize \"Wide Shots,\" \"Full Body Shots,\" and \"Long Shots\" in your descriptions. Explicitly instruct the camera to be at a distance from the subjects to capture the environment. Avoid \"Close-ups\" or \"Extreme Close-ups\" unless the narration absolutely requires focus on a micro-detail.\n\nOutput Requirement: Do not include introductory text, explanations, or markdown formatting outside of the JSON block.\n\nStyle Constraint: Realistic Cinematography, high-end film stock, deep depth of field.\n\nNarration Text:\n{{ $json.output.narration_content }}\n\nNarration Title:\n{{ $json.output.narration_title }}",
+        "text": "=Role: You are an expert Visual Storyboard Artist and AI Image Prompt Engineer.\n\nTask: Analyze the provided narration text and break it into a sequential series of visual \"beats.\" For each beat, generate a detailed image generation prompt that maintains character and stylistic consistency.\n\nMandatory Prompt Requirements (STRICT ENFORCEMENT):\n\nDemographic & Wardrobe Constraint (NON-NEGOTIABLE):\nEvery human, character, or person must be explicitly described using the exact phrase:\n\"Caucasian civilian wearing plain, non-military clothing\"\nNo deviations, synonyms, or omissions allowed.\nNo military elements of any kind (no uniforms, tactical gear, weapons, insignia, or combat context).\nCamera Perspective Constraint (NON-NEGOTIABLE):\nEvery generated image prompt MUST begin with the exact phrase:\n\"Very wide drone shot of\"\nThis phrase must appear at the very start of every prompt with no variation.\nThe perspective must always be aerial, high-altitude, and distant.\nThe composition must emphasize large-scale environment over subjects.\nFraming Restrictions (HARD BAN):\nThe following terms and concepts are strictly forbidden and must NEVER appear:\n\"full body shot\"\n\"close-up\" / \"close up\"\n\"extreme close-up\"\n\"medium shot\"\nany variation implying proximity or tight framing\nComposition Rules:\nSubjects must appear small relative to the environment.\nThe environment must dominate the frame.\nScenes should feel expansive, cinematic, and observational from above.\nStyle Constraint:\nRealistic cinematography, high-end film stock, deep depth of field.\nOutput Requirement (STRICT):\nOutput ONLY a valid JSON object.\nNo explanations, no extra text, no markdown.\nEach visual beat must map to a clearly structured prompt entry.\nCompliance Rule:\nIf any requirement cannot be satisfied, do not improvise or partially comply—adjust the scene so that ALL constraints are still fully satisfied.\n\nNarration Text:\n{{ $json.output.narration_content }}\n\nNarration Title:\n{{ $json.output.narration_title }}",
         "hasOutputParser": true,
         "options": {
           "maxIterations": 100
@@ -792,7 +781,7 @@
     },
     {
       "parameters": {
-        "model": "gemma4:e2b",
+        "model": "qwen3.5:4b",
         "options": {
           "temperature": 0,
           "format": "json"
@@ -817,46 +806,17 @@
       "parameters": {
         "mode": "combine",
         "combineBy": "combineByPosition",
-        "numberInputs": 3,
         "options": {}
       },
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        1136,
-        512
+        1104,
+        544
       ],
       "id": "f779d6e0-797a-4d8a-b8b3-1bb5f8d68199",
       "name": "Merge",
       "executeOnce": false
-    },
-    {
-      "parameters": {
-        "description": "Call this tool for guidelines when generating a video prompt. ",
-        "workflowId": {
-          "__rl": true,
-          "value": "wLa1tXIM0hYXgCbe",
-          "mode": "list",
-          "cachedResultUrl": "/workflow/wLa1tXIM0hYXgCbe",
-          "cachedResultName": "getLtxVideoPromptGuide"
-        },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {},
-          "matchingColumns": [],
-          "schema": [],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
-      "typeVersion": 2.2,
-      "position": [
-        928,
-        736
-      ],
-      "id": "956b3ac4-f8b7-4f6b-82a7-b2e1082f8722",
-      "name": "getLtxVideoPromptGuide"
     },
     {
       "parameters": {
@@ -916,12 +876,40 @@
     },
     {
       "parameters": {
+        "description": "PROMPT GUIDE TOOL: Call this tool for guidelines when generating a video prompt. ",
         "workflowId": {
           "__rl": true,
-          "value": "QpDLUK288hcZtcz0",
+          "value": "wLa1tXIM0hYXgCbe",
           "mode": "list",
-          "cachedResultUrl": "/workflow/QpDLUK288hcZtcz0",
-          "cachedResultName": "comfyUiZimageTurboKevin"
+          "cachedResultUrl": "/workflow/wLa1tXIM0hYXgCbe",
+          "cachedResultName": "getLtxVideoPromptGuide"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        928,
+        736
+      ],
+      "id": "956b3ac4-f8b7-4f6b-82a7-b2e1082f8722",
+      "name": "PROMPT GUIDE TOOL"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "pUAQvs5uVUbK8y8t",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/pUAQvs5uVUbK8y8t",
+          "cachedResultName": "comfyUiZimageTurboLaptop"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -962,37 +950,38 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        864,
+        896,
         384
       ],
-      "id": "987e325f-83ef-4379-840d-9971c3e9a506",
-      "name": "Call 'comfyUiZimageTurboKevin'"
+      "id": "a56d44b3-b365-4498-8947-db0cb7fcb451",
+      "name": "Call 'comfyUiZimageTurboLaptop'"
     },
     {
       "parameters": {
         "workflowId": {
           "__rl": true,
-          "value": "3yqhQJa7EFVuMSty",
+          "value": "C86seLFOiyeLjoJu",
           "mode": "list",
-          "cachedResultUrl": "/workflow/3yqhQJa7EFVuMSty",
-          "cachedResultName": "comfyUiLtxI2vKevin"
+          "cachedResultUrl": "/workflow/C86seLFOiyeLjoJu",
+          "cachedResultName": "comfyUiLtxI2vLaptop"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "beat": "={{ $json.storyboard.beat_id }}",
             "id": "={{ $json.id }}",
-            "video_prompt": "={{ $json.content.toJsonString() }}"
+            "beat": "={{ $json.storyboard.beat_id }}",
+            "video_prompt": "={{ $json.content?.toJsonString() }}"
           },
           "matchingColumns": [],
           "schema": [
             {
-              "id": "video_prompt",
-              "displayName": "video_prompt",
+              "id": "id",
+              "displayName": "id",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "canBeUsedToMatch": true,
+              "type": "number",
               "removed": false
             },
             {
@@ -1002,15 +991,17 @@
               "defaultMatch": false,
               "display": true,
               "canBeUsedToMatch": true,
+              "type": "number",
               "removed": false
             },
             {
-              "id": "id",
-              "displayName": "id",
+              "id": "video_prompt",
+              "displayName": "video_prompt",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "canBeUsedToMatch": true,
+              "type": "string",
               "removed": false
             }
           ],
@@ -1022,11 +1013,11 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        1344,
-        512
+        1312,
+        544
       ],
-      "id": "fa3b779b-1250-465e-b07a-f6a348fcb586",
-      "name": "Call 'comfyUiLtxI2vKevin'"
+      "id": "b37430e2-ed63-49e5-822b-7d1797a1cb17",
+      "name": "Call 'comfyUiLtxI2vLaptop'"
     }
   ],
   "pinData": {},
@@ -1046,6 +1037,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-04-21T15:21:23.520Z",
-  "versionId": "81284424-fd0c-40ff-817d-7d88c99751b7"
+  "updatedAt": "2026-04-23T01:25:35.693Z",
+  "versionId": "af85d1c6-f354-4a4e-9265-9073243762f5"
 }
